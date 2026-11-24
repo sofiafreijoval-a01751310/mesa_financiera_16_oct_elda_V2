@@ -1,0 +1,64 @@
+{
+  "tipo": "OBSERVACION_UI_N8N",
+  "workflow": "Lincoln | Prueba aislada de skills y loops v1",
+  "ejecucion_n8n": "50",
+  "fecha_local": "2026-11-23",
+  "resultado": "PASS",
+  "mensaje_ui": "Workflow executed successfully",
+  "alcance": "PRUEBA AISLADA EN N8N; NO FLUJO OPERATIVO",
+  "casos": [
+    "LIN-50-1",
+    "LIN-50-2",
+    "LIN-50-3",
+    "LIN-50-4"
+  ],
+  "observado": {
+    "carga": [
+      "cotizar-tokens-ia",
+      "vizdata",
+      "revisar-apoyo-lincoln"
+    ],
+    "monterrey": {
+      "caso_id": "LIN-50-1",
+      "apoyo_mxn": 200000,
+      "aportacion_mxn": 200000,
+      "inversion_ajustada_mxn": 400000,
+      "saldo_proyectado_mxn": 450000,
+      "estado_loop": "CONVERGIO"
+    },
+    "fuente_insuficiente": {
+      "caso_id": "LIN-50-4",
+      "estado_loop": "ESCALAR",
+      "diagnostico": "Falta versión de fuente"
+    },
+    "seguridad_costo": {
+      "estado": "OK",
+      "max_intentos": 3,
+      "presupuesto_usd": 0.25,
+      "consumo_api_usd": 0,
+      "eventos": [
+        "50:1",
+        "50:2",
+        "50:3"
+      ],
+      "estados": [
+        "TIMEOUT_SIMULADO",
+        "TIMEOUT_SIMULADO",
+        "OK"
+      ]
+    }
+  },
+  "criterios_exigidos_por_verificador": [
+    "3 casos CONVERGIO y 1 ESCALAR",
+    "2 revisiones por caso válido",
+    "modifica_presupuesto=false",
+    "3 intentos recuperación y costo_api_usd=0"
+  ],
+  "limitaciones": [
+    "Datos ficticios embebidos, no lectura de Data Tables operativas",
+    "Transporte local de prueba, sin APIs de modelos",
+    "Dedup solo dentro de ejecución; no demuestra persistencia compartida",
+    "Los guardianes Python todavía no conectados al bot operativo"
+  ],
+  "export": "exports/Lincoln_Prueba_Aislada_Skills_Loops.json"
+}

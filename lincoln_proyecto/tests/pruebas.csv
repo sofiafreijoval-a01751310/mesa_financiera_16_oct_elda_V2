@@ -9,7 +9,7 @@ P07,Usuario sin permiso,PASS_LOCAL_PARCIAL,UT02-UT04 + GuardTests.test_auth/test
 P08,API caída o cuota agotada,PASS_LOCAL_PARCIAL,evidencias/loop_recuperacion.json + test_recovery_stops,Fallas de transporte inyectadas localmente; probar proveedor/timeout real
 P09,Presupuesto e iteraciones,PASS_LOCAL_PARCIAL,test_budget/test_concurrent_budget/test_loop_cap,Conectar admisión por llamada a n8n antes del modelo
 P10,Evento duplicado,PASS_LOCAL_PARCIAL,test_durable_dedup/test_concurrent_duplicates,Persistir en almacén compartido antes del modelo y demostrar vivo
-P11,Skill y loop con corrección,PASS_LOCAL,evidencias/skills_ejecutados.json + LIN-101-1.jsonl,Integrar carga al camino operativo final
+P11,Skill y loop con corrección,PASS_N8N_AISLADO,evidencias/n8n_prueba_aislada_observada.json + skills_ejecutados.json + LIN-101-1.jsonl,Integrar carga al camino operativo final
 P12,Actions y publicación,PARCIAL_CI,GitHub Actions verde; ver github_evidencia.json,Fallo deliberado de control y Pages desplegado aún pendientes
 P13,Interfaz y micrófono,PENDIENTE_INTEGRAL,"VizData valida figura estática, no interfaz","Verificar web390/1366, teclado y alternativa a micrófono denegado"
 P14,Trazabilidad y costos,PARCIAL_ESTIMACION,costos/* y evidencias/comprobaciones.json,Conciliar usage por llamada con panel y voz; desarrollo no medido

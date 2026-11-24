@@ -37,3 +37,7 @@ Ver `docs/cierre_y_evidencias.md` para pendientes de rúbrica y límites. Ningú
 ## Regenerar el informe y figura (opcional)
 
 Instalar `python3 -m pip install -r requirements-report.txt`. Ejecutar `python3 src/generar_grafica.py` y `python3 src/generar_informe.py`. Requieren fuentes DejaVuSans de la distribución Linux; las pruebas de negocio no dependen de estas librerías. El informe se escribe fuera de la carpeta de código, en output/pdf.
+
+## Prueba aislada en n8n
+
+El export `exports/Lincoln_Prueba_Aislada_Skills_Loops.json` tiene4nodos manuales y no necesita credenciales. Fue importado y ejecutado con PASS (ejecución50). La salida muestra carga de las tres instrucciones, V1/V2 y recuperación acotada. Continúa separado del bot operativo. Validación local del mismo JS:`node tests/verificar_n8n_loops.cjs`.

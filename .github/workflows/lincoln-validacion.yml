@@ -32,5 +32,6 @@ jobs:
       - run: python3 -m unittest discover -s tests -p 'test_*.py' -v
       - run: node exports/verificar_workflow_v03.cjs
       - run: python3 src/run_demo.py
+      - run: node tests/verificar_n8n_loops.cjs
       - run: python3 skills/vizdata/scripts/audit_viz_spec.py docs/vizdata_brief.json --strict
       - run: python3 src/validar_paquete.py

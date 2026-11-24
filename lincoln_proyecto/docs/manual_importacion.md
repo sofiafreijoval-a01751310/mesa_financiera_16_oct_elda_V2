@@ -31,3 +31,7 @@ Dar folio completo y versión. Si hay error de transporte, mostrar error de cons
 Sin respuesta Telegram:verificar activación, credencial y único webhook. No hay datos:verificar tabla/folio/versión y flujo de carga, nunca inventar saldo. Error de auth voz:comprobar encabezado y secreto en ambos servicios sin publicarlo. Error de cliente ElevenLabs no demuestra fallo de n8n; revisar ejecución y respuesta por separado.
 
 Para autorizar cambios de producción, usar resultados de tests/pruebas.csv y conservar evidencia sanitizada. No confundir validación de código en Actions con publicación de Pages ni con una prueba de voz actual.
+
+## Repetir la prueba nativa aislada
+
+Crear workflow vacío e importar Lincoln_Prueba_Aislada_Skills_Loops.json. Ejecutar manualmente y abrir Verificar resultado y trazas:debe terminar en PASS con tres casos convergentes, uno escalado y recuperación3intentos. Usa datos embebidos; no requiere credenciales ni debe publicarse como bot. Ya se ejecutó en la cuenta con folios LIN-50-1..4. No reemplaza la integración al proceso empresarial.

@@ -1,0 +1,188 @@
+{
+  "alcance": "PRUEBA AISLADA EN N8N; NO FLUJO OPERATIVO",
+  "modo": "SIMULADO",
+  "carga": [
+    {
+      "nombre": "cotizar-tokens-ia",
+      "sha256": "83e4d347640c491fab2d9e7f5affc668fcc83d0a0a572402f67762f8c9bc7af4",
+      "caracteres": 4183
+    },
+    {
+      "nombre": "vizdata",
+      "sha256": "451693f3ffe4f89cce63a7615cc973535a7bde3aa03e8b8735e0ef235e2fd9ad",
+      "caracteres": 7947
+    },
+    {
+      "nombre": "revisar-apoyo-lincoln",
+      "sha256": "e06e069048e0f94b4c6d60b9b8caee2a4cebf890b724424b31746501c772cbbc",
+      "caracteres": 1967
+    }
+  ],
+  "resultados": [
+    {
+      "caso_id": "LIN-999999-1",
+      "distribuidor": "Lincoln Monterrey",
+      "estado_loop": "CONVERGIO",
+      "propuesta": {
+        "apoyo_mxn": 200000,
+        "aportacion_mxn": 200000,
+        "inversion_ajustada_mxn": 400000,
+        "saldo_proyectado_mxn": 450000,
+        "requiere_aceptacion_alcance": false,
+        "estado": "PENDIENTE_APROBACION",
+        "modifica_presupuesto": false
+      },
+      "historial": [
+        {
+          "caso_id": "LIN-999999-1",
+          "version": 1,
+          "ok": false,
+          "diagnostico": [
+            "apoyo_mxn",
+            "aportacion_mxn",
+            "inversion_ajustada_mxn",
+            "saldo_proyectado_mxn",
+            "requiere_aceptacion_alcance",
+            "estado",
+            "modifica_presupuesto"
+          ],
+          "costo_api_usd": 0
+        },
+        {
+          "caso_id": "LIN-999999-1",
+          "version": 2,
+          "ok": true,
+          "diagnostico": [],
+          "costo_api_usd": 0
+        }
+      ]
+    },
+    {
+      "caso_id": "LIN-999999-2",
+      "distribuidor": "Lincoln Chiapas",
+      "estado_loop": "CONVERGIO",
+      "propuesta": {
+        "apoyo_mxn": 62500,
+        "aportacion_mxn": 62500,
+        "inversion_ajustada_mxn": 125000,
+        "saldo_proyectado_mxn": 0,
+        "requiere_aceptacion_alcance": true,
+        "estado": "PENDIENTE_APROBACION",
+        "modifica_presupuesto": false
+      },
+      "historial": [
+        {
+          "caso_id": "LIN-999999-2",
+          "version": 1,
+          "ok": false,
+          "diagnostico": [
+            "apoyo_mxn",
+            "aportacion_mxn",
+            "inversion_ajustada_mxn",
+            "saldo_proyectado_mxn",
+            "requiere_aceptacion_alcance",
+            "estado",
+            "modifica_presupuesto"
+          ],
+          "costo_api_usd": 0
+        },
+        {
+          "caso_id": "LIN-999999-2",
+          "version": 2,
+          "ok": true,
+          "diagnostico": [],
+          "costo_api_usd": 0
+        }
+      ]
+    },
+    {
+      "caso_id": "LIN-999999-3",
+      "distribuidor": "Lincoln Guadalajara",
+      "estado_loop": "CONVERGIO",
+      "propuesta": {
+        "apoyo_mxn": 250000,
+        "aportacion_mxn": 250000,
+        "inversion_ajustada_mxn": 500000,
+        "saldo_proyectado_mxn": 200000,
+        "requiere_aceptacion_alcance": false,
+        "estado": "PENDIENTE_APROBACION",
+        "modifica_presupuesto": false
+      },
+      "historial": [
+        {
+          "caso_id": "LIN-999999-3",
+          "version": 1,
+          "ok": false,
+          "diagnostico": [
+            "apoyo_mxn",
+            "aportacion_mxn",
+            "inversion_ajustada_mxn",
+            "saldo_proyectado_mxn",
+            "requiere_aceptacion_alcance",
+            "estado",
+            "modifica_presupuesto"
+          ],
+          "costo_api_usd": 0
+        },
+        {
+          "caso_id": "LIN-999999-3",
+          "version": 2,
+          "ok": true,
+          "diagnostico": [],
+          "costo_api_usd": 0
+        }
+      ]
+    },
+    {
+      "caso_id": "LIN-999999-4",
+      "distribuidor": "Lincoln Monterrey",
+      "estado_loop": "ESCALAR",
+      "historial": [
+        {
+          "caso_id": "LIN-999999-4",
+          "version": 1,
+          "ok": false,
+          "diagnostico": "Falta versión de fuente",
+          "costo_api_usd": 0
+        }
+      ]
+    }
+  ],
+  "seguridad_costo": {
+    "estado": "OK",
+    "max_intentos": 3,
+    "presupuesto_usd": 0.25,
+    "consumo_api_usd": 0,
+    "traza": [
+      {
+        "intento": 1,
+        "evento": "999999:1",
+        "cota_usd": 0.01,
+        "costo_api_usd": 0,
+        "estado": "TIMEOUT_SIMULADO"
+      },
+      {
+        "intento": 2,
+        "evento": "999999:2",
+        "cota_usd": 0.01,
+        "costo_api_usd": 0,
+        "estado": "TIMEOUT_SIMULADO"
+      },
+      {
+        "intento": 3,
+        "evento": "999999:3",
+        "cota_usd": 0.01,
+        "costo_api_usd": 0,
+        "estado": "OK"
+      }
+    ]
+  },
+  "advertencias": [
+    "Transporte de prueba local, sin modelos ni APIs externas.",
+    "Dedup dentro de esta ejecución; NO demuestra persistencia compartida entre workers.",
+    "La prueba no aprueba ni modifica presupuestos operativos."
+  ],
+  "validacion": "PASS",
+  "resumen": "3 skills cargados; 3 casos V1->V2; 1 fuente insuficiente; recuperación acotada de 3 intentos; API USD0",
+  "ejecucion_n8n": "999999"
+}

@@ -9,6 +9,7 @@ Fecha de trabajo:23nov2026. Proyecto académico con datos sintéticos. Este mód
 - Nuevos controles y loops:21pruebas Python, incluyendo concurrencia, dedup durable y presupuesto.
 - Skill nuevo validado e instalado; forward-test independiente sobre dos casos más fuente insuficiente.
 - Tres propuestas locales correctas y un error de fuente, trazas JSON/JSONL.
+- Prueba aislada nativa n8n (ejecución50) con PASS, tres cargas de skills, V1/V2 y recuperación acotada. El flujo operativo sigue separado.
 - Skills previos de costos y VizData realmente utilizados.
 - Escenarios de costos base/alto, por etapa y a100/1000/10000; consumo real desconocido.
 
