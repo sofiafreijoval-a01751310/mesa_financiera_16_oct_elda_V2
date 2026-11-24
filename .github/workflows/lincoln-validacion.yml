@@ -1,7 +1,7 @@
 name: Lincoln - validación sin secretos
 on:
   push:
-    branches: ['lincoln/**']
+    branches: ['main', 'lincoln/**']
     paths: ['lincoln_proyecto/**', '.github/workflows/lincoln-validacion.yml']
   pull_request:
     paths: ['lincoln_proyecto/**', '.github/workflows/lincoln-validacion.yml']
@@ -34,4 +34,29 @@ jobs:
       - run: python3 src/run_demo.py
       - run: node tests/verificar_n8n_loops.cjs
       - run: python3 skills/vizdata/scripts/audit_viz_spec.py docs/vizdata_brief.json --strict
+      - run: python3 tests/validar_web.py
+      - run: node tests/test_web.cjs
       - run: python3 src/validar_paquete.py
+  publicar:
+    needs: validar
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: lincoln_proyecto/web
+      - name: Publicar panel validado
+        id: deployment
+        uses: actions/deploy-pages@v4
