@@ -41,3 +41,9 @@ Instalar `python3 -m pip install -r requirements-report.txt`. Ejecutar `python3 
 ## Prueba aislada en n8n
 
 El export `exports/Lincoln_Prueba_Aislada_Skills_Loops.json` tiene4nodos manuales y no necesita credenciales. Fue importado y ejecutado con PASS (ejecución50). La salida muestra carga de las tres instrucciones, V1/V2 y recuperación acotada. Continúa separado del bot operativo. Validación local del mismo JS:`node tests/verificar_n8n_loops.cjs`.
+
+## Panel y publicación
+
+[Panel Lincoln](https://sofiafreijoval-a01751310.github.io/mesa_financiera_16_oct_elda_V2/) · datos ficticios, exportación manual con fecha, sin datos de chats. GitHub confirmó el despliegue inicial. El control de datos bloqueó una publicación deliberadamente inconsistente; ver `evidencias/pages_despliegue.json` y `docs/Panel_GitHub_Pages.md`.
+
+Pruebas web: `python3 tests/validar_web.py` y `node tests/test_web.cjs` (12 pruebas). La voz embebida y la revisión visual móvil siguen pendientes; no equivalen a las comprobaciones de código. El ZIP y PDF de revisión publicados anteriormente corresponden a un commit anterior y deben regenerarse antes de entregar.

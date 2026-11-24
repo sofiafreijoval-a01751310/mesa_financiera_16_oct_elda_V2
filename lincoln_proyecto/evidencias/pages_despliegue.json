@@ -1,0 +1,45 @@
+{
+  "fecha": "2026-11-24",
+  "alcance": "Evidencia obtenida de GitHub Actions. La inspección visual y de voz del sitio no está incluida.",
+  "url_panel": "https://sofiafreijoval-a01751310.github.io/mesa_financiera_16_oct_elda_V2/",
+  "despliegue_inicial": {
+    "commit": "8b821533d6e0ca3aaed9efd0c10930d0f7ecd525",
+    "run_id": 45326466063,
+    "url": "https://github.com/sofiafreijoval-a01751310/mesa_financiera_16_oct_elda_V2/actions/runs/45326466063",
+    "validar": "success",
+    "publicar": "success"
+  },
+  "fallo_deliberado": {
+    "commit": "af1a5dc30779c2f5bc2d31f4bc348c477454d6cc",
+    "run_id": 45514201989,
+    "url": "https://github.com/sofiafreijoval-a01751310/mesa_financiera_16_oct_elda_V2/actions/runs/45514201989",
+    "cambio": "Solo presupuesto_nacional_mxn del JSON público: 5000000 → 5000001",
+    "validar": "failure",
+    "paso": "python3 tests/validar_web.py",
+    "mensaje": "AssertionError: Bolsa o ventas nacionales incoherentes",
+    "publicar": "skipped",
+    "extracto_log": "2026-11-24T23:57:22.3576615Z ##[group]Run python3 tests/validar_web.py\n2026-11-24T23:57:22.3577385Z \u001b[36;1mpython3 tests/validar_web.py\u001b[0m\n2026-11-24T23:57:22.3919159Z   File \"/home/runner/work/mesa_financiera_16_oct_elda_V2/mesa_financiera_16_oct_elda_V2/lincoln_proyecto/tests/validar_web.py\", line 47, in <module>\n2026-11-24T23:57:22.3923882Z   File \"/home/runner/work/mesa_financiera_16_oct_elda_V2/mesa_financiera_16_oct_elda_V2/lincoln_proyecto/tests/validar_web.py\", line 12, in validate\n2026-11-24T23:57:22.3926111Z     assert d['presupuesto_nacional_mxn']==5000000 and d['ventas_nacionales_2025']==2000,'Bolsa o ventas nacionales incoherentes'\n2026-11-24T23:57:22.3929086Z AssertionError: Bolsa o ventas nacionales incoherentes\n2026-11-24T23:57:22.3967974Z ##[error]Process completed with exit code 1."
+  },
+  "recuperacion": {
+    "commit": "c9298550ef49bc2a468cb3e5dfd99af20bd26905",
+    "run_id": 45514286977,
+    "url": "https://github.com/sofiafreijoval-a01751310/mesa_financiera_16_oct_elda_V2/actions/runs/45514286977",
+    "arbol_restaurado_exacto": "35897b810aa85c1b3d8b4387465aedcf258ce2d1",
+    "intento_1": {
+      "validar": "success",
+      "publicar": "failure",
+      "motivo": "El artefacto fue subido, pero deploy-pages no lo encontró todavía: Found 0 artifact(s)."
+    },
+    "intento_2": {
+      "validar": "success",
+      "publicar": "success",
+      "accion": "Reejecución únicamente de los trabajos fallidos mediante GitHub."
+    }
+  },
+  "limites": [
+    "No se desactivó ninguna validación para obtener la recuperación.",
+    "La cifra inconsistente no se desplegó: publicar quedó skipped.",
+    "No prueba integración de los guardianes en n8n ni gasto real.",
+    "Revisión interactiva de la web y voz pendiente."
+  ]
+}

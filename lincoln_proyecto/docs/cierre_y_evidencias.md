@@ -1,6 +1,6 @@
 # Estado de entrega y pendientes comprobables
 
-Fecha de trabajo:23nov2026. Proyecto académico con datos sintéticos. Este módulo agrega código local, evidencia de ejecución y documentación. No afirmar cierre100% mientras falten pruebas vivas y publicación.
+Fecha de actualización: 24 nov 2026. Proyecto académico con datos sintéticos. Este módulo agrega código local, evidencia de ejecución y documentación. No afirmar cierre100% mientras falten pruebas vivas y publicación.
 
 ## Evidencia disponible
 
@@ -12,6 +12,9 @@ Fecha de trabajo:23nov2026. Proyecto académico con datos sintéticos. Este mód
 - Prueba aislada nativa n8n (ejecución50) con PASS, tres cargas de skills, V1/V2 y recuperación acotada. El flujo operativo sigue separado.
 - Skills previos de costos y VizData realmente utilizados.
 - Escenarios de costos base/alto, por etapa y a100/1000/10000; consumo real desconocido.
+- Panel estático sanitizado y despliegue Pages confirmado por GitHub Actions.
+- Fallo deliberado de datos bloqueó la publicación; corrección restaurada. Ver evidencias/pages_despliegue.json.
+- La usuaria confirmó que el token Telegram compartido anteriormente ya fue invalidado.
 
 ## No confundir evidencia histórica y actual
 
@@ -21,9 +24,9 @@ Las capturas anteriores muestran Telegram con decisiones simuladas y ElevenLabs 
 
 1. Integrar los guardianes/loops en la instancia n8n con almacén compartido, topes por llamada y CAS transaccional; probar cuatro casos integrales con mismo folio entre orquestador+4especialistas.
 2. Obtener export vigente completo de n8n y artefactos ElevenLabs sin secretos. Revalidar consulta por voz y segunda interacción de negocio desde Pages.
-3. Preparar/publicar Pages con tres KPI, historia sanitizada, filtros/empty/error/stale, teclado y prueba390/1366px. Consentimiento de IA y dominio permitido para el widget.
+3. Pages y sus tres KPI ya están implementados y desplegados. Falta la revisión interactiva a 390/1366 px, teclado, voz desde Pages y dominio permitido del widget. Consentimiento y alternativa Telegram están implementados; aún no se acreditan como prueba viva.
 4. Conciliar uso real por etapa y desarrollo desde proveedores. Los supuestos de este reporte no cumplen una medición de gasto real.
-5. Validación GitHub Actions ya verde (evidencias/github_evidencia.json). Falta fallo deliberado bloqueando despliegue y corrección; la validación sola no acredita Pages desplegado.
+5. Despliegue inicial confirmado y fallo deliberado bloqueado: ver evidencias/pages_despliegue.json, que también registra la recuperación. Conservar las URLs de Actions; no sustituirlas por resultados locales.
 6. Grabar video5-8min y realizar demo12min según guía. Solo Sofía puede aportar su voz/presentación personal y entregar en Canvas.
 
 La matriz P01-P14 debe completarse desde el texto oficial, sin inventar nombres o resultados para pruebas pendientes. El informe técnico adjunto documenta alcance y riesgos actuales; actualizar versión final con enlaces y evidencias de esos pasos.
