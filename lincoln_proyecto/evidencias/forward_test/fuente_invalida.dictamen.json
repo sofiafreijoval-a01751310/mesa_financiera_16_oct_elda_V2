@@ -1,0 +1,10 @@
+{
+  "ok": false,
+  "errores": [
+    "ENTRADA: Fuente/versión/folio insuficiente"
+  ],
+  "esperado": null,
+  "skill": "revisar-apoyo-lincoln",
+  "version_skill": "1.0.0",
+  "skill_sha256": "f2ca4618a3e787c6f37c788098e1764e501012bf27b60ec256d348d78e96b7e6"
+}

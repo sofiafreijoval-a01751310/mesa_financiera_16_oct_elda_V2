@@ -1,0 +1,7 @@
+{
+  "skill": "revisar-apoyo-lincoln",
+  "version": "1.0.1",
+  "url": "https://chatgpt.com/skills?skill_id=6b0502a37a1481919c8f8707cb6b9d48",
+  "estado": "Instalado y verificado en la copia persistente; versión1.0.1",
+  "forward_test": "versión1.0.0 con dos casos; versión1.0.1 añade esquema de objeto y retención de campos, cubierta por unit tests"
+}

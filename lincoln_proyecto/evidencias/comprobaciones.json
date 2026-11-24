@@ -1,0 +1,70 @@
+{
+  "fecha_utc": "2026-11-24T03:29:56.175001+00:00",
+  "scope": "LOCAL sin APIs; no prueba integral en n8n",
+  "ok": true,
+  "comprobaciones": [
+    {
+      "command": [
+        "python3",
+        "tests/validar_base.py"
+      ],
+      "returncode": 0,
+      "stdout": "APROBADO: 19 distribuidores, 2000 unidades, MXN 5000000 y 76 registros de mercado consistentes.\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "test_auth (test_controles.GuardTests.test_auth) ... ok\ntest_budget (test_controles.GuardTests.test_budget) ... ok\ntest_cap_immutable (test_controles.GuardTests.test_cap_immutable) ... ok\ntest_concurrent_budget (test_controles.GuardTests.test_concurrent_budget) ... ok\ntest_concurrent_duplicates (test_controles.GuardTests.test_concurrent_duplicates) ... ok\ntest_durable_dedup (test_controles.GuardTests.test_durable_dedup) ... ok\ntest_excess_recorded (test_controles.GuardTests.test_excess_recorded) ... ok\ntest_projection_and_allowlist (test_controles.GuardTests.test_projection_and_allowlist) ... ok\ntest_reconcile (test_controles.GuardTests.test_reconcile) ... ok\ntest_recovery_auth (test_controles.GuardTests.test_recovery_auth) ... ok\ntest_recovery_loop (test_controles.GuardTests.test_recovery_loop) ... ok\ntest_recovery_stops (test_controles.GuardTests.test_recovery_stops) ... ok\ntest_correction_and_source_unchanged (test_controles.ReviewTests.test_correction_and_source_unchanged) ... ok\ntest_extra_fields_preserved (test_controles.ReviewTests.test_extra_fields_preserved) ... ok\ntest_infinite_negative_and_boolean (test_controles.ReviewTests.test_infinite_negative_and_boolean) ... ok\ntest_limited (test_controles.ReviewTests.test_limited) ... ok\ntest_loop_cap (test_controles.ReviewTests.test_loop_cap) ... ok\ntest_malformed_objects (test_controles.ReviewTests.test_malformed_objects) ... ok\ntest_no_source (test_controles.ReviewTests.test_no_source) ... ok\ntest_odd_cent_and_zero_balance (test_controles.ReviewTests.test_odd_cent_and_zero_balance) ... ok\ntest_wrong_case (test_controles.ReviewTests.test_wrong_case) ... ok\n\n----------------------------------------------------------------------\nRan 21 tests in 0.028s\n\nOK\n"
+    },
+    {
+      "command": [
+        "node",
+        "exports/verificar_workflow_v03.cjs"
+      ],
+      "returncode": 0,
+      "stdout": "{\n  \"generated_at\": \"2026-11-24T03:29:55.980Z\",\n  \"scope\": \"Pruebas unitarias locales del JavaScript exportado; no sustituyen pruebas integrales ni la matriz oficial P01–P14.\",\n  \"total\": 25,\n  \"passed\": 25,\n  \"results\": [\n    {\n      \"id\": \"UT01\",\n      \"description\": \"Solicitud de texto autorizada se procesa\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"id\": \"UT02\",\n      \"description\": \"Otro usuario se bloquea\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"id\": \"UT03\",\n      \"description\": \"Chat grupal se bloquea\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"id\": \"UT04\",\n      \"description\": \"Mensaje de bot se bloquea\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"id\": \"UT05\",\n      \"description\": \"Mensaje sin texto pide aclaración sin modelo\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"id\": \"UT06\",\n      \"description\": \"Más de 4000 caracteres pide corrección\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"id\": \"UT07\",\n      \"description\": \"Start devuelve instrucciones\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"id\": \"UT08\",\n      \"description\": \"Comando correcto conserva folio y versión\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"id\": \"UT09\",\n      \"description\": \"Comando incompleto no decide\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"id\": \"UT10\",\n      \"description\": \"Comando desconocido no llama al modelo\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"id\": \"UT11\",\n      \"description\": \"Folio inexistente no se modifica\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"id\": \"UT12\",\n      \"description\": \"Folio ambiguo no se modifica\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"id\": \"UT13\",\n      \"description\": \"Propietario incorrecto no puede decidir\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"id\": \"UT14\",\n      \"description\": \"Versión incorrecta no puede decidir\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"id\": \"UT15\",\n      \"description\": \"Segunda decisión se bloquea\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"id\": \"UT16\",\n      \"description\": \"Fecha inválida no permite aprobación\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"id\": \"UT17\",\n      \"description\": \"Caso vencido queda VENCIDO sin aprobación humana\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"id\": \"UT18\",\n      \"description\": \"Aprobación válida queda APROBADO_SIMULADO\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"id\": \"UT19\",\n      \"description\": \"Rechazo válido queda RECHAZADO\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"id\": \"UT20\",\n      \"description\": \"Entrada no autorizada falla explícitamente\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"id\": \"UT21\",\n      \"description\": \"Modo distinto a SIMULADO falla explícitamente\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"id\": \"UT22\",\n      \"description\": \"Registro JSON corrupto falla explícitamente\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"id\": \"UT23\",\n      \"description\": \"Folio original inconsistente falla explícitamente\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"id\": \"UT24\",\n      \"description\": \"Respaldo sin datos fijados y con fuente real restaurada\",\n      \"status\": \"PASS\"\n    },\n    {\n      \"id\": \"UT25\",\n      \"description\": \"Actualización requiere todas las condiciones y estado pendiente\",\n      \"status\": \"PASS\"\n    }\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "src/run_demo.py"
+      ],
+      "returncode": 0,
+      "stdout": "{\n  \"casos\": [\n    {\n      \"caso_id\": \"LIN-101-1\",\n      \"distribuidor\": \"Lincoln Monterrey\",\n      \"estado_loop\": \"CONVERGIO\",\n      \"revisiones\": 2,\n      \"costo_api_usd\": \"0\",\n      \"integral_n8n\": false\n    },\n    {\n      \"caso_id\": \"LIN-102-1\",\n      \"distribuidor\": \"Lincoln Chiapas\",\n      \"estado_loop\": \"CONVERGIO\",\n      \"revisiones\": 2,\n      \"costo_api_usd\": \"0\",\n      \"integral_n8n\": false\n    },\n    {\n      \"caso_id\": \"LIN-103-1\",\n      \"distribuidor\": \"Lincoln Guadalajara\",\n      \"estado_loop\": \"CONVERGIO\",\n      \"revisiones\": 2,\n      \"costo_api_usd\": \"0\",\n      \"integral_n8n\": false\n    },\n    {\n      \"caso_id\": \"LIN-104-1\",\n      \"distribuidor\": \"Lincoln Monterrey\",\n      \"estado_loop\": \"ESCALAR\",\n      \"revisiones\": 1,\n      \"costo_api_usd\": \"0\",\n      \"integral_n8n\": false\n    }\n  ],\n  \"loop_recuperacion\": \"OK\",\n  \"intentos\": 3\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "skills/vizdata/scripts/audit_viz_spec.py",
+        "docs/vizdata_brief.json",
+        "--strict"
+      ],
+      "returncode": 0,
+      "stdout": "{\n  \"valid\": true,\n  \"summary\": {\n    \"error\": 0,\n    \"warning\": 0,\n    \"info\": 0\n  },\n  \"findings\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "src/validar_paquete.py"
+      ],
+      "returncode": 0,
+      "stdout": "PASS: sin patrones de llaves; export inactivo, sin credenciales ni pinData; propuestas no aprueban. Escaneo por patrones, no auditoría exhaustiva.\n",
+      "stderr": ""
+    }
+  ]
+}

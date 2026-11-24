@@ -1,0 +1,25 @@
+# Dos skills previos, uno nuevo y dos loops
+
+| Skill | Procedencia | Ejecución/uso comprobado |
+|---|---|---|
+| cotizar-tokens-ia | Personal existente | Tokenizador y cotizador original; resultados y hashes en evidencias/cotizar_tokens_ia_ejecucion.json |
+| vizdata | Archivos originales adjuntos por Sofía | Brief, auditoría de fuente/denominador, selección barras vs donut, auditor --strict, gráfica y tabla equivalente |
+| revisar-apoyo-lincoln | Nuevo, versión funcional1.0.1 | Creado, validado e instalado; ejecutado en tres casos válidos y un caso de fuente insuficiente |
+
+La invocación no se demuestra mencionando un nombre en un prompt. Se conservan instrucciones leídas, hashes, entradas y salidas. Los archivos del skill nuevo están disponibles también como copia reproducible en skills/revisar-apoyo-lincoln; la instalación personal es independiente. VizData aplica al diseño y la auditoría, no requiere ejecutar un modelo. El tokenizador usa o200k_base para texto plano, con el límite declarado en el reporte de costos.
+
+## Loop 1: proponer, revisar, corregir
+
+Recurso: skills/revisar-apoyo-lincoln/scripts/revisar.py . Máximo tres revisiones y diez segundos. V1 parte con propuesta vacía y falla revisión; la corrección usa solo inversión/saldo originales; V2 vuelve a revisar y converge. Nunca cambia fuente, inversión ni distribuidor. El apoyo es min(50% inversión, saldo), inversión ajustada dos veces apoyo y aportación igual a apoyo. Si reduce alcance, marca aceptación requerida. No aprueba ni paga. Registrar caso, versión local, iteración, dictamen y hashes de instrucciones/script/contrato. La versión local del loop no sustituye version_propuesta de n8n hasta integrar explícitamente el contrato.
+
+Casos de demostración, no casos vivos:
+- LIN-101-1 Monterrey: apoyo200000, aportación200000, evento400000, saldo450000.
+- LIN-102-1 Chiapas: apoyo62500, aportación62500, evento125000, saldo0; requiere aceptar alcance.
+- LIN-103-1 Guadalajara: apoyo250000, aportación250000, evento500000, saldo200000.
+- LIN-104-1: falta versión de fuente; se detiene en una revisión y escala sin inventarla.
+
+## Loop 2: recuperar consulta ante error transitorio
+
+Recurso: src/loop_servicio.py . Máximo tres intentos/diez segundos; reserva costo ANTES de cada intento; reintenta únicamente TimeoutError/ConnectionError. Detiene ante esquema/folio inválido, duplicado o límite de costo. La demostración provoca dos timeouts locales y éxito al tercero, sin servicio remoto. Un adaptador HTTP debe imponer timeout de transporte usando el tiempo restante: el reloj Python no cancela una función bloqueada. No afirmar un deadline de red duro sin esa conexión.
+
+Pruebas y trazas están en evidencias/. Costo API de loops locales USD0; costo operativo de infraestructura no medido. La implementación se entrega separada del respaldo v03: no está activada automáticamente en n8n Cloud. Para conectar: entradas de Telegram -> autenticar -> dedup persistente -> inicializar -> reserva por llamada -> orquestador; revisor después de propuesta -> aceptación de alcance -> aprobación humana; consulta de voz -> Header Auth -> esquema -> lectura -> proyección segura.

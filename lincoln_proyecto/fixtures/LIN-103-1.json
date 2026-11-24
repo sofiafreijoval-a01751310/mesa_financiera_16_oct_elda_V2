@@ -1,0 +1,13 @@
+{
+  "caso_id": "LIN-103-1",
+  "modo": "SIMULADO",
+  "inversion_mxn": "500000",
+  "datos_verificados": {
+    "caso_id": "LIN-103-1",
+    "distribuidor_id": "D08",
+    "fuente": "base_proyecto",
+    "version": "0.1",
+    "saldo_mxn": "450000"
+  },
+  "propuesta": {}
+}

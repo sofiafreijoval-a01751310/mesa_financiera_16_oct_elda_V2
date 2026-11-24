@@ -1,0 +1,50 @@
+{
+  "fecha": "2026-11-23",
+  "escenarios": [
+    {
+      "escenario": "BASE",
+      "usd_caso_llm": "0.09615425",
+      "usd_100_casos_llm": "9.61542500",
+      "usd_1000_casos_llm": "96.15425000",
+      "usd_10000_casos_llm": "961.54250000",
+      "llamadas_supuestas": 14
+    },
+    {
+      "escenario": "ALTO",
+      "usd_caso_llm": "0.2944635",
+      "usd_100_casos_llm": "29.4463500",
+      "usd_1000_casos_llm": "294.4635000",
+      "usd_10000_casos_llm": "2944.6350000",
+      "llamadas_supuestas": 25
+    }
+  ],
+  "tarifas": [
+    {
+      "name": "gpt-4.1",
+      "input_usd_m": "2",
+      "output_usd_m": "8",
+      "fixed_usd_call": "0",
+      "source": "https://developers.openai.com/api/docs/models/gpt-4.1",
+      "verified_at": "2026-11-23"
+    },
+    {
+      "name": "gpt-5-mini",
+      "input_usd_m": "0.25",
+      "output_usd_m": "2",
+      "fixed_usd_call": "0",
+      "source": "https://developers.openai.com/api/docs/models/gpt-5-mini",
+      "verified_at": "2026-11-23"
+    }
+  ],
+  "consumo_real_produccion_usd": null,
+  "consumo_desarrollo_usd": null,
+  "excluye": [
+    "n8n",
+    "ElevenLabs",
+    "IVA",
+    "FX",
+    "sobrecargo gateway",
+    "infraestructura"
+  ],
+  "nota": "El gasto histórico es desconocido. Los loops locales no llamaron API de modelos. No asumir caché ni descuentos."
+}

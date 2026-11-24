@@ -1,0 +1,20 @@
+{
+  "ok": false,
+  "errores": [
+    "caso_id",
+    "ENTRADA: Monto no numérico"
+  ],
+  "esperado": {
+    "caso_id": "LIN-777-1",
+    "apoyo_mxn": "200000.00",
+    "aportacion_mxn": "200000.00",
+    "inversion_ajustada_mxn": "400000.00",
+    "saldo_proyectado_mxn": "450000.00",
+    "requiere_aceptacion_alcance": false,
+    "estado": "PENDIENTE_APROBACION",
+    "modifica_presupuesto": false
+  },
+  "skill": "revisar-apoyo-lincoln",
+  "version_skill": "1.0.0",
+  "skill_sha256": "f2ca4618a3e787c6f37c788098e1764e501012bf27b60ec256d348d78e96b7e6"
+}

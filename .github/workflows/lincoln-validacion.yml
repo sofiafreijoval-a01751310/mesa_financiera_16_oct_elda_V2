@@ -1,0 +1,36 @@
+name: Lincoln - validación sin secretos
+on:
+  push:
+    branches: ['lincoln/**']
+    paths: ['lincoln_proyecto/**', '.github/workflows/lincoln-validacion.yml']
+  pull_request:
+    paths: ['lincoln_proyecto/**', '.github/workflows/lincoln-validacion.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: lincoln-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  validar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    defaults:
+      run:
+        working-directory: lincoln_proyecto
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: python3 tests/validar_base.py
+      - run: python3 -m unittest discover -s tests -p 'test_*.py' -v
+      - run: node exports/verificar_workflow_v03.cjs
+      - run: python3 src/run_demo.py
+      - run: python3 skills/vizdata/scripts/audit_viz_spec.py docs/vizdata_brief.json --strict
+      - run: python3 src/validar_paquete.py

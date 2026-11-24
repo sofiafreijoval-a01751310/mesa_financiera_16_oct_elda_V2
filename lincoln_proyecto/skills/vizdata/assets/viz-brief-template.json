@@ -1,0 +1,33 @@
+{
+  "artifact_type": "dashboard",
+  "mode": "explanatory",
+  "audience": "",
+  "decision": "",
+  "primary_question": "",
+  "secondary_questions": [],
+  "action_expected": "",
+  "device_and_size": "",
+  "refresh_frequency": "",
+  "data_source": "",
+  "as_of_date": "",
+  "assumptions": [],
+  "charts": [
+    {
+      "id": "chart-1",
+      "purpose": "trend",
+      "chart_type": "line",
+      "fields": {
+        "time": "date",
+        "measure": "value",
+        "category": "segment"
+      },
+      "category_cardinality": 3,
+      "series_count": 3,
+      "has_negative": false,
+      "part_to_whole": false,
+      "axis_start": null,
+      "notes": ""
+    }
+  ]
+}
+
