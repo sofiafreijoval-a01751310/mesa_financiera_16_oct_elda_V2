@@ -1,0 +1,38 @@
+{
+  "ok": false,
+  "estado_loop": "ESCALAR",
+  "caso": {
+    "caso_id": "LIN-777-1",
+    "modo": "SIMULADO",
+    "inversion_mxn": "400000",
+    "datos_verificados": {
+      "caso_id": "LIN-777-1",
+      "fuente": "base_proyecto",
+      "version": "",
+      "saldo_mxn": "650000",
+      "distribuidor_id": "D01"
+    },
+    "propuesta": {}
+  },
+  "traza": [
+    {
+      "fecha_utc": "2026-11-24T03:19:35.369408+00:00",
+      "caso_id": "LIN-777-1",
+      "iteracion": 1,
+      "version_propuesta_local": 1,
+      "dictamen": {
+        "ok": false,
+        "errores": [
+          "ENTRADA: Fuente/versión/folio insuficiente"
+        ],
+        "esperado": null,
+        "skill": "revisar-apoyo-lincoln",
+        "version_skill": "1.0.0",
+        "skill_sha256": "f2ca4618a3e787c6f37c788098e1764e501012bf27b60ec256d348d78e96b7e6"
+      },
+      "propuesta": {},
+      "llamadas_modelo": 0,
+      "costo_api_usd": "0"
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+[
+  {
+    "role": "Orquestador Lincoln",
+    "file": "costos/prompts/00.txt",
+    "sha256": "22c0999d7928071ef199d976d00623fa2a84dcfc688446510c38fe51d252ee48",
+    "encoding": "o200k_base",
+    "engine": "gpt-tokenizer 2.9.0",
+    "characters": 4716,
+    "tokens": 1060,
+    "scope": "plain text; no chat overhead; OpenAI reference only"
+  },
+  {
+    "role": "agente_1_solicitud",
+    "file": "costos/prompts/01.txt",
+    "sha256": "3fc1be4803c3a11c442f4641d65c15ce1d8dff280ebe9c31690a5cd09429426f",
+    "encoding": "o200k_base",
+    "engine": "gpt-tokenizer 2.9.0",
+    "characters": 3584,
+    "tokens": 847,
+    "scope": "plain text; no chat overhead; OpenAI reference only"
+  },
+  {
+    "role": "agente_2_datos",
+    "file": "costos/prompts/02.txt",
+    "sha256": "4ad20ca2bf13fd0ce959a4735b8b308db56b1ce8cca15a408cc4be39ddd3be2d",
+    "encoding": "o200k_base",
+    "engine": "gpt-tokenizer 2.9.0",
+    "characters": 4047,
+    "tokens": 996,
+    "scope": "plain text; no chat overhead; OpenAI reference only"
+  },
+  {
+    "role": "agente_3_propuesta",
+    "file": "costos/prompts/03.txt",
+    "sha256": "11837a6c87fec2cadd71f495ffa79707aee4d2daad28d9a85e07889bcff91e14",
+    "encoding": "o200k_base",
+    "engine": "gpt-tokenizer 2.9.0",
+    "characters": 2256,
+    "tokens": 560,
+    "scope": "plain text; no chat overhead; OpenAI reference only"
+  },
+  {
+    "role": "agente_4_revision",
+    "file": "costos/prompts/04.txt",
+    "sha256": "bc1b3826f1e9a132f91a652a3d9525760e94834c4bc1d71d4a533e721f1b8988",
+    "encoding": "o200k_base",
+    "engine": "gpt-tokenizer 2.9.0",
+    "characters": 1926,
+    "tokens": 486,
+    "scope": "plain text; no chat overhead; OpenAI reference only"
+  }
+]

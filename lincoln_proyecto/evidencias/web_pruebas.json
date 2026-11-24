@@ -1,0 +1,19 @@
+{
+  "alcance": "Pruebas de funciones y estados web; completar QA visual de navegador",
+  "total": 12,
+  "passed": 12,
+  "checks": [
+    "KPI reconciliados con dos casos de negocio",
+    "Fixture de vencimiento no afecta KPI",
+    "Vacío no se presenta como cero",
+    "Filtro de estado conserva denominador correcto",
+    "Búsqueda no inventa registros",
+    "Consulta de folio ignora mayúsculas",
+    "Caso completo de simulador",
+    "Saldo insuficiente exige reducción de alcance",
+    "Simulador rechaza no finitos, negativos, booleanos y milésimas",
+    "Centavo impar no rompe 50/50",
+    "Estado desactualizado es explícito",
+    "Estado sin datos y error de esquema"
+  ]
+}

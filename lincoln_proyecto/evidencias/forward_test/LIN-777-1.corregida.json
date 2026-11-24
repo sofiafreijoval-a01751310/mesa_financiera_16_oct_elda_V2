@@ -1,0 +1,22 @@
+{
+  "caso_id": "LIN-777-1",
+  "modo": "SIMULADO",
+  "inversion_mxn": "400000",
+  "datos_verificados": {
+    "caso_id": "LIN-777-1",
+    "fuente": "base_proyecto",
+    "version": "0.1",
+    "saldo_mxn": "650000",
+    "distribuidor_id": "D01"
+  },
+  "propuesta": {
+    "caso_id": "LIN-777-1",
+    "apoyo_mxn": "200000.00",
+    "aportacion_mxn": "200000.00",
+    "inversion_ajustada_mxn": "400000.00",
+    "saldo_proyectado_mxn": "450000.00",
+    "requiere_aceptacion_alcance": false,
+    "estado": "PENDIENTE_APROBACION",
+    "modifica_presupuesto": false
+  }
+}

@@ -1,0 +1,322 @@
+[
+  {
+    "role": "Orquestador Lincoln",
+    "result": {
+      "currency": "USD",
+      "fx": "1",
+      "fx_source": "Identidad USD/USD; sin conversión a MXN",
+      "fx_date": "2026-11-23",
+      "baseline": "gpt-4.1",
+      "results": [
+        {
+          "scenario": "BASE",
+          "rows": [
+            {
+              "model": "gpt-4.1",
+              "input_usd": "0.04272",
+              "output_usd": "0.0384",
+              "fixed_usd": "0",
+              "usd_call": "0.08112",
+              "input_share_pct": "52.66272189349112426035502959",
+              "output_share_pct": "47.33727810650887573964497041",
+              "scales_usd": {
+                "1000": "81.12000",
+                "10000": "811.20000",
+                "1000000": "81120.00000"
+              },
+              "scales_currency": {
+                "1000": "81.12000",
+                "10000": "811.20000",
+                "1000000": "81120.00000"
+              },
+              "delta_usd": "0.00000",
+              "delta_pct": "0"
+            }
+          ]
+        },
+        {
+          "scenario": "ALTO",
+          "rows": [
+            {
+              "model": "gpt-4.1",
+              "input_usd": "0.12096",
+              "output_usd": "0.1024",
+              "fixed_usd": "0",
+              "usd_call": "0.22336",
+              "input_share_pct": "54.15472779369627507163323782",
+              "output_share_pct": "45.84527220630372492836676218",
+              "scales_usd": {
+                "1000": "223.36000",
+                "10000": "2233.60000",
+                "1000000": "223360.00000"
+              },
+              "scales_currency": {
+                "1000": "223.36000",
+                "10000": "2233.60000",
+                "1000000": "223360.00000"
+              },
+              "delta_usd": "0.00000",
+              "delta_pct": "0"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "role": "agente_1_solicitud",
+    "result": {
+      "currency": "USD",
+      "fx": "1",
+      "fx_source": "Identidad USD/USD; sin conversión a MXN",
+      "fx_date": "2026-11-23",
+      "baseline": "gpt-5-mini",
+      "results": [
+        {
+          "scenario": "BASE",
+          "rows": [
+            {
+              "model": "gpt-5-mini",
+              "input_usd": "0.00051175",
+              "output_usd": "0.0012",
+              "fixed_usd": "0",
+              "usd_call": "0.00171175",
+              "input_share_pct": "29.89630495107346283043668760",
+              "output_share_pct": "70.10369504892653716956331240",
+              "scales_usd": {
+                "1000": "1.71175000",
+                "10000": "17.11750000",
+                "1000000": "1711.75000000"
+              },
+              "scales_currency": {
+                "1000": "1.71175000",
+                "10000": "17.11750000",
+                "1000000": "1711.75000000"
+              },
+              "delta_usd": "0E-8",
+              "delta_pct": "0"
+            }
+          ]
+        },
+        {
+          "scenario": "ALTO",
+          "rows": [
+            {
+              "model": "gpt-5-mini",
+              "input_usd": "0.0019235",
+              "output_usd": "0.0048",
+              "fixed_usd": "0",
+              "usd_call": "0.0067235",
+              "input_share_pct": "28.60861158622741131850970477",
+              "output_share_pct": "71.39138841377258868149029523",
+              "scales_usd": {
+                "1000": "6.7235000",
+                "10000": "67.2350000",
+                "1000000": "6723.5000000"
+              },
+              "scales_currency": {
+                "1000": "6.7235000",
+                "10000": "67.2350000",
+                "1000000": "6723.5000000"
+              },
+              "delta_usd": "0E-7",
+              "delta_pct": "0"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "role": "agente_2_datos",
+    "result": {
+      "currency": "USD",
+      "fx": "1",
+      "fx_source": "Identidad USD/USD; sin conversión a MXN",
+      "fx_date": "2026-11-23",
+      "baseline": "gpt-5-mini",
+      "results": [
+        {
+          "scenario": "BASE",
+          "rows": [
+            {
+              "model": "gpt-5-mini",
+              "input_usd": "0.002996",
+              "output_usd": "0.004",
+              "fixed_usd": "0",
+              "usd_call": "0.006996",
+              "input_share_pct": "42.82447112635791881074899943",
+              "output_share_pct": "57.17552887364208118925100057",
+              "scales_usd": {
+                "1000": "6.996000",
+                "10000": "69.960000",
+                "1000000": "6996.000000"
+              },
+              "scales_currency": {
+                "1000": "6.996000",
+                "10000": "69.960000",
+                "1000000": "6996.000000"
+              },
+              "delta_usd": "0.000000",
+              "delta_pct": "0"
+            }
+          ]
+        },
+        {
+          "scenario": "ALTO",
+          "rows": [
+            {
+              "model": "gpt-5-mini",
+              "input_usd": "0.008244",
+              "output_usd": "0.0144",
+              "fixed_usd": "0",
+              "usd_call": "0.022644",
+              "input_share_pct": "36.40699523052464228934817170",
+              "output_share_pct": "63.59300476947535771065182830",
+              "scales_usd": {
+                "1000": "22.644000",
+                "10000": "226.440000",
+                "1000000": "22644.000000"
+              },
+              "scales_currency": {
+                "1000": "22.644000",
+                "10000": "226.440000",
+                "1000000": "22644.000000"
+              },
+              "delta_usd": "0.000000",
+              "delta_pct": "0"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "role": "agente_3_propuesta",
+    "result": {
+      "currency": "USD",
+      "fx": "1",
+      "fx_source": "Identidad USD/USD; sin conversión a MXN",
+      "fx_date": "2026-11-23",
+      "baseline": "gpt-5-mini",
+      "results": [
+        {
+          "scenario": "BASE",
+          "rows": [
+            {
+              "model": "gpt-5-mini",
+              "input_usd": "0.00138",
+              "output_usd": "0.0028",
+              "fixed_usd": "0",
+              "usd_call": "0.00418",
+              "input_share_pct": "33.01435406698564593301435407",
+              "output_share_pct": "66.98564593301435406698564593",
+              "scales_usd": {
+                "1000": "4.18000",
+                "10000": "41.80000",
+                "1000000": "4180.00000"
+              },
+              "scales_currency": {
+                "1000": "4.18000",
+                "10000": "41.80000",
+                "1000000": "4180.00000"
+              },
+              "delta_usd": "0.00000",
+              "delta_pct": "0"
+            }
+          ]
+        },
+        {
+          "scenario": "ALTO",
+          "rows": [
+            {
+              "model": "gpt-5-mini",
+              "input_usd": "0.00695",
+              "output_usd": "0.016",
+              "fixed_usd": "0",
+              "usd_call": "0.02295",
+              "input_share_pct": "30.28322440087145969498910675",
+              "output_share_pct": "69.71677559912854030501089325",
+              "scales_usd": {
+                "1000": "22.95000",
+                "10000": "229.50000",
+                "1000000": "22950.00000"
+              },
+              "scales_currency": {
+                "1000": "22.95000",
+                "10000": "229.50000",
+                "1000000": "22950.00000"
+              },
+              "delta_usd": "0.00000",
+              "delta_pct": "0"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "role": "agente_4_revision",
+    "result": {
+      "currency": "USD",
+      "fx": "1",
+      "fx_source": "Identidad USD/USD; sin conversión a MXN",
+      "fx_date": "2026-11-23",
+      "baseline": "gpt-5-mini",
+      "results": [
+        {
+          "scenario": "BASE",
+          "rows": [
+            {
+              "model": "gpt-5-mini",
+              "input_usd": "0.0007465",
+              "output_usd": "0.0014",
+              "fixed_usd": "0",
+              "usd_call": "0.0021465",
+              "input_share_pct": "34.77754484043792219892848824",
+              "output_share_pct": "65.22245515956207780107151176",
+              "scales_usd": {
+                "1000": "2.1465000",
+                "10000": "21.4650000",
+                "1000000": "2146.5000000"
+              },
+              "scales_currency": {
+                "1000": "2.1465000",
+                "10000": "21.4650000",
+                "1000000": "2146.5000000"
+              },
+              "delta_usd": "0E-7",
+              "delta_pct": "0"
+            }
+          ]
+        },
+        {
+          "scenario": "ALTO",
+          "rows": [
+            {
+              "model": "gpt-5-mini",
+              "input_usd": "0.005986",
+              "output_usd": "0.0128",
+              "fixed_usd": "0",
+              "usd_call": "0.018786",
+              "input_share_pct": "31.86415415735121899286702864",
+              "output_share_pct": "68.13584584264878100713297136",
+              "scales_usd": {
+                "1000": "18.786000",
+                "10000": "187.860000",
+                "1000000": "18786.000000"
+              },
+              "scales_currency": {
+                "1000": "18.786000",
+                "10000": "187.860000",
+                "1000000": "18786.000000"
+              },
+              "delta_usd": "0.000000",
+              "delta_pct": "0"
+            }
+          ]
+        }
+      ]
+    }
+  }
+]

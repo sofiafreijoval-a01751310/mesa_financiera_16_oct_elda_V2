@@ -1,0 +1,30 @@
+{
+  "simulacion_fallos": true,
+  "resultado": {
+    "estado": "OK",
+    "datos": {
+      "caso_id": "LIN-201-1",
+      "estado": "PENDIENTE_APROBACION"
+    }
+  },
+  "traza": [
+    {
+      "loop": "recuperacion",
+      "intento": 1,
+      "estado": "ERROR_TRANSITORIO",
+      "cota_usd": "0.01"
+    },
+    {
+      "loop": "recuperacion",
+      "intento": 2,
+      "estado": "ERROR_TRANSITORIO",
+      "cota_usd": "0.01"
+    },
+    {
+      "loop": "recuperacion",
+      "intento": 3,
+      "estado": "OK",
+      "cota_usd": "0.01"
+    }
+  ]
+}

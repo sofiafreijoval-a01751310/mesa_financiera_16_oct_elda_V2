@@ -1,0 +1,5 @@
+[
+ {"caso_id":"LIN-25-1","modo":"SIMULADO","distribuidor_id":"D01","estado":"RECHAZADO","version":1,"apoyo_mxn":200000,"creado_utc":"2026-11-05T02:46:11.119Z","decidido_utc":"2026-11-05T03:24:23.659Z","fixture":false,"fuente":"lincoln_casos","version_fuente":"0.1"},
+ {"caso_id":"LIN-34-1","modo":"SIMULADO","distribuidor_id":"D01","estado":"APROBADO_SIMULADO","version":1,"apoyo_mxn":200000,"creado_utc":"2026-11-05T03:29:58.395Z","decidido_utc":"2026-11-05T03:33:42.614Z","fixture":false,"fuente":"lincoln_casos","version_fuente":"0.1"},
+ {"caso_id":"LIN-900001-1","modo":"SIMULADO","distribuidor_id":null,"estado":"VENCIDO","version":1,"apoyo_mxn":null,"creado_utc":null,"decidido_utc":"2026-11-05T03:42:22.298Z","fixture":true,"fuente":"lincoln_casos","version_fuente":"0.1"}
+]

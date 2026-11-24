@@ -1,0 +1,14 @@
+interface:
+  display_name: Revisar apoyo Lincoln
+  short_description: Revisa cofinanciamiento y fuentes sin aprobar apoyos
+  default_prompt: Usa $revisar-apoyo-lincoln para revisar esta propuesta y corregir
+    sus cifras derivadas.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

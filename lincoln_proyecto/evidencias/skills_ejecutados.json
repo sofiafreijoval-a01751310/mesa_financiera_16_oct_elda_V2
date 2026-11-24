@@ -1,0 +1,43 @@
+{
+  "reviewer": {
+    "skill": "revisar-apoyo-lincoln",
+    "version": "1.0.1",
+    "loaded_from": "skills/revisar-apoyo-lincoln/SKILL.md",
+    "sha256": "e06e069048e0f94b4c6d60b9b8caee2a4cebf890b724424b31746501c772cbbc",
+    "execution": "local determinista; no integración viva n8n"
+  },
+  "casos": [
+    {
+      "caso_id": "LIN-101-1",
+      "distribuidor": "Lincoln Monterrey",
+      "estado_loop": "CONVERGIO",
+      "revisiones": 2,
+      "costo_api_usd": "0",
+      "integral_n8n": false
+    },
+    {
+      "caso_id": "LIN-102-1",
+      "distribuidor": "Lincoln Chiapas",
+      "estado_loop": "CONVERGIO",
+      "revisiones": 2,
+      "costo_api_usd": "0",
+      "integral_n8n": false
+    },
+    {
+      "caso_id": "LIN-103-1",
+      "distribuidor": "Lincoln Guadalajara",
+      "estado_loop": "CONVERGIO",
+      "revisiones": 2,
+      "costo_api_usd": "0",
+      "integral_n8n": false
+    },
+    {
+      "caso_id": "LIN-104-1",
+      "distribuidor": "Lincoln Monterrey",
+      "estado_loop": "ESCALAR",
+      "revisiones": 1,
+      "costo_api_usd": "0",
+      "integral_n8n": false
+    }
+  ]
+}

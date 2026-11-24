@@ -1,0 +1,147 @@
+[
+  {
+    "currency": "USD",
+    "fx": "1",
+    "fx_source": "Identidad USD/USD; sin conversión a MXN",
+    "fx_date": "2026-11-23",
+    "baseline": "gpt-4.1",
+    "scenarios": [
+      {
+        "name": "BASE",
+        "input_tokens": "21360",
+        "output_tokens": "4800"
+      },
+      {
+        "name": "ALTO",
+        "input_tokens": "60480",
+        "output_tokens": "12800"
+      }
+    ],
+    "models": [
+      {
+        "name": "gpt-4.1",
+        "input_usd_m": "2",
+        "output_usd_m": "8",
+        "fixed_usd_call": "0",
+        "source": "https://developers.openai.com/api/docs/models/gpt-4.1",
+        "verified_at": "2026-11-23"
+      }
+    ]
+  },
+  {
+    "currency": "USD",
+    "fx": "1",
+    "fx_source": "Identidad USD/USD; sin conversión a MXN",
+    "fx_date": "2026-11-23",
+    "baseline": "gpt-5-mini",
+    "scenarios": [
+      {
+        "name": "BASE",
+        "input_tokens": "2047",
+        "output_tokens": "600"
+      },
+      {
+        "name": "ALTO",
+        "input_tokens": "7694",
+        "output_tokens": "2400"
+      }
+    ],
+    "models": [
+      {
+        "name": "gpt-5-mini",
+        "input_usd_m": "0.25",
+        "output_usd_m": "2",
+        "fixed_usd_call": "0",
+        "source": "https://developers.openai.com/api/docs/models/gpt-5-mini",
+        "verified_at": "2026-11-23"
+      }
+    ]
+  },
+  {
+    "currency": "USD",
+    "fx": "1",
+    "fx_source": "Identidad USD/USD; sin conversión a MXN",
+    "fx_date": "2026-11-23",
+    "baseline": "gpt-5-mini",
+    "scenarios": [
+      {
+        "name": "BASE",
+        "input_tokens": "11984",
+        "output_tokens": "2000"
+      },
+      {
+        "name": "ALTO",
+        "input_tokens": "32976",
+        "output_tokens": "7200"
+      }
+    ],
+    "models": [
+      {
+        "name": "gpt-5-mini",
+        "input_usd_m": "0.25",
+        "output_usd_m": "2",
+        "fixed_usd_call": "0",
+        "source": "https://developers.openai.com/api/docs/models/gpt-5-mini",
+        "verified_at": "2026-11-23"
+      }
+    ]
+  },
+  {
+    "currency": "USD",
+    "fx": "1",
+    "fx_source": "Identidad USD/USD; sin conversión a MXN",
+    "fx_date": "2026-11-23",
+    "baseline": "gpt-5-mini",
+    "scenarios": [
+      {
+        "name": "BASE",
+        "input_tokens": "5520",
+        "output_tokens": "1400"
+      },
+      {
+        "name": "ALTO",
+        "input_tokens": "27800",
+        "output_tokens": "8000"
+      }
+    ],
+    "models": [
+      {
+        "name": "gpt-5-mini",
+        "input_usd_m": "0.25",
+        "output_usd_m": "2",
+        "fixed_usd_call": "0",
+        "source": "https://developers.openai.com/api/docs/models/gpt-5-mini",
+        "verified_at": "2026-11-23"
+      }
+    ]
+  },
+  {
+    "currency": "USD",
+    "fx": "1",
+    "fx_source": "Identidad USD/USD; sin conversión a MXN",
+    "fx_date": "2026-11-23",
+    "baseline": "gpt-5-mini",
+    "scenarios": [
+      {
+        "name": "BASE",
+        "input_tokens": "2986",
+        "output_tokens": "700"
+      },
+      {
+        "name": "ALTO",
+        "input_tokens": "23944",
+        "output_tokens": "6400"
+      }
+    ],
+    "models": [
+      {
+        "name": "gpt-5-mini",
+        "input_usd_m": "0.25",
+        "output_usd_m": "2",
+        "fixed_usd_call": "0",
+        "source": "https://developers.openai.com/api/docs/models/gpt-5-mini",
+        "verified_at": "2026-11-23"
+      }
+    ]
+  }
+]

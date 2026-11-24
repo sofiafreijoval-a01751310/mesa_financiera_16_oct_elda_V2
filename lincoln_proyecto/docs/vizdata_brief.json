@@ -1,0 +1,39 @@
+{
+  "artifact_type": "one-pager",
+  "mode": "explanatory",
+  "audience": "Evaluadora académica y coordinación de distribuidores",
+  "decision": "Comprobar cómo se asigna el presupuesto ficticio y qué falta para producción",
+  "primary_question": "¿Qué asignación recibe cada distribuidor según sus ventas 2025?",
+  "secondary_questions": [
+    "¿Cómo conserva el 50/50 un apoyo limitado?",
+    "¿Cuánto cuesta el procesamiento bajo supuestos explícitos?"
+  ],
+  "action_expected": "Revisar propuesta y evidencias antes de aprobar una integración",
+  "device_and_size": "PDF A4 y gráfica de 1200 px; alternativa tabular",
+  "refresh_frequency": "Por versión de entrega, sin actualización automática",
+  "data_source": "datos/base_proyecto.json v0.1, sintética",
+  "as_of_date": "2026-11-23",
+  "assumptions": [
+    "Ventas 2025 ficticias: 2000 unidades",
+    "Bolsa 2026 de Lincoln: MXN 5000000 antes de IVA",
+    "No son ventas ni segmentaciones oficiales de Lincoln ni Urban Science"
+  ],
+  "charts": [
+    {
+      "id": "asignaciones",
+      "purpose": "comparison",
+      "chart_type": "bar",
+      "fields": {
+        "category": "nombre",
+        "measure": "asignacion_mxn"
+      },
+      "category_cardinality": 19,
+      "series_count": 1,
+      "has_negative": false,
+      "part_to_whole": false,
+      "axis_start": 0,
+      "source": "datos/base_proyecto.json v0.1",
+      "notes": "Barras horizontales ordenadas, MXN miles, etiquetas exactas. Alternativa descartada: donut de 19 partes por dificultad comparativa."
+    }
+  ]
+}

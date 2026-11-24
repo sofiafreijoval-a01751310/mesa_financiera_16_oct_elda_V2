@@ -1,0 +1,112 @@
+[
+  {
+    "escenario": "BASE",
+    "etapa": "Orquestador Lincoln",
+    "modelo": "gpt-4.1",
+    "llamadas_supuestas": 6,
+    "prompt_estatico_tokens": 1060,
+    "contexto_extra_tokens_supuestos_por_llamada": 2500,
+    "salida_tokens_supuestos_por_llamada": 800,
+    "usd_por_caso": "0.08112",
+    "tipo": "ESTIMACION_NO_FACTURA"
+  },
+  {
+    "escenario": "ALTO",
+    "etapa": "Orquestador Lincoln",
+    "modelo": "gpt-4.1",
+    "llamadas_supuestas": 8,
+    "prompt_estatico_tokens": 1060,
+    "contexto_extra_tokens_supuestos_por_llamada": 6500,
+    "salida_tokens_supuestos_por_llamada": 1600,
+    "usd_por_caso": "0.22336",
+    "tipo": "ESTIMACION_NO_FACTURA"
+  },
+  {
+    "escenario": "BASE",
+    "etapa": "agente_1_solicitud",
+    "modelo": "gpt-5-mini",
+    "llamadas_supuestas": 1,
+    "prompt_estatico_tokens": 847,
+    "contexto_extra_tokens_supuestos_por_llamada": 1200,
+    "salida_tokens_supuestos_por_llamada": 600,
+    "usd_por_caso": "0.00171175",
+    "tipo": "ESTIMACION_NO_FACTURA"
+  },
+  {
+    "escenario": "ALTO",
+    "etapa": "agente_1_solicitud",
+    "modelo": "gpt-5-mini",
+    "llamadas_supuestas": 2,
+    "prompt_estatico_tokens": 847,
+    "contexto_extra_tokens_supuestos_por_llamada": 3000,
+    "salida_tokens_supuestos_por_llamada": 1200,
+    "usd_por_caso": "0.0067235",
+    "tipo": "ESTIMACION_NO_FACTURA"
+  },
+  {
+    "escenario": "BASE",
+    "etapa": "agente_2_datos",
+    "modelo": "gpt-5-mini",
+    "llamadas_supuestas": 4,
+    "prompt_estatico_tokens": 996,
+    "contexto_extra_tokens_supuestos_por_llamada": 2000,
+    "salida_tokens_supuestos_por_llamada": 500,
+    "usd_por_caso": "0.006996",
+    "tipo": "ESTIMACION_NO_FACTURA"
+  },
+  {
+    "escenario": "ALTO",
+    "etapa": "agente_2_datos",
+    "modelo": "gpt-5-mini",
+    "llamadas_supuestas": 6,
+    "prompt_estatico_tokens": 996,
+    "contexto_extra_tokens_supuestos_por_llamada": 4500,
+    "salida_tokens_supuestos_por_llamada": 1200,
+    "usd_por_caso": "0.022644",
+    "tipo": "ESTIMACION_NO_FACTURA"
+  },
+  {
+    "escenario": "BASE",
+    "etapa": "agente_3_propuesta",
+    "modelo": "gpt-5-mini",
+    "llamadas_supuestas": 2,
+    "prompt_estatico_tokens": 560,
+    "contexto_extra_tokens_supuestos_por_llamada": 2200,
+    "salida_tokens_supuestos_por_llamada": 700,
+    "usd_por_caso": "0.00418",
+    "tipo": "ESTIMACION_NO_FACTURA"
+  },
+  {
+    "escenario": "ALTO",
+    "etapa": "agente_3_propuesta",
+    "modelo": "gpt-5-mini",
+    "llamadas_supuestas": 5,
+    "prompt_estatico_tokens": 560,
+    "contexto_extra_tokens_supuestos_por_llamada": 5000,
+    "salida_tokens_supuestos_por_llamada": 1600,
+    "usd_por_caso": "0.02295",
+    "tipo": "ESTIMACION_NO_FACTURA"
+  },
+  {
+    "escenario": "BASE",
+    "etapa": "agente_4_revision",
+    "modelo": "gpt-5-mini",
+    "llamadas_supuestas": 1,
+    "prompt_estatico_tokens": 486,
+    "contexto_extra_tokens_supuestos_por_llamada": 2500,
+    "salida_tokens_supuestos_por_llamada": 700,
+    "usd_por_caso": "0.0021465",
+    "tipo": "ESTIMACION_NO_FACTURA"
+  },
+  {
+    "escenario": "ALTO",
+    "etapa": "agente_4_revision",
+    "modelo": "gpt-5-mini",
+    "llamadas_supuestas": 4,
+    "prompt_estatico_tokens": 486,
+    "contexto_extra_tokens_supuestos_por_llamada": 5500,
+    "salida_tokens_supuestos_por_llamada": 1600,
+    "usd_por_caso": "0.018786",
+    "tipo": "ESTIMACION_NO_FACTURA"
+  }
+]

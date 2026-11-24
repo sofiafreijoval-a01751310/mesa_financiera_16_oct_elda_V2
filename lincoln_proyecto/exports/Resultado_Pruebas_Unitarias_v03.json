@@ -1,0 +1,133 @@
+{
+  "generated_at": "2026-11-24T03:29:55.980Z",
+  "scope": "Pruebas unitarias locales del JavaScript exportado; no sustituyen pruebas integrales ni la matriz oficial P01–P14.",
+  "total": 25,
+  "passed": 25,
+  "results": [
+    {
+      "id": "UT01",
+      "description": "Solicitud de texto autorizada se procesa",
+      "status": "PASS"
+    },
+    {
+      "id": "UT02",
+      "description": "Otro usuario se bloquea",
+      "status": "PASS"
+    },
+    {
+      "id": "UT03",
+      "description": "Chat grupal se bloquea",
+      "status": "PASS"
+    },
+    {
+      "id": "UT04",
+      "description": "Mensaje de bot se bloquea",
+      "status": "PASS"
+    },
+    {
+      "id": "UT05",
+      "description": "Mensaje sin texto pide aclaración sin modelo",
+      "status": "PASS"
+    },
+    {
+      "id": "UT06",
+      "description": "Más de 4000 caracteres pide corrección",
+      "status": "PASS"
+    },
+    {
+      "id": "UT07",
+      "description": "Start devuelve instrucciones",
+      "status": "PASS"
+    },
+    {
+      "id": "UT08",
+      "description": "Comando correcto conserva folio y versión",
+      "status": "PASS"
+    },
+    {
+      "id": "UT09",
+      "description": "Comando incompleto no decide",
+      "status": "PASS"
+    },
+    {
+      "id": "UT10",
+      "description": "Comando desconocido no llama al modelo",
+      "status": "PASS"
+    },
+    {
+      "id": "UT11",
+      "description": "Folio inexistente no se modifica",
+      "status": "PASS"
+    },
+    {
+      "id": "UT12",
+      "description": "Folio ambiguo no se modifica",
+      "status": "PASS"
+    },
+    {
+      "id": "UT13",
+      "description": "Propietario incorrecto no puede decidir",
+      "status": "PASS"
+    },
+    {
+      "id": "UT14",
+      "description": "Versión incorrecta no puede decidir",
+      "status": "PASS"
+    },
+    {
+      "id": "UT15",
+      "description": "Segunda decisión se bloquea",
+      "status": "PASS"
+    },
+    {
+      "id": "UT16",
+      "description": "Fecha inválida no permite aprobación",
+      "status": "PASS"
+    },
+    {
+      "id": "UT17",
+      "description": "Caso vencido queda VENCIDO sin aprobación humana",
+      "status": "PASS"
+    },
+    {
+      "id": "UT18",
+      "description": "Aprobación válida queda APROBADO_SIMULADO",
+      "status": "PASS"
+    },
+    {
+      "id": "UT19",
+      "description": "Rechazo válido queda RECHAZADO",
+      "status": "PASS"
+    },
+    {
+      "id": "UT20",
+      "description": "Entrada no autorizada falla explícitamente",
+      "status": "PASS"
+    },
+    {
+      "id": "UT21",
+      "description": "Modo distinto a SIMULADO falla explícitamente",
+      "status": "PASS"
+    },
+    {
+      "id": "UT22",
+      "description": "Registro JSON corrupto falla explícitamente",
+      "status": "PASS"
+    },
+    {
+      "id": "UT23",
+      "description": "Folio original inconsistente falla explícitamente",
+      "status": "PASS"
+    },
+    {
+      "id": "UT24",
+      "description": "Respaldo sin datos fijados y con fuente real restaurada",
+      "status": "PASS"
+    },
+    {
+      "id": "UT25",
+      "description": "Actualización requiere todas las condiciones y estado pendiente",
+      "status": "PASS"
+    }
+  ]
+}

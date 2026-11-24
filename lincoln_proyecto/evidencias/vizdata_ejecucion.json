@@ -1,0 +1,17 @@
+{
+  "skill": "vizdata",
+  "origen": "archivos originales aportados por la usuaria",
+  "archivos_leidos": {
+    "SKILL.md": "451693f3ffe4f89cce63a7615cc973535a7bde3aa03e8b8735e0ef235e2fd9ad",
+    "references/chart-selection.md": "96b5955ffcfd39f4cda048fe3e51f079e65319eaeb858ca5e90f75668ce935b2",
+    "references/layouts-by-format.md": "106841d9befb5992bb265fc76ace800e70844e2da85ac49be3516aad248f97f9",
+    "references/story-accessibility-qa.md": "2225a42d005987cc0ec7109404f5e1ebbcdfcb68b853f71eaf19cece7dab1437",
+    "scripts/audit_viz_spec.py": "104ae8441d53c8366d23cc293be4a8cc15f453ebb7d5a427fccfac07e1ed504b"
+  },
+  "salidas": [
+    "docs/vizdata_brief.json",
+    "docs/asignaciones.png",
+    "evidencias/vizdata_auditoria.json"
+  ],
+  "limites": "Auditor automático de especificación no valida por sí solo render, accesibilidad ni integración viva."
+}

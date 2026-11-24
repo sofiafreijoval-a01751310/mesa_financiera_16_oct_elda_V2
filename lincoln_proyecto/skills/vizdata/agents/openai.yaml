@@ -1,0 +1,4 @@
+interface:
+  display_name: "VizData"
+  short_description: "Diseña visualizaciones claras y profesionales"
+  default_prompt: "Usa $vizdata para analizar mis datos, elegir las gráficas correctas y estructurar un producto visual profesional."

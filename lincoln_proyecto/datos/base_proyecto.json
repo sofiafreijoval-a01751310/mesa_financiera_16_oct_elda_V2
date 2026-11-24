@@ -1,0 +1,327 @@
+{
+  "version": "0.1",
+  "modo": "SIMULADO",
+  "datos": "SINTETICOS_NO_OFICIALES",
+  "presupuesto_nacional_mxn": 5000000,
+  "ventas_nacionales_2025": 2000,
+  "porcentaje_apoyo": 0.5,
+  "criterio_montos": "MXN antes de IVA para comparación homogénea; IVA fuera del modelo inicial",
+  "audiencia": {
+    "edades": [
+      35,
+      60
+    ],
+    "etiquetas_nse": [
+      "A",
+      "A+",
+      "B+"
+    ],
+    "nota": "Etiquetas académicas aportadas por la estudiante; no clasificación externa validada"
+  },
+  "distribuidores": [
+    {
+      "distribuidor_id": "D01",
+      "nombre": "Lincoln Monterrey",
+      "ventas_2025": 260,
+      "ventas_por_nameplate": {
+        "Corsair": 39,
+        "Nautilus": 65,
+        "Aviator": 52,
+        "Navigator": 104
+      },
+      "participacion_pct": 13.0,
+      "asignacion_mxn": 650000,
+      "aprobado_mxn": 0,
+      "reservado_mxn": 0,
+      "disponible_mxn": 650000
+    },
+    {
+      "distribuidor_id": "D02",
+      "nombre": "Lincoln Mérida",
+      "ventas_2025": 110,
+      "ventas_por_nameplate": {
+        "Corsair": 16,
+        "Nautilus": 45,
+        "Aviator": 27,
+        "Navigator": 22
+      },
+      "participacion_pct": 5.5,
+      "asignacion_mxn": 275000,
+      "aprobado_mxn": 0,
+      "reservado_mxn": 0,
+      "disponible_mxn": 275000
+    },
+    {
+      "distribuidor_id": "D03",
+      "nombre": "Lincoln Chiapas",
+      "ventas_2025": 25,
+      "ventas_por_nameplate": {
+        "Corsair": 8,
+        "Nautilus": 9,
+        "Aviator": 5,
+        "Navigator": 3
+      },
+      "participacion_pct": 1.25,
+      "asignacion_mxn": 62500,
+      "aprobado_mxn": 0,
+      "reservado_mxn": 0,
+      "disponible_mxn": 62500
+    },
+    {
+      "distribuidor_id": "D04",
+      "nombre": "Lincoln Picacho",
+      "ventas_2025": 120,
+      "ventas_por_nameplate": {
+        "Corsair": 36,
+        "Nautilus": 42,
+        "Aviator": 24,
+        "Navigator": 18
+      },
+      "participacion_pct": 6.0,
+      "asignacion_mxn": 300000,
+      "aprobado_mxn": 0,
+      "reservado_mxn": 0,
+      "disponible_mxn": 300000
+    },
+    {
+      "distribuidor_id": "D05",
+      "nombre": "Lincoln Santa Fe",
+      "ventas_2025": 155,
+      "ventas_por_nameplate": {
+        "Corsair": 38,
+        "Nautilus": 56,
+        "Aviator": 38,
+        "Navigator": 23
+      },
+      "participacion_pct": 7.75,
+      "asignacion_mxn": 387500,
+      "aprobado_mxn": 0,
+      "reservado_mxn": 0,
+      "disponible_mxn": 387500
+    },
+    {
+      "distribuidor_id": "D06",
+      "nombre": "Lincoln Puebla",
+      "ventas_2025": 90,
+      "ventas_por_nameplate": {
+        "Corsair": 31,
+        "Nautilus": 28,
+        "Aviator": 18,
+        "Navigator": 13
+      },
+      "participacion_pct": 4.5,
+      "asignacion_mxn": 225000,
+      "aprobado_mxn": 0,
+      "reservado_mxn": 0,
+      "disponible_mxn": 225000
+    },
+    {
+      "distribuidor_id": "D07",
+      "nombre": "Lincoln León",
+      "ventas_2025": 85,
+      "ventas_por_nameplate": {
+        "Corsair": 25,
+        "Nautilus": 31,
+        "Aviator": 17,
+        "Navigator": 12
+      },
+      "participacion_pct": 4.25,
+      "asignacion_mxn": 212500,
+      "aprobado_mxn": 0,
+      "reservado_mxn": 0,
+      "disponible_mxn": 212500
+    },
+    {
+      "distribuidor_id": "D08",
+      "nombre": "Lincoln Guadalajara",
+      "ventas_2025": 180,
+      "ventas_por_nameplate": {
+        "Corsair": 45,
+        "Nautilus": 63,
+        "Aviator": 45,
+        "Navigator": 27
+      },
+      "participacion_pct": 9.0,
+      "asignacion_mxn": 450000,
+      "aprobado_mxn": 0,
+      "reservado_mxn": 0,
+      "disponible_mxn": 450000
+    },
+    {
+      "distribuidor_id": "D09",
+      "nombre": "Lincoln Condesa",
+      "ventas_2025": 80,
+      "ventas_por_nameplate": {
+        "Corsair": 28,
+        "Nautilus": 24,
+        "Aviator": 16,
+        "Navigator": 12
+      },
+      "participacion_pct": 4.0,
+      "asignacion_mxn": 200000,
+      "aprobado_mxn": 0,
+      "reservado_mxn": 0,
+      "disponible_mxn": 200000
+    },
+    {
+      "distribuidor_id": "D10",
+      "nombre": "Lincoln Zona Esmeralda",
+      "ventas_2025": 90,
+      "ventas_por_nameplate": {
+        "Corsair": 27,
+        "Nautilus": 32,
+        "Aviator": 18,
+        "Navigator": 13
+      },
+      "participacion_pct": 4.5,
+      "asignacion_mxn": 225000,
+      "aprobado_mxn": 0,
+      "reservado_mxn": 0,
+      "disponible_mxn": 225000
+    },
+    {
+      "distribuidor_id": "D11",
+      "nombre": "Lincoln Tijuana",
+      "ventas_2025": 95,
+      "ventas_por_nameplate": {
+        "Corsair": 23,
+        "Nautilus": 35,
+        "Aviator": 23,
+        "Navigator": 14
+      },
+      "participacion_pct": 4.75,
+      "asignacion_mxn": 237500,
+      "aprobado_mxn": 0,
+      "reservado_mxn": 0,
+      "disponible_mxn": 237500
+    },
+    {
+      "distribuidor_id": "D12",
+      "nombre": "Lincoln Hermosillo",
+      "ventas_2025": 75,
+      "ventas_por_nameplate": {
+        "Corsair": 26,
+        "Nautilus": 23,
+        "Aviator": 15,
+        "Navigator": 11
+      },
+      "participacion_pct": 3.75,
+      "asignacion_mxn": 187500,
+      "aprobado_mxn": 0,
+      "reservado_mxn": 0,
+      "disponible_mxn": 187500
+    },
+    {
+      "distribuidor_id": "D13",
+      "nombre": "Lincoln Saltillo",
+      "ventas_2025": 60,
+      "ventas_por_nameplate": {
+        "Corsair": 18,
+        "Nautilus": 21,
+        "Aviator": 12,
+        "Navigator": 9
+      },
+      "participacion_pct": 3.0,
+      "asignacion_mxn": 150000,
+      "aprobado_mxn": 0,
+      "reservado_mxn": 0,
+      "disponible_mxn": 150000
+    },
+    {
+      "distribuidor_id": "D14",
+      "nombre": "Lincoln Interlomas",
+      "ventas_2025": 160,
+      "ventas_por_nameplate": {
+        "Corsair": 40,
+        "Nautilus": 56,
+        "Aviator": 40,
+        "Navigator": 24
+      },
+      "participacion_pct": 8.0,
+      "asignacion_mxn": 400000,
+      "aprobado_mxn": 0,
+      "reservado_mxn": 0,
+      "disponible_mxn": 400000
+    },
+    {
+      "distribuidor_id": "D15",
+      "nombre": "Lincoln Veracruz",
+      "ventas_2025": 55,
+      "ventas_por_nameplate": {
+        "Corsair": 19,
+        "Nautilus": 17,
+        "Aviator": 11,
+        "Navigator": 8
+      },
+      "participacion_pct": 2.75,
+      "asignacion_mxn": 137500,
+      "aprobado_mxn": 0,
+      "reservado_mxn": 0,
+      "disponible_mxn": 137500
+    },
+    {
+      "distribuidor_id": "D16",
+      "nombre": "Lincoln Querétaro",
+      "ventas_2025": 120,
+      "ventas_por_nameplate": {
+        "Corsair": 36,
+        "Nautilus": 42,
+        "Aviator": 24,
+        "Navigator": 18
+      },
+      "participacion_pct": 6.0,
+      "asignacion_mxn": 300000,
+      "aprobado_mxn": 0,
+      "reservado_mxn": 0,
+      "disponible_mxn": 300000
+    },
+    {
+      "distribuidor_id": "D17",
+      "nombre": "Lincoln Sinaloa",
+      "ventas_2025": 65,
+      "ventas_por_nameplate": {
+        "Corsair": 16,
+        "Nautilus": 24,
+        "Aviator": 16,
+        "Navigator": 9
+      },
+      "participacion_pct": 3.25,
+      "asignacion_mxn": 162500,
+      "aprobado_mxn": 0,
+      "reservado_mxn": 0,
+      "disponible_mxn": 162500
+    },
+    {
+      "distribuidor_id": "D18",
+      "nombre": "Lincoln Palmas",
+      "ventas_2025": 105,
+      "ventas_por_nameplate": {
+        "Corsair": 36,
+        "Nautilus": 33,
+        "Aviator": 21,
+        "Navigator": 15
+      },
+      "participacion_pct": 5.25,
+      "asignacion_mxn": 262500,
+      "aprobado_mxn": 0,
+      "reservado_mxn": 0,
+      "disponible_mxn": 262500
+    },
+    {
+      "distribuidor_id": "D19",
+      "nombre": "Lincoln Cancún",
+      "ventas_2025": 70,
+      "ventas_por_nameplate": {
+        "Corsair": 21,
+        "Nautilus": 25,
+        "Aviator": 14,
+        "Navigator": 10
+      },
+      "participacion_pct": 3.5,
+      "asignacion_mxn": 175000,
+      "aprobado_mxn": 0,
+      "reservado_mxn": 0,
+      "disponible_mxn": 175000
+    }
+  ]
+}

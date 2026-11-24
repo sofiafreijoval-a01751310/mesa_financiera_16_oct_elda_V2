@@ -1,0 +1,11 @@
+{
+  "skill": "cotizar-tokens-ia",
+  "skill_sha256": "83e4d347640c491fab2d9e7f5affc668fcc83d0a0a572402f67762f8c9bc7af4",
+  "tokenizer_sha256": "ea7b1eb1d10f94ddd6574f1b589ad2f3dcf98b0991d8d897da5db99f0227f620",
+  "pricing_script_sha256": "7529d1c4e9582f46e36792cfc530625460845bb21f4bcabd6be1a2b4f4c0909c",
+  "comandos_ejecutados": {
+    "tokenizar.cjs": 5,
+    "cotizar.py": 5
+  },
+  "referencia": "costos/tokenizacion.json + entradas_cotizador.json + salidas_cotizador.json"
+}
