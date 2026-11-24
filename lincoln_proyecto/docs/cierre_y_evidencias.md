@@ -22,7 +22,7 @@ Las capturas anteriores muestran Telegram con decisiones simuladas y ElevenLabs 
 2. Obtener export vigente completo de n8n y artefactos ElevenLabs sin secretos. Revalidar consulta por voz y segunda interacción de negocio desde Pages.
 3. Preparar/publicar Pages con tres KPI, historia sanitizada, filtros/empty/error/stale, teclado y prueba390/1366px. Consentimiento de IA y dominio permitido para el widget.
 4. Conciliar uso real por etapa y desarrollo desde proveedores. Los supuestos de este reporte no cumplen una medición de gasto real.
-5. Confirmar en GitHub Actions el run verde, fallo deliberado bloqueando despliegue y corrección; la validación sola no acredita Pages desplegado.
+5. Validación GitHub Actions ya verde (evidencias/github_evidencia.json). Falta fallo deliberado bloqueando despliegue y corrección; la validación sola no acredita Pages desplegado.
 6. Grabar video5-8min y realizar demo12min según guía. Solo Sofía puede aportar su voz/presentación personal y entregar en Canvas.
 
 La matriz P01-P14 debe completarse desde el texto oficial, sin inventar nombres o resultados para pruebas pendientes. El informe técnico adjunto documenta alcance y riesgos actuales; actualizar versión final con enlaces y evidencias de esos pasos.

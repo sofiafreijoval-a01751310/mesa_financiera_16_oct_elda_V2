@@ -33,3 +33,7 @@ No importar el export sobre un flujo activo sin configurar credenciales/tablas/i
 El tokenizador binario original permanece en la instalación personal de cotizar-tokens-ia. Su salida medida se conserva con hashes. El script cotizar.py copiado reproduce los cálculos por las entradas JSON, sin necesitar el tokenizador.
 
 Ver `docs/cierre_y_evidencias.md` para pendientes de rúbrica y límites. Ningún dictamen numérico aprueba apoyos ni mueve presupuesto.
+
+## Regenerar el informe y figura (opcional)
+
+Instalar `python3 -m pip install -r requirements-report.txt`. Ejecutar `python3 src/generar_grafica.py` y `python3 src/generar_informe.py`. Requieren fuentes DejaVuSans de la distribución Linux; las pruebas de negocio no dependen de estas librerías. El informe se escribe fuera de la carpeta de código, en output/pdf.

@@ -1,0 +1,20 @@
+{
+  "source_commit": "725bf04a1a1c4c1f67e68b858fd397f200351a08",
+  "scope": "Validación remota del código local y respaldo; no prueba de n8n ni publicación Pages",
+  "runs": [
+    {
+      "name": "Lincoln - validación sin secretos",
+      "event": "pull_request",
+      "conclusion": "success",
+      "id": 45320061816,
+      "url": "https://github.com/sofiafreijoval-a01751310/mesa_financiera_16_oct_elda_V2/actions/runs/45320061816"
+    },
+    {
+      "name": "Lincoln - validación sin secretos",
+      "event": "push",
+      "conclusion": "success",
+      "id": 45320035412,
+      "url": "https://github.com/sofiafreijoval-a01751310/mesa_financiera_16_oct_elda_V2/actions/runs/45320035412"
+    }
+  ]
+}

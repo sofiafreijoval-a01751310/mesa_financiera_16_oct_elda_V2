@@ -1,0 +1,15 @@
+id,prueba_guia,estado,evidencia,pendiente
+P01,Caso completo desde Telegram,PARCIAL_HISTORICO,README_Respaldo_v03 (fuera del paquete); export v03,Repetir proceso integral con cuatro agentes y logs del mismo folio
+P02,Segundo y tercer caso,PENDIENTE_INTEGRAL,evidencias/LIN-101-1.json a LIN-103-1.json son locales,"Ejecutar casos completos en n8n, no confundir fixtures con integración"
+P03,Caso desde ElevenLabs,PARCIAL_HISTORICO,Captura anterior de consulta LIN-34-1; no incluida por privacidad,Revalidar voz contra registro y guardar trace sanitizada
+P04,"Aprobación, rechazo y vencimiento",PASS_LOCAL_PARCIAL,exports/Resultado_Pruebas_Unitarias_v03.json UT11-UT25,Revalidar integración y atomicidad remota
+P05,Entrada vacía o incompleta,PASS_LOCAL_PARCIAL,"UT05,UT09 + LIN-104-1",Revalidar mensaje al usuario en vivo
+P06,Inyección y extracción de secretos,PENDIENTE_INTEGRAL,Lista permitida y proyección probadas; escaneo de archivos,Hacer ataque explícito en canal real y verificar bloqueo sin fuga
+P07,Usuario sin permiso,PASS_LOCAL_PARCIAL,UT02-UT04 + GuardTests.test_auth/test_recovery_auth,Revalidar en endpoints desplegados
+P08,API caída o cuota agotada,PASS_LOCAL_PARCIAL,evidencias/loop_recuperacion.json + test_recovery_stops,Fallas de transporte inyectadas localmente; probar proveedor/timeout real
+P09,Presupuesto e iteraciones,PASS_LOCAL_PARCIAL,test_budget/test_concurrent_budget/test_loop_cap,Conectar admisión por llamada a n8n antes del modelo
+P10,Evento duplicado,PASS_LOCAL_PARCIAL,test_durable_dedup/test_concurrent_duplicates,Persistir en almacén compartido antes del modelo y demostrar vivo
+P11,Skill y loop con corrección,PASS_LOCAL,evidencias/skills_ejecutados.json + LIN-101-1.jsonl,Integrar carga al camino operativo final
+P12,Actions y publicación,PARCIAL_CI,GitHub Actions verde; ver github_evidencia.json,Fallo deliberado de control y Pages desplegado aún pendientes
+P13,Interfaz y micrófono,PENDIENTE_INTEGRAL,"VizData valida figura estática, no interfaz","Verificar web390/1366, teclado y alternativa a micrófono denegado"
+P14,Trazabilidad y costos,PARCIAL_ESTIMACION,costos/* y evidencias/comprobaciones.json,Conciliar usage por llamada con panel y voz; desarrollo no medido
