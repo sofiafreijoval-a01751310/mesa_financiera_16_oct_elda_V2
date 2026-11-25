@@ -32,4 +32,4 @@ Para conciliar, completar costos/consumo_real_plantilla.csv con request_id, etap
 
 ## Conexión elegida: Gateway credits
 
-Se conserva la conexión Gateway de n8n por indicación de Sofía. Sus tarifas y cargos se deben consultar en n8n; los precios públicos de OpenAI de este documento no se presentan como tarifas Gateway. El saldo actual y el cargo real de la prueba siguen pendientes. El valor nominal USD 0.25 no es todavía un corte monetario comprobado en n8n. Ver [procedimiento de medición y alcance](creditos_gateway.md).
+Se conserva la conexión Gateway de n8n por indicación de Sofía. Sus tarifas y cargos se deben consultar en n8n; los precios públicos de OpenAI de este documento no se presentan como tarifas Gateway. El 24/nov/2026 se observó saldo USD1.46 y consumo Gateway agregado del workflow de USD0.16 en el periodo de siete días; el saldo inicial mostrado era USD1.62. Estos importes están redondeados y no son un cargo exacto por caso. Ver evidencia `evidencias/n8n_gateway_24nov.json`. El valor nominal USD 0.25 no es todavía un corte monetario comprobado en n8n. Ver [procedimiento de medición y alcance](creditos_gateway.md).

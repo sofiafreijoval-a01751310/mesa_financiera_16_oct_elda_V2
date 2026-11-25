@@ -1,8 +1,8 @@
 {
-  "fecha_utc": "2026-11-25T00:39:06.745Z",
+  "fecha_utc": "2026-11-25T01:12:50.578Z",
   "alcance": "Pruebas locales sobre JavaScript y estructura del export v04; no es ejecución nativa ni garantiza deduplicación o tope de gasto.",
-  "total": 37,
-  "passed": 37,
+  "total": 40,
+  "passed": 40,
   "tests": [
     "Los 35 nodos compilan y el export no está activo",
     "Inversión rechazada Infinity",
@@ -20,6 +20,9 @@
     "Penetración mayor a 100 rechazada",
     "Segmento duplicado rechazado",
     "Centavo impar conserva 50/50 sin exceder inversión",
+    "IVA con guiones bajos del agente conserva el cálculo",
+    "IVA incluido no se acepta como antes de IVA",
+    "Contexto n8n e instrucciones incrustadas no alteran importes",
     "Monterrey válido: 200000 y saldo450000",
     "Chiapas limita a62500 y requiere aceptación",
     "Fuente sin versión detiene sin corregirla",

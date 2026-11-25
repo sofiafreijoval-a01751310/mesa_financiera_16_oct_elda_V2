@@ -1,0 +1,93 @@
+{
+  "fecha_local": "2026-11-24",
+  "zona_horaria": "America/Mexico_City",
+  "verificacion": "UI viva de n8n Cloud",
+  "version_n8n": "2.47.6",
+  "workflow": "F4EQv9Uf38hOVkIG",
+  "publicado": false,
+  "conexion": "Gateway credits",
+  "ejecuciones": [
+    {
+      "id": 51,
+      "caso_id": "LIN-51-1",
+      "estado_tecnico": "Succeeded",
+      "duracion_historial_seg": 23.647,
+      "estado_negocio_observado": "REQUIERE_ACLARACION",
+      "motivo": "La fecha del evento 2026-11-20 ya había pasado."
+    },
+    {
+      "id": 52,
+      "caso_id": "LIN-52-1",
+      "estado_tecnico": "Succeeded",
+      "duracion_historial_seg": 100.8,
+      "estado_negocio_final": "NO_VERIFICADO_EN_ESTA_EVIDENCIA",
+      "bloqueo_observado": "Tool Code rechazó contexto de n8n no incluido en esquema estricto; agente 3 agotó tres iteraciones. No considerar éxito de negocio."
+    },
+    {
+      "id": 53,
+      "caso_id": "LIN-53-1",
+      "estado_tecnico": "Succeeded",
+      "duracion_historial_seg": 143.505,
+      "estado_negocio_observado": "PENDIENTE_APROBACION",
+      "version_propuesta": "1",
+      "fecha_evento": "2026-12-20",
+      "agentes_observados": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "lecturas_directas_revision": {
+        "ventas": 1,
+        "presupuesto": 1,
+        "mercado": 4
+      },
+      "calculo": {
+        "inversion_mxn": 400000,
+        "apoyo_lincoln_mxn": 200000,
+        "aportacion_distribuidor_mxn": 200000,
+        "saldo_proyectado_mxn": 450000
+      },
+      "control_determinista": {
+        "ok": true,
+        "version": "0.4",
+        "traza": [
+          {
+            "vuelta": 1,
+            "ok": true,
+            "errores": []
+          }
+        ],
+        "aprobacion_humana": false,
+        "modifica_presupuesto": false
+      },
+      "fuentes": {
+        "tipo": "SINTETICA_ACADEMICA",
+        "version": "0.1"
+      },
+      "tokens_estimados_interfaz": 28775,
+      "uso_facturable_por_request": "NO_DISPONIBLE"
+    }
+  ],
+  "consumo_gateway": {
+    "saldo_mostrado_antes_usd": "1.62",
+    "saldo_mostrado_despues_usd": "1.46",
+    "consumo_mostrado_workflow_ultimos_7_dias_usd": "0.16",
+    "hora_actualizacion_panel_local": "2026-11-24 19:15",
+    "alcance": "Agregado redondeado del workflow; no cargo exacto del caso 53 ni desglose por solicitud. El panel agrupa el periodo diario con etiqueta Wed Nov 25; se conserva la fecha local de consulta por separado.",
+    "recarga_automatica_habilitada": false,
+    "compra_realizada": false
+  },
+  "limites_pendientes": [
+    "No se ha verificado un corte automático por caso de USD0.25.",
+    "Deduplicación concurrente nativa pendiente.",
+    "Solo un caso completo válido; no prueba de todos los distribuidores o ramas.",
+    "La copia v04 sigue sin publicar."
+  ],
+  "cambios": {
+    "calculadora": "Se admiten las claves observadas de transporte de n8n, manteniendo campos desconocidos rechazados. Normalización limitada de IVA; no se ejecutan instrucciones del contexto.",
+    "fecha_ejemplo": "20 de diciembre de 2026",
+    "pruebas_locales_v04": 40,
+    "comandos_verificacion": 10
+  }
+}

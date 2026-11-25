@@ -10,7 +10,7 @@ function calcularPropuesta(d){
  const modelos=['Corsair','Nautilus','Aviator','Navigator'];
  const inv=dinero(d.inversion_total_mxn,'inversion_total_mxn',true),asig=dinero(d.asignacion_mxn,'asignacion_mxn',true),disp=dinero(d.disponible_mxn,'disponible_mxn');
  if(disp>asig)throw Error('Saldo mayor que asignación');
- if(!['antes de iva','antes de IVA','ANTES DE IVA'].includes(d.tratamiento_iva))throw Error('Inversión debe expresarse antes de IVA');
+ if(typeof d.tratamiento_iva!=='string'||d.tratamiento_iva.trim().toLowerCase().replaceAll('_',' ')!=='antes de iva')throw Error('Inversión debe expresarse antes de IVA');
  const ventas={};for(const m of modelos)ventas[m]=entero(d.ventas?.[m]??d.ventas?.[m.toLowerCase()],m);
  if(Object.values(ventas).reduce((a,b)=>a+b,0)<=0)throw Error('Ventas insuficientes');
  if(!Array.isArray(d.mercado)||d.mercado.length!==4)throw Error('Se requieren cuatro segmentos');

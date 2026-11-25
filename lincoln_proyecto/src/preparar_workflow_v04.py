@@ -7,6 +7,10 @@ w=json.loads(SOURCE.read_text());w=copy.deepcopy(w)
 for key in ['id','versionId','meta','nodeGroups','tags']:w.pop(key,None)
 w['name']='Lincoln | Apoyos a Distribuidores | Revision v04';w['active']=False;w['pinData']={};w['settings']['availableInMCP']=False
 nodes={n['name']:n for n in w['nodes']}
+# Solo el ejemplo académico: fecha vigente en la revisión del 24/nov/2026.
+request=nodes['Solicitud de prueba']['parameters']
+if isinstance(request.get('jsonOutput'),str):
+ request['jsonOutput']=request['jsonOutput'].replace('20 de noviembre de 2026','20 de diciembre de 2026')
 core=(ROOT/'src/n8n_v04/calculo.js').read_text()
 nodes['calcular_propuesta']['parameters']['jsCode']=core+'''\nlet d=query;try{if(typeof d==='string')d=JSON.parse(d);if(d&&typeof d.datos==='string')d=JSON.parse(d.datos);}catch{return JSON.stringify({ok:false,errores:['JSON inválido']});}return JSON.stringify(calcularPropuesta(d));'''
 p=nodes['calcular_propuesta']['parameters'];schema=json.loads(p['inputSchema']);schema['additionalProperties']=False
@@ -15,6 +19,13 @@ schema['properties']['inversion_total_mxn']['exclusiveMinimum']=0;schema['proper
 schema['properties']['ventas']['required']=['Corsair','Nautilus','Aviator','Navigator'];schema['properties']['ventas']['additionalProperties']=False
 for v in schema['properties']['ventas']['properties'].values():v.update({'type':'integer','minimum':0})
 m=schema['properties']['mercado'];m.update({'minItems':4,'maxItems':4});m['items']['required']=list(m['items']['properties']);m['items']['properties']['modelo']['enum']=['Corsair','Nautilus','Aviator','Navigator'];m['items']['properties']['volumen_2025'].update({'type':'integer','minimum':0});m['items']['properties']['penetracion_pct'].update({'minimum':0,'maximum':100});m['items']['properties']['crecimiento_real_pct']['minimum']=-100
+# n8n 2.47.6 adjunta el contexto del AI Agent al invocar Tool Code.
+# Se admiten únicamente estas claves observadas; el cálculo ignora toda esta metadata.
+for k in ['distribuidor_id','canal','usuario','modo','objetivo','solicitud','caso_id','fecha_creacion','estado','toolCallId']:
+ schema['properties'][k]={'type':'string','description':'Contexto de transporte de n8n; no modifica el cálculo.'}
+for k in ['limite_costo_usd','version_propuesta']:
+ schema['properties'][k]={'type':'number','description':'Contexto de transporte; no aplica límites monetarios.'}
+schema['properties']['entrada_propuesta']={'type':'object','description':'Contexto del agente; ignorado por el cálculo.'}
 p['inputSchema']=json.dumps(schema,ensure_ascii=False,indent=2)
 # Las herramientas consultan siempre el ID canónico, sin aceptar el parámetro del modelo.
 for name in ['consultar_ventas','consultar_presupuesto','consultar_mercado']:

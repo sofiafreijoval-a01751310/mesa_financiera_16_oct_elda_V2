@@ -31,7 +31,9 @@ No se incorporará el nodo LangChain Code como envoltorio de llamadas. La docume
 
 ## Pendientes de la instancia
 
-Saldo actual, tarifas Gateway aplicables, consumo real y prueba de ejecución de la copia v04: pendientes de verificar. Este documento no afirma haber modificado ni ejecutado el workflow vivo.
+Consulta viva del 24/nov/2026, 19:15 CDMX: saldo mostrado USD1.46, frente a USD1.62 al inicio. El panel reporta USD0.16 agregados para este workflow en los últimos siete días. Son importes redondeados; no un cargo exacto por caso. Recarga automática desactivada, sin compras.
+
+Se observaron las ejecuciones 51 (aclaración por fecha pasada), 52 (bloqueo de esquema en calculadora) y 53 (recorrido completo válido, LIN-53-1 PENDIENTE_APROBACION). El caso 53 conservó revisión determinista correcta, fuentes v0.1, aprobación humana falsa y presupuesto sin modificar. La copia sigue sin publicar. Las tarifas por modelo y el desglose facturable por solicitud no se verificaron. Evidencia: `evidencias/n8n_gateway_24nov.json`.
 
 ## Fuentes oficiales consultadas
 

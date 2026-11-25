@@ -35,3 +35,9 @@ Crear un workflow nuevo e importar desde archivo; mantenerlo inactivo. Antes de 
 `node tests/test_workflow_v04.cjs`: 37 pruebas locales sobre el JavaScript y grafo exportados, incluyendo V1→V2, fuentes inválidas, rechazo de aprobación automática, folios, comandos y aceptación de alcance. No hay llamadas API ni mensajes en estas pruebas. Los fixtures de mercado se transforman de la base sintética local al esquema esperado en n8n; no sustituyen una inspección de las tablas vivas.
 
 Documentación técnica consultada: https://github.com/n8n-io/n8n-docs/blob/main/docs/integrations/builtin/core-nodes/n8n-nodes-base.datatable/rows.md y https://github.com/n8n-io/skills/blob/main/skills/n8n-data-tables-official/references/OPERATIONS.md.
+
+## Verificación viva del 24 de noviembre
+
+En n8n 2.47.6, la ejecución 53 completó cuatro agentes, las tres lecturas directas de revisión y el control determinista; guardó LIN-53-1 como PENDIENTE_APROBACION. Se corrigió el rechazo del contexto de transporte en el esquema Tool Code, conservando el rechazo de claves desconocidas, y se actualizó la fecha del ejemplo al 20/dic/2026. Se ejecutaron 40 pruebas locales y los diez comandos de verificación. Evidencia: `evidencias/n8n_gateway_24nov.json`.
+
+El éxito técnico de las ejecuciones anteriores no equivalía a éxito de negocio: la 51 solicitó aclaración por fecha pasada y la 52 encontró un error de contrato en la calculadora. El saldo actual mostrado es USD1.46; el panel reporta USD0.16 agregados del workflow. No se verificó corte monetario por caso ni deduplicación concurrente. La copia permanece sin publicar.
