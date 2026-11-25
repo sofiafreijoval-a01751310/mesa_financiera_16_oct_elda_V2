@@ -1,7 +1,7 @@
 # Lincoln | Apoyos a Distribuidores - complemento reproducible
 
 Sofía Freijo Valdovinos · AI Tools · Prof. Elda Morales.
-Datos sintéticos académicos; corte23nov2026. Este subproyecto conserva separada la actividad Mesa Financiera de Batuta, Iris, Euler y Vera.
+Datos sintéticos académicos; revisión24nov2026. Este subproyecto conserva separada la actividad Mesa Financiera de Batuta, Iris, Euler y Vera.
 
 ## Ejecutar sin llaves
 
@@ -16,7 +16,7 @@ python3 skills/vizdata/scripts/audit_viz_spec.py docs/vizdata_brief.json --stric
 python3 src/validar_paquete.py
 ```
 
-Resultado esperado:base consistente;21pruebas Python;25JS;3casos convergen en2revisiones y1escala;loop recuperación3intentos. Las pruebas no llaman APIs ni mandan Telegram. `run_demo.py` regenera un ledger SQLite de DEMO; nunca apuntarlo a una base operativa.
+Resultado esperado: base consistente; 29 pruebas Python y 25 JS del respaldo v03; 3 casos locales convergen en2 revisiones y1 escala; recuperación acotada a3 intentos. Ejecutar también `node tests/test_workflow_v04.cjs` (40 pruebas) y las pruebas web. Las pruebas no llaman APIs ni mandan Telegram. `run_demo.py` regenera un ledger SQLite de DEMO; nunca apuntarlo a una base operativa.
 
 ## Contenido
 
@@ -28,7 +28,7 @@ Resultado esperado:base consistente;21pruebas Python;25JS;3casos convergen en2re
 - `costos/`:conteos medidos de texto estático, supuestos, tarifas y estimaciones.
 - `docs/`:costos, ciberseguridad, loops, VizData y pendientes de cierre.
 
-No importar el export sobre un flujo activo sin configurar credenciales/tablas/identidad:es copia pública para revisión. Los guardianes nuevos NO están desplegados en n8n. Los controles financieros requieren una cota máxima por llamada calculada en servidor y una reserva transaccional antes del modelo. El gasto real no está disponible.
+No importar el export sobre un flujo activo sin configurar credenciales/tablas/identidad:es copia pública para revisión. Los guardianes nuevos NO están desplegados en n8n. Los controles financieros requieren una cota máxima por llamada calculada en servidor y una reserva transaccional antes del modelo. Se observó USD0.16 de consumo Gateway agregado del workflow; no está disponible el desglose facturable por llamada.
 
 El tokenizador binario original permanece en la instalación personal de cotizar-tokens-ia. Su salida medida se conserva con hashes. El script cotizar.py copiado reproduce los cálculos por las entradas JSON, sin necesitar el tokenizador.
 
@@ -47,3 +47,9 @@ El export `exports/Lincoln_Prueba_Aislada_Skills_Loops.json` tiene4nodos manuale
 [Panel Lincoln](https://sofiafreijoval-a01751310.github.io/mesa_financiera_16_oct_elda_V2/) · datos ficticios, exportación manual con fecha, sin datos de chats. GitHub confirmó el despliegue inicial. El control de datos bloqueó una publicación deliberadamente inconsistente; ver `evidencias/pages_despliegue.json` y `docs/Panel_GitHub_Pages.md`.
 
 Pruebas web: `python3 tests/validar_web.py` y `node tests/test_web.cjs` (12 pruebas). La voz embebida y la revisión visual móvil siguen pendientes; no equivalen a las comprobaciones de código. El ZIP de revisión incluye un manifiesto con el commit exacto; el PDF refleja el despliegue, su bloqueo y su recuperación. Continúan pendientes las pruebas integrales del bot.
+
+## Revisión contra la guía de entrega
+
+[Auditoría completa de requisitos](docs/auditoria_guia_24nov.md) · [Arquitectura y estado](docs/arquitectura_integracion.md) · [Checklist de entregables](tests/auditoria_entregables.csv).
+
+La ejecución nativa53 completó cuatro agentes y revisión determinista por entrada manual; el caso LIN-53-1 quedó PENDIENTE_APROBACION. Esto no acredita las rutas pendientes de Telegram, voz, deduplicación ni corte de gasto. La auditoría distingue estos alcances y define el siguiente trabajo.

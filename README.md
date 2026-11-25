@@ -1,3 +1,5 @@
+> **Proyecto final individual AI Tools de Sofía:** [Lincoln | Apoyos a Distribuidores](lincoln_proyecto/README.md). La actividad original Mesa Financiera se conserva a continuación.
+
 # Mesa Financiera en Telegram 📊🤖
 
 Actividad del diplomado · **Dra. Elda C. Morales**
