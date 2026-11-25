@@ -9,7 +9,7 @@ Estado del código auditado: commit `b999c7a4b8ffd2c9572de5158b1e0f08432ce535`. 
 
 ## Skills: qué ya se hizo y qué falta
 
-- **cotizar-tokens-ia** sí se utilizó: cinco tokenizaciones y cinco cotizaciones, con referencias y hashes en evidencias/cotizar_tokens_ia_ejecucion.json.
+- **cotizar-tokens-ia** sí se utilizó: cinco tokenizaciones y cinco cotizaciones, con referencias y hashes en evidencias/cotizar_tokens_ia_ejecucion.json. Completar también la reproducción del cotizador: su SKILL.md referencia scripts/tokenizar.cjs, que no está incluido en la copia del repositorio.
 - **vizdata** sí se utilizó: instrucciones y referencias leídas, brief, selección de gráfica, auditoría y salida visual; ver evidencias/vizdata_ejecucion.json.
 - **revisar-apoyo-lincoln1.0.1** ya fue creado, instalado y ejecutado en casos locales. Su calidad/loop se mostró también en una prueba n8n aislada. No falta crearlo por primera vez.
 - La guía(p7) exige dos skills específicos, uno de negocio y otro de calidad/seguridad, cargados y utilizados en el proceso. El uso de dos recursos generales como apoyo al desarrollo no acredita por sí solo ese requisito operativo.
@@ -57,7 +57,7 @@ La columna estado distingue documentación, prueba local, evidencia histórica y
 | E11 | Voz operativa desde Pages (p.5) | HISTORICO_Y_CONFIGURACION_PARCIAL | Consultar folio y otra interacción de negocio desde Pages; comprobar herramienta y registro; micrófono denegado/servicio caído |
 | E12 | Configuración ElevenLabs exportable (p.5,13) | INCOMPLETO | Entregar configuración/exports sin secretos: propósito, español, voz, saludo, conocimiento, derivación, dominios y herramienta |
 | E13 | GitHub Actions Pages y bloqueo (p.6) | VERIFICADO | Conservar enlaces y relacionarlos con commit final; no confundir con QA de voz |
-| E14 | Dos skills anteriores y uno nuevo pedidos por Sofía (p.Petición de Sofía;7) | USO_PREVIO_Y_LOCAL_ACREDITADO | Mantener evidencia y actualizar referencias; el número de carpetas no acredita integración operativa |
+| E14 | Dos skills anteriores y uno nuevo pedidos por Sofía (p.Petición de Sofía;7) | USO_PREVIO_Y_LOCAL_ACREDITADO | Mantener evidencia y actualizar referencias; incluir tokenizar.cjs o instalación reproducible; el número de carpetas no acredita integración operativa |
 | E15 | Dos skills específicos negocio y calidad (p.7) | INCOMPLETO_EN_OPERACION | Completar skill de preparación de apoyo Lincoln y cargar ambos en el proceso; ejemplos válido/rechazado, versión, recursos y traza |
 | E16 | Dos loops operativos y reutilización (p.7) | PARCIAL | Integrar calidad y seguridad/costo al camino operativo; demostrar V1 fallida->V2 válida con mismo folio/costo adicional y segundo caso |
 | E17 | Autoevaluación skills y loops (p.7) | LOCAL_DOCUMENTADA | Actualizar tras integración/skill específico nuevo; cada uno>=16 y ningún aspecto<3; justificar límites>3iteraciones |
