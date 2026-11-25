@@ -45,6 +45,7 @@ jobs:
     timeout-minutes: 5
     permissions:
       contents: read
+      actions: read
       pages: write
       id-token: write
     environment:
@@ -58,6 +59,39 @@ jobs:
       - uses: actions/upload-pages-artifact@v3
         with:
           path: lincoln_proyecto/web
+      - name: Esperar disponibilidad del artefacto
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 lincoln_proyecto/src/esperar_artefacto_pages.py
       - name: Publicar panel validado
         id: deployment
         uses: actions/deploy-pages@v4
+  empaquetar:
+    needs: validar
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Instalar generador PDF
+        run: python3 -m pip install reportlab==4.4.10
+      - name: Generar informe de revisión
+        run: python3 lincoln_proyecto/src/generar_informe.py
+      - name: Verificar y empaquetar commit
+        run: python3 lincoln_proyecto/src/empaquetar_entrega.py
+      - name: Guardar paquete de revisión
+        uses: actions/upload-artifact@v4
+        with:
+          name: Lincoln-Proyecto-Revision
+          path: |
+            output/Freijo_Valdovinos_Sofia_AI_Tools_ProyectoFinal_REVISION.zip
+            output/pdf/Informe_Lincoln_Revision.pdf
+          if-no-files-found: error
+          retention-days: 30

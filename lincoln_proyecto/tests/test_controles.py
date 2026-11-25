@@ -79,6 +79,17 @@ class GuardTests(unittest.TestCase):
     def test_excess_recorded(self):
         self.admit('1');self.assertEqual(self.g.reconcile('1','.30'),'COTA_EXCEDIDA')
         self.assertFalse(self.admit('2')['admitido'])
+    def test_excess_invalidates_bounds_below_case_cap(self):
+        self.admit('1')
+        self.assertEqual(self.g.reconcile('1','.11'),'COTA_EXCEDIDA')
+        # USD .11 + .01 cabe en .25, pero la cota dejó de ser confiable.
+        self.assertEqual(self.admit('2','.01')['motivo'],'COTA_INVALIDADA')
+    def test_invalidated_bounds_survive_restart_and_concurrency(self):
+        self.admit('1');self.g.reconcile('1','.11')
+        def attempt(i):
+            return Guardianes(self.path).admit('after-'+str(i),'LIN-1-1','demo','demo','.01')
+        with ThreadPoolExecutor(8) as ex:r=list(ex.map(attempt,range(8)))
+        self.assertTrue(all(x['motivo']=='COTA_INVALIDADA' for x in r))
     def test_projection_and_allowlist(self):
         self.assertEqual(public_case({'caso_id':'LIN-1-1','token':'SECRET','usuario':'private'}),{'caso_id':'LIN-1-1'})
         self.assertTrue(allow_tool('consultar_ventas'))

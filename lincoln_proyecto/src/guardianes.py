@@ -38,6 +38,10 @@ class Guardianes:
                     db.rollback();return {'admitido':False,'motivo':'DUPLICADO'}
                 row=db.execute('SELECT cap_microusd FROM limits WHERE case_id=?',(case_id,)).fetchone()
                 if row and row[0]!=cap: raise ValueError('Límite del caso es inmutable')
+                # Si una cota previa resultó falsa, no se confía en nuevas reservas.
+                # Bloquear incluso cuando el total facturado aún no agota el límite.
+                if db.execute('SELECT 1 FROM requests WHERE case_id=? AND state=?',(case_id,'COTA_EXCEDIDA')).fetchone():
+                    db.rollback();return {'admitido':False,'motivo':'COTA_INVALIDADA'}
                 db.execute('INSERT OR IGNORE INTO limits VALUES (?,?)',(case_id,cap))
                 spent=db.execute('SELECT COALESCE(SUM(COALESCE(actual_microusd,reserved_microusd)),0) FROM requests WHERE case_id=?',(case_id,)).fetchone()[0]
                 if spent+bound>cap:

@@ -1,0 +1,16 @@
+{
+  "fecha_local": "2026-11-24",
+  "alcance": "LOCAL SQLite; sin APIs ni conexión a Gateway",
+  "resultado_observado": "PASS",
+  "python_tests_observados": 27,
+  "ejemplo": {
+    "reserva_usd": "0.10",
+    "factura_usd": "0.11",
+    "intento_posterior_usd": "0.01",
+    "cap_usd": "0.25"
+  },
+  "bloqueo": "COTA_INVALIDADA incluso bajo el límite monetario",
+  "persistencia": "Ocho intentos con conexiones reabiertas, todos bloqueados",
+  "evidencia": "test_excess_invalidates_bounds_below_case_cap; test_invalidated_bounds_survive_restart_and_concurrency",
+  "nota": "Resumen de salida local observada antes de perder el entorno. CI vuelve a ejecutar estas pruebas sobre el commit."
+}

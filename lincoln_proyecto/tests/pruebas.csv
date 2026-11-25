@@ -1,5 +1,5 @@
 id,prueba_guia,estado,evidencia,pendiente
-P01,Caso completo desde Telegram,PARCIAL_HISTORICO,README_Respaldo_v03 (fuera del paquete); export v03,Repetir proceso integral con cuatro agentes y logs del mismo folio
+P01,Caso completo desde Telegram,PARCIAL_NATIVO_MANUAL,evidencias/n8n_gateway_24nov.json ejecución53 + histórico v03,Caso completo acreditado por entrada manual; repetir por Telegram y validar canal
 P02,Segundo y tercer caso,PENDIENTE_INTEGRAL,evidencias/LIN-101-1.json a LIN-103-1.json son locales,"Ejecutar casos completos en n8n, no confundir fixtures con integración"
 P03,Caso desde ElevenLabs,PARCIAL_HISTORICO,Captura anterior de consulta LIN-34-1; no incluida por privacidad,Revalidar voz contra registro y guardar trace sanitizada
 P04,"Aprobación, rechazo y vencimiento",PASS_LOCAL_PARCIAL,exports/Resultado_Pruebas_Unitarias_v03.json UT11-UT25,Revalidar integración y atomicidad remota
@@ -12,4 +12,4 @@ P10,Evento duplicado,PASS_LOCAL_PARCIAL,test_durable_dedup/test_concurrent_dupli
 P11,Skill y loop con corrección,PASS_N8N_AISLADO,evidencias/n8n_prueba_aislada_observada.json + skills_ejecutados.json + LIN-101-1.jsonl,Integrar carga al camino operativo final
 P12,Actions y publicación,PASS_ACTIONS_PAGES,evidencias/pages_despliegue.json,Revisión visual e interacción del sitio se registran por separado en P13
 P13,Interfaz y micrófono,PARCIAL_CODIGO,"12 pruebas JS y esquema público; panel desplegado","Verificar visualmente web390/1366, teclado, voz y alternativa a micrófono denegado"
-P14,Trazabilidad y costos,PARCIAL_ESTIMACION,costos/* y evidencias/comprobaciones.json,Conciliar usage por llamada con panel y voz; desarrollo no medido
+P14,Trazabilidad y costos,PARCIAL_GATEWAY_OBSERVADO,costos/* y evidencias/n8n_gateway_24nov.json,USD0.16 agregado y saldo USD1.46 observados; falta cargo exacto por caso y voz
