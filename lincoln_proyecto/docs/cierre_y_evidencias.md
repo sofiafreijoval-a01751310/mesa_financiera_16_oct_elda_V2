@@ -6,7 +6,7 @@ Fecha de actualización: 24 nov 2026. Proyecto académico con datos sintéticos.
 
 - Base consistente:19distribuidores,2000unidades,MXN5millones,76registros mercado.
 - Respaldo n8n28nodos sanitizado e inactivo, con25pruebas JavaScript del código exportado.
-- Nuevos controles y loops:27pruebas Python, incluyendo concurrencia, dedup durable y presupuesto.
+- Nuevos controles y loops:29pruebas Python, incluyendo concurrencia, dedup durable y presupuesto.
 - Skill nuevo validado e instalado; forward-test independiente sobre dos casos más fuente insuficiente.
 - Tres propuestas locales correctas y un error de fuente, trazas JSON/JSONL.
 - Prueba aislada nativa n8n (ejecución50) con PASS, tres cargas de skills, V1/V2 y recuperación acotada. Adicionalmente, la ejecución53 completó cuatro agentes, lecturas directas y revisión determinista en la copia v04, sin publicarla.

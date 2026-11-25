@@ -84,7 +84,7 @@ p('Marco técnico: OWASP recomienda mínimos permisos, parámetros validados, se
 page()
 #6
 title(6,'Resultados medidos y límites')
-p("La validación local pasó 27 pruebas Python, 25 del export v03 y 40 de v04. En n8n, LIN-53-1 completó los cuatro agentes y la revisión determinista.","LeadX")
+p("La validación local pasó 29 pruebas Python, 25 del export v03 y 40 de v04. En n8n, LIN-53-1 completó los cuatro agentes y la revisión determinista.","LeadX")
 table([['Caso local','Resultado financiero','Revisión'],['LIN-101-1 Monterrey','Apoyo200000 + distribuidor200000; saldo450000','V1 falla / V2 válida'],['LIN-102-1 Chiapas','Apoyo62500 + distribuidor62500; evento125000; saldo0','V2 válida; aceptar alcance'],['LIN-103-1 Guadalajara','Apoyo250000 + distribuidor250000; saldo200000','V1 falla / V2 válida'],['LIN-104-1 fuente insuficiente','No se inventa versión ni apoyo válido','Escala en1revisión']],[145,250,120])
 h('Qué demuestran las pruebas')
 p('Las pruebas Python cubren montos no finitos, negativos y booleanos; consistencia de folio/fuente; aceptación requerida; máximo de iteraciones; propuesta malformada y campos adicionales. Cubren también autorización, límite inmutable, conciliación, exceso observado, persistencia de duplicados y concurrencia de presupuesto. El loop de recuperación demuestra éxito al tercer intento y agotamiento controlado.')

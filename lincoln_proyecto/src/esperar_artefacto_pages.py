@@ -6,7 +6,7 @@ import time
 import urllib.request
 
 
-def esperar(fetch, *, intentos=8, pausa=2, dormir=time.sleep):
+def esperar(fetch, *, intentos=8, pausa=2, dormir=time.sleep, nombre='github-pages', artifact_id=None):
     if not isinstance(intentos,int) or isinstance(intentos,bool) or not 1<=intentos<=8:
         raise ValueError('Entre uno y ocho intentos')
     if not 0<=pausa<=2:
@@ -15,7 +15,7 @@ def esperar(fetch, *, intentos=8, pausa=2, dormir=time.sleep):
         datos=fetch()
         if not isinstance(datos,dict) or not isinstance(datos.get('artifacts'),list):
             raise ValueError('Respuesta de artefactos inválida')
-        encontrados=[a for a in datos['artifacts'] if a.get('name')=='github-pages' and a.get('expired') is False]
+        encontrados=[a for a in datos['artifacts'] if a.get('name')==nombre and a.get('expired') is False and (artifact_id is None or a.get('id')==artifact_id)]
         if len(encontrados)>1:
             raise ValueError('Artefactos github-pages ambiguos')
         if encontrados:
@@ -39,6 +39,10 @@ def main():
         # Solo se reintenta una respuesta válida en la que el artefacto aún no aparece.
         with urllib.request.urlopen(req,timeout=5) as response:
             return json.load(response)
-    print(json.dumps(esperar(fetch)))
+    nombre=os.environ.get('EXPECTED_ARTIFACT_NAME','github-pages')
+    expected_id=os.environ.get('EXPECTED_ARTIFACT_ID','')
+    if not re.fullmatch(r'[A-Za-z0-9_.-]+',nombre) or not re.fullmatch(r'[1-9][0-9]*',expected_id):
+        raise ValueError('Artefacto esperado inválido')
+    print(json.dumps(esperar(fetch,nombre=nombre,artifact_id=int(expected_id))))
 
 if __name__=='__main__':main()

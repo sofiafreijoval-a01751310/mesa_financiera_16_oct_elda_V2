@@ -23,3 +23,10 @@ class ArtifactTests(unittest.TestCase):
         def denied():calls.append(1);raise PermissionError('Acceso denegado')
         with self.assertRaises(PermissionError):esperar(denied,dormir=lambda _:None)
         self.assertEqual(len(calls),1)
+
+    def test_rerun_uses_exact_current_artifact(self):
+        items=[{'id':7,'name':'github-pages-100-1','expired':False},{'id':8,'name':'github-pages-100-2','expired':False}]
+        self.assertEqual(esperar(lambda:{'artifacts':items},nombre='github-pages-100-2',artifact_id=8)['artifact_id'],8)
+    def test_wrong_id_never_substituted(self):
+        with self.assertRaises(RuntimeError):
+            esperar(lambda:{'artifacts':[{'id':7,'name':'github-pages-100-2','expired':False}]},nombre='github-pages-100-2',artifact_id=8,intentos=1)
