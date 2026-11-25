@@ -3,7 +3,7 @@ import json,subprocess,sys
 from datetime import datetime,timezone
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
-commands=[['python3','tests/validar_base.py'],['python3','-m','unittest','discover','-s','tests','-p','test_*.py','-v'],['node','exports/verificar_workflow_v03.cjs'],['python3','src/run_demo.py'],['python3','skills/vizdata/scripts/audit_viz_spec.py','docs/vizdata_brief.json','--strict'],['node','tests/verificar_n8n_loops.cjs'],['python3','tests/validar_web.py'],['node','tests/test_web.cjs'],['python3','src/validar_paquete.py']]
+commands=[['python3','tests/validar_base.py'],['python3','-m','unittest','discover','-s','tests','-p','test_*.py','-v'],['node','exports/verificar_workflow_v03.cjs'],['python3','src/run_demo.py'],['python3','skills/vizdata/scripts/audit_viz_spec.py','docs/vizdata_brief.json','--strict'],['node','tests/verificar_n8n_loops.cjs'],['python3','tests/validar_web.py'],['node','tests/test_web.cjs'],['node','tests/test_workflow_v04.cjs'],['python3','src/validar_paquete.py']]
 results=[]
 for cmd in commands:
  r=subprocess.run(cmd,cwd=ROOT,text=True,capture_output=True,timeout=30)

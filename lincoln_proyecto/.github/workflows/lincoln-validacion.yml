@@ -36,6 +36,7 @@ jobs:
       - run: python3 skills/vizdata/scripts/audit_viz_spec.py docs/vizdata_brief.json --strict
       - run: python3 tests/validar_web.py
       - run: node tests/test_web.cjs
+      - run: node tests/test_workflow_v04.cjs
       - run: python3 src/validar_paquete.py
   publicar:
     needs: validar
