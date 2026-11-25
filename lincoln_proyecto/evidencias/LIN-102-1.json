@@ -25,7 +25,7 @@
   },
   "traza": [
     {
-      "fecha_utc": "2026-11-24T03:29:56.028455+00:00",
+      "fecha_utc": "2026-11-25T00:09:53.326749+00:00",
       "caso_id": "LIN-102-1",
       "iteracion": 1,
       "version_propuesta_local": 1,
@@ -56,7 +56,7 @@
       "costo_api_usd": "0"
     },
     {
-      "fecha_utc": "2026-11-24T03:29:56.028553+00:00",
+      "fecha_utc": "2026-11-25T00:09:53.326827+00:00",
       "caso_id": "LIN-102-1",
       "iteracion": 2,
       "version_propuesta_local": 2,

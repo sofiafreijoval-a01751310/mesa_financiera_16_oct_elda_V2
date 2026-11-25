@@ -46,4 +46,4 @@ El export `exports/Lincoln_Prueba_Aislada_Skills_Loops.json` tiene4nodos manuale
 
 [Panel Lincoln](https://sofiafreijoval-a01751310.github.io/mesa_financiera_16_oct_elda_V2/) · datos ficticios, exportación manual con fecha, sin datos de chats. GitHub confirmó el despliegue inicial. El control de datos bloqueó una publicación deliberadamente inconsistente; ver `evidencias/pages_despliegue.json` y `docs/Panel_GitHub_Pages.md`.
 
-Pruebas web: `python3 tests/validar_web.py` y `node tests/test_web.cjs` (12 pruebas). La voz embebida y la revisión visual móvil siguen pendientes; no equivalen a las comprobaciones de código. El ZIP y PDF de revisión publicados anteriormente corresponden a un commit anterior y deben regenerarse antes de entregar.
+Pruebas web: `python3 tests/validar_web.py` y `node tests/test_web.cjs` (12 pruebas). La voz embebida y la revisión visual móvil siguen pendientes; no equivalen a las comprobaciones de código. El ZIP de revisión incluye un manifiesto con el commit exacto; el PDF refleja el despliegue, su bloqueo y su recuperación. Continúan pendientes las pruebas integrales del bot.
