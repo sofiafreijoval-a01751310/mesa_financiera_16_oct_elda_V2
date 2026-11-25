@@ -29,3 +29,7 @@ n8n anuncia Starter EUR20/mes con facturación anual y 2,500 ejecuciones: https:
 No se dispone de usage completo por request ni facturas. Gasto de producción y desarrollo: DESCONOCIDO, nunca cero. Los dos loops de demostración sí ejecutan exclusivamente Python local y no llaman API de modelos: gasto API de esas ejecuciones = USD0; esto no estima CPU/hosting ni el trabajo de desarrollo en ChatGPT.
 
 Para conciliar, completar costos/consumo_real_plantilla.csv con request_id, etapa, modelo, entrada/caché/salida/razonamiento, USD facturado y duración de voz desde logs/exportaciones del proveedor. No volver a sumar reasoning si ya integra output_tokens. Registrar llamadas fallidas cuando el proveedor las facture.
+
+## Conexión elegida: Gateway credits
+
+Se conserva la conexión Gateway de n8n por indicación de Sofía. Sus tarifas y cargos se deben consultar en n8n; los precios públicos de OpenAI de este documento no se presentan como tarifas Gateway. El saldo actual y el cargo real de la prueba siguen pendientes. El valor nominal USD 0.25 no es todavía un corte monetario comprobado en n8n. Ver [procedimiento de medición y alcance](creditos_gateway.md).
