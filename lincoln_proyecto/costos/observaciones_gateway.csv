@@ -1,0 +1,3 @@
+fecha,concepto,usd,alcance,fuente
+2026-11-24,saldo_visible,1.46,No es costo por request,UI n8n Gateway
+2026-11-26,saldo_visible,1.3,No es factura ni costo por request; llamadas55/56 no desglosadas,UI OpenAI Chat Model Gateway credits
