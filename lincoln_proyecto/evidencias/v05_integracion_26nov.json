@@ -6,7 +6,7 @@
     "observada": true,
     "version": "Lincoln v05 consulta estado sin IA",
     "telegram_habilitado": true,
-    "respuesta_start_pendiente": true
+    "respuesta_start_pendiente": false
   },
   "ejecuciones": [
     {
@@ -91,7 +91,6 @@
     "usa_modelos": false
   },
   "pendientes": [
-    "Respuesta Telegram /start",
     "Deduplicación persistente anterior al modelo y guardián monetario nativo",
     "Tres casos distintos completos",
     "V1 errónea a V2 corregida en flujo operativo",
@@ -102,14 +101,51 @@
   "consulta_estado": {
     "comando": "/estado FOLIO VERSION",
     "configurada_y_publicada": true,
-    "verificada_nativamente_por_telegram": false,
+    "verificada_nativamente_por_telegram": true,
     "pruebas_locales": [
       "ruta sin modelo",
       "formato y usuario",
       "vencido solo lectura",
       "dueño y duplicados"
-    ]
+    ],
+    "prueba_nativa_62": {
+      "fecha_local": "2026-11-26T17:50:02-06:00",
+      "estado_tecnico": "Succeeded",
+      "duracion": "1.969s",
+      "entrada": "/estado LIN-56-1 1",
+      "filas_devuelta": [
+        8,
+        9
+      ],
+      "folios": [
+        "LIN-56-1",
+        "LIN-56-1"
+      ],
+      "usuario_tipo": "evaluador_demo, prueba manual",
+      "respuesta": "El folio no existe o no es único. No se realizó ningún cambio.",
+      "dictamen": "PASS_BLOQUEO_AMBIGUEDAD; CONSULTA_POSITIVA_PENDIENTE",
+      "causa": "Segunda inserción manual del mismo resultado en ejecución60. Se conservan ambos registros como evidencia, sin eliminar ni elegir automáticamente uno.",
+      "modelo_invocado": false,
+      "escrituras": false
+    },
+    "consulta_positiva": {
+      "entrada": "/estado LIN-34-1 1",
+      "respuesta": "Consulta de solo lectura. Caso LIN-34-1, versión 1, estado registrado: APROBADO_SIMULADO. Simulación académica; sin cambios de presupuesto.",
+      "confirmacion": "Respuesta aportada por Sofía el26nov después de prueba con bot vigente",
+      "alcance": "Lectura de caso histórico propio. No acredita solicitud completa nueva por Telegram ni cambia aprobación previa."
+    }
   },
   "gateway_saldo_observado_usd": 1.3,
-  "gateway_saldo_alcance": "Saldo visible agregado; no factura ni costo por llamada"
+  "gateway_saldo_alcance": "Saldo visible agregado; no factura ni costo por llamada",
+  "telegram_start": {
+    "ejecucion": 61,
+    "fecha_local": "2026-11-26T17:48:10-06:00",
+    "duracion": "1.996s",
+    "estado": "Succeeded",
+    "entrada": "/start",
+    "respuesta": "Asistente académico Lincoln... Para consultar usa /estado FOLIO VERSION... Solo simulación; no se realizan pagos.",
+    "modelo_invocado": false,
+    "confirmacion": "UI n8n y captura aportada por Sofía",
+    "captura_no_publicada": "Contiene conversaciones y datos personales ajenos al proyecto"
+  }
 }

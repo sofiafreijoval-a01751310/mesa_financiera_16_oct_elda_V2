@@ -38,13 +38,13 @@ Prueba nativa: LIN-53-1, fila 6, versión 1 pasó de PENDIENTE_APROBACION a VENC
 
 ## Orden de cierre
 
-1. v05 ya publicado con Telegram habilitado; verificar /start desde la cuenta autorizada, sin consumir modelos.
+1. v05 ya publicado con Telegram habilitado; /start verificado desde cuenta autorizada, ejecución61, 1.996s, sin modelos.
 2. Tarea diaria ya publicada; conservar prueba de transición e idempotencia y verificar posteriormente el primer disparo horario.
-3. Consulta `/estado FOLIO VERSION` publicada y probada localmente; falta prueba nativa de Telegram. Integrar guardián/deduplicación; ejecutar la matriz de pruebas con evidencia real de al menos tres casos completos y un error/rechazo.
+3. Consulta `/estado FOLIO VERSION` publicada y probada localmente; prueba nativa62 bloqueó LIN-56-1 duplicado sin escrituras ni modelos. Consulta positiva LIN-34-1 respondió APROBADO_SIMULADO según respuesta compartida por Sofía. Integrar guardián/deduplicación; ejecutar la matriz de pruebas con evidencia real de al menos tres casos completos y un error/rechazo.
 4. Exportar configuración actual de ElevenLabs y completar prueba de voz enlazada al caso, accesibilidad y pantalla móvil.
 5. Completar costos medidos y estimados separados, informe, reflexión personal y manifiesto del mismo commit.
 6. Sofía graba video y realiza defensa; descargar ZIP final únicamente después de Actions correcto y comprobar que coincide con el commit del informe.
 
 ## Intervención concreta
 
-Enviar `/start` al bot para comprobar la ruta real de Telegram; no enviar otra solicitud completa mientras se revisa consumo Gateway. La grabación individual y reflexión personal corresponden a Sofía. No hace falta volver a compartir credenciales ni importar otra copia del workflow.
+`/start` pasó. `/estado LIN-34-1 1` respondió correctamente según la respuesta aportada por Sofía; LIN-56-1 pertenece a prueba manual y tiene dos inserciones, bloqueadas correctamente. No enviar otra solicitud completa mientras se revisa consumo Gateway. Para finalizar la configuración de voz hace falta completar el inicio de sesión de ElevenLabs en el navegador compartido. La grabación individual y reflexión personal corresponden a Sofía. No hace falta volver a compartir credenciales ni importar otra copia del workflow.
