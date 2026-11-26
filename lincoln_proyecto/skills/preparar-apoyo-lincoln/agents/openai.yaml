@@ -1,0 +1,14 @@
+interface:
+  display_name: Preparar apoyo Lincoln
+  short_description: Preparar apoyos 50/50 con fuentes verificadas
+  default_prompt: Usa $preparar-apoyo-lincoln para preparar una propuesta académica
+    con solicitud validada y datos autorizados.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

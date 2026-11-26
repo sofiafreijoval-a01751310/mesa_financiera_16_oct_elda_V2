@@ -1,0 +1,274 @@
+{
+  "name": "Lincoln | Revision programada de vencimientos",
+  "active": false,
+  "nodes": [
+    {
+      "name": "Cada cinco minutos",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 5
+            }
+          ]
+        }
+      },
+      "position": [
+        0,
+        0
+      ],
+      "typeVersion": 1.2,
+      "id": "48992f8b-bf3a-5ed6-ae90-3baeb853f8b2"
+    },
+    {
+      "name": "Prueba manual",
+      "type": "n8n-nodes-base.manualTrigger",
+      "parameters": {},
+      "position": [
+        0,
+        180
+      ],
+      "typeVersion": 1,
+      "id": "f41b627f-d99e-5371-85a3-7890aaa0974d"
+    },
+    {
+      "name": "Leer pendientes",
+      "type": "n8n-nodes-base.dataTable",
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "CONFIGURAR_TABLA_lincoln_casos",
+          "mode": "id"
+        },
+        "returnAll": true,
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "estado",
+              "keyValue": "PENDIENTE_APROBACION"
+            }
+          ]
+        }
+      },
+      "position": [
+        240,
+        0
+      ],
+      "typeVersion": 1.1,
+      "id": "a9f0feb4-f298-5ebd-9902-26ffdf9433a5"
+    },
+    {
+      "name": "Seleccionar vencidos simulados",
+      "type": "n8n-nodes-base.code",
+      "parameters": {
+        "jsCode": "function seleccionarVencidos(rows,ahora=Date.now()){\n if(!Number.isFinite(ahora))throw Error('Reloj inválido');\n return rows.flatMap(r=>{\n  if(!Number.isInteger(r.id)||r.estado!=='PENDIENTE_APROBACION'||r.decision_id||!/^LIN-\\d+-\\d+$/.test(r.caso_id)||!/^\\d+$/.test(String(r.version_propuesta)))return [];\n  const vence=Date.parse(r.vence_en);if(!Number.isFinite(vence)||vence>ahora)return [];\n  let p;try{p=JSON.parse(r.propuesta_json);}catch{return [];}\n  if(p.caso_original?.modo!=='SIMULADO'||p.caso_original?.caso_id!==r.caso_id||p.resultado?.caso_id!==r.caso_id||p.aprobacion_humana===true||p.modifica_presupuesto!==false)return [];\n  const decision_id='VENCIMIENTO:'+r.caso_id+':'+r.version_propuesta;\n  p.vencimiento={decision_id,fecha:new Date(ahora).toISOString(),estado:'VENCIDO',modifica_presupuesto:false,aprobacion_humana:false};\n  p.resultado.estado='VENCIDO';\n  return [{...r,estado:'VENCIDO',decision_id,propuesta_original:r.propuesta_json,propuesta_json:JSON.stringify(p)}];\n });\n}\nreturn seleccionarVencidos($input.all().map(i=>i.json)).map(json=>({json}));\n"
+      },
+      "position": [
+        480,
+        0
+      ],
+      "typeVersion": 2,
+      "id": "5206ca1c-fda8-592b-8489-1975c98307e3"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "value": "CONFIGURAR_TABLA_lincoln_casos",
+          "mode": "id"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyValue": "={{ $json.id }}"
+            },
+            {
+              "keyName": "caso_id",
+              "keyValue": "={{ $json.caso_id }}"
+            },
+            {
+              "keyName": "version_propuesta",
+              "keyValue": "={{ $json.version_propuesta }}"
+            },
+            {
+              "keyName": "estado",
+              "keyValue": "PENDIENTE_APROBACION"
+            },
+            {
+              "keyName": "decision_id",
+              "condition": "isEmpty"
+            },
+            {
+              "keyName": "propuesta_json",
+              "keyValue": "={{ $json.propuesta_original }}"
+            },
+            {
+              "keyName": "vence_en",
+              "keyValue": "={{ $json.vence_en }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "estado": "={{ $json.estado }}",
+            "propuesta_json": "={{ $json.propuesta_json }}",
+            "decision_id": "={{ $json.decision_id }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "caso_id",
+              "displayName": "caso_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "usuario",
+              "displayName": "usuario",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "estado",
+              "displayName": "estado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "version_propuesta",
+              "displayName": "version_propuesta",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "propuesta_json",
+              "displayName": "propuesta_json",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "vence_en",
+              "displayName": "vence_en",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "update_id",
+              "displayName": "update_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "decision_id",
+              "displayName": "decision_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        720,
+        0
+      ],
+      "id": "45e51f98-a6e5-49a0-b9ac-8b86e5d41c5a",
+      "name": "Marcar vencimiento condicional",
+      "alwaysOutputData": true
+    }
+  ],
+  "connections": {
+    "Cada cinco minutos": {
+      "main": [
+        [
+          {
+            "node": "Leer pendientes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prueba manual": {
+      "main": [
+        [
+          {
+            "node": "Leer pendientes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Leer pendientes": {
+      "main": [
+        [
+          {
+            "node": "Seleccionar vencidos simulados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Seleccionar vencidos simulados": {
+      "main": [
+        [
+          {
+            "node": "Marcar vencimiento condicional",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "America/Mexico_City"
+  },
+  "pinData": {}
+}

@@ -1,0 +1,23 @@
+const fs=require('fs'),path=require('path'),assert=require('assert/strict');
+const R=path.resolve(__dirname,'..'),read=p=>fs.readFileSync(path.join(R,p),'utf8');
+const {preparar,metadata}=require('../skills/preparar-apoyo-lincoln/scripts/preparar.cjs');
+const sample=n=>JSON.parse(read('skills/preparar-apoyo-lincoln/references/'+n+'.json'));
+let tests=[];function t(n,f){f();tests.push(n);}
+t('Skill válido calcula 50/50',()=>{const o=preparar(sample('ejemplo_valido'));assert.equal(o.estado,'PROPUESTA_GENERADA');assert.equal(o.resultado.calculo.apoyo_lincoln_mxn,200000);});
+t('Skill limita Chiapas al saldo',()=>assert.equal(preparar(sample('ejemplo_saldo_limitado')).resultado.calculo.apoyo_lincoln_mxn,62500));
+t('Skill rechaza fuente sin versión',()=>assert.equal(preparar(sample('ejemplo_rechazo')).estado,'DETENIDO'));
+t('Skill traza hash del archivo real',()=>assert.equal(metadata.sha256,require('crypto').createHash('sha256').update(read('skills/preparar-apoyo-lincoln/SKILL.md')).digest('hex')));
+t('Centavo impar no significa saldo insuficiente',()=>{const d=sample('ejemplo_valido');d.solicitud_validada.resultado.inversion_total=400000.01;const c=preparar(d).resultado.calculo;assert.equal(c.saldo_suficiente,true);assert.equal(c.requiere_aceptacion_ajuste,true);});
+const code=read('src/seleccionar_vencidos.js'),run=(rows,time)=>new Function('$input',code.replace('Date.now())',''+time+')'))({all:()=>rows.map(json=>({json}))}).map(x=>x.json);
+const row=()=>({id:1,estado:'PENDIENTE_APROBACION',caso_id:'LIN-801-1',version_propuesta:'1',decision_id:'',vence_en:'2026-11-25T00:00:00Z',propuesta_json:JSON.stringify({caso_original:{modo:'SIMULADO',caso_id:'LIN-801-1'},resultado:{caso_id:'LIN-801-1'},aprobacion_humana:false,modifica_presupuesto:false})});
+const now=Date.parse('2026-11-25T01:00:00Z');
+t('Vence caso sin aprobar ni modificar presupuesto',()=>{let r=row(),o=run([r],now)[0];assert.equal(o.estado,'VENCIDO');assert.equal(JSON.parse(o.propuesta_json).vencimiento.modifica_presupuesto,false);assert.equal(r.estado,'PENDIENTE_APROBACION');});
+for(const [field,value]of [['estado','APROBADO_SIMULADO'],['decision_id','decision-existente'],['vence_en','2099-01-01'],['vence_en','fecha-invalida'],['propuesta_json','{']])t('No vence '+field+' '+value,()=>{let r=row();r[field]=value;assert.equal(run([r],now).length,0);});
+t('No modifica casos reales',()=>{let r=row(),p=JSON.parse(r.propuesta_json);p.caso_original.modo='REAL';r.propuesta_json=JSON.stringify(p);assert.equal(run([r],now).length,0);});
+t('Vencimiento repetido no duplica transición',()=>{const o=run([row()],now);assert.equal(run(o,now).length,0);});
+const w=JSON.parse(read('exports/Lincoln_Apoyos_v05_PUBLICO.json')),s=JSON.parse(read('exports/Lincoln_Vencimientos_Programados_PUBLICO.json'));
+t('Adapter carga dos instrucciones reales y hashes',()=>{for(const name of ['preparar-apoyo-lincoln','revisar-apoyo-lincoln'])assert(JSON.stringify(w).includes(read('skills/'+name+'/SKILL.md').slice(0,100).replaceAll('\n','\\n')));assert(w.nodes.some(n=>n.name==='Registrar skills cargados'));});
+t('Candidatos inactivos sin credenciales',()=>{assert.equal(w.active,false);assert.equal(s.active,false);assert([...w.nodes,...s.nodes].every(n=>!n.credentials));});
+t('Schedule 5min sin modelos ni Telegram',()=>{assert.equal(s.nodes[0].parameters.rule.interval[0].minutesInterval,5);assert(s.nodes.every(n=>!(/langchain|telegram/i.test(n.type))));});
+t('Update exige instantánea y estado pendientes',()=>{const f=s.nodes.at(-1).parameters.filters;assert.equal(s.nodes.at(-1).parameters.matchType,'allConditions');for(const k of ['estado','propuesta_json','caso_id','version_propuesta','vence_en','decision_id'])assert(f.conditions.some(x=>x.keyName===k));});
+fs.writeFileSync(path.join(R,'evidencias/preparacion_programada_pruebas.json'),JSON.stringify({fecha_utc:new Date().toISOString(),alcance:'LOCAL; no acredita importación, publicación ni ejecución nativa del Schedule Trigger o v05',passed:tests.length,tests},null,2));console.log('PASS '+tests.length+' pruebas de preparación y tarea programada');

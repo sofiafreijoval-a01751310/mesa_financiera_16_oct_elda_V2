@@ -1,0 +1,98 @@
+{
+  "caso_id": "LIN-801-1",
+  "modo": "SIMULADO",
+  "solicitud_validada": {
+    "caso_id": "LIN-801-1",
+    "agente": "agente_1_solicitud",
+    "estado": "VALIDADO",
+    "resultado": {
+      "distribuidor_id": "D01",
+      "distribuidor": "Lincoln Monterrey",
+      "tipo_evento": "exhibición",
+      "fecha_evento": "2026-12-20",
+      "nameplate_solicitado": "Navigator",
+      "inversion_total": 400000,
+      "moneda": "MXN",
+      "tratamiento_iva": "antes de IVA",
+      "asistentes": 80,
+      "edad_min": 35,
+      "edad_max": 60,
+      "nse": [
+        "A/A+/B+"
+      ],
+      "objetivo_comercial": "Prospectos y pruebas de manejo",
+      "campos_faltantes": [],
+      "preguntas": []
+    }
+  },
+  "datos_verificados": {
+    "caso_id": "LIN-801-1",
+    "agente": "agente_2_datos",
+    "estado": "DATOS_VERIFICADOS",
+    "resultado": {
+      "distribuidor_id": "D01",
+      "ventas_2025_por_nameplate": {
+        "total_2025": 260,
+        "corsair": 39,
+        "nautilus": 65,
+        "aviator": 52,
+        "navigator": 104
+      },
+      "presupuesto_2026": {
+        "asignacion_mxn": 650000,
+        "aprobado_mxn": 0,
+        "reservado_mxn": 0,
+        "disponible_mxn": 650000
+      },
+      "mercado_pma": [
+        {
+          "modelo": "Corsair",
+          "categoria": "SUV premium compacta",
+          "volumen_2025": 2184,
+          "crecimiento_real_pct": 5.0,
+          "penetracion_pct": 1.7857
+        },
+        {
+          "modelo": "Nautilus",
+          "categoria": "SUV premium mediana de dos filas",
+          "volumen_2025": 1654,
+          "crecimiento_real_pct": 6.0256,
+          "penetracion_pct": 3.9299
+        },
+        {
+          "modelo": "Aviator",
+          "categoria": "SUV premium de tres filas",
+          "volumen_2025": 1082,
+          "crecimiento_real_pct": 4.0385,
+          "penetracion_pct": 4.8059
+        },
+        {
+          "modelo": "Navigator",
+          "categoria": "SUV premium grande",
+          "volumen_2025": 874,
+          "crecimiento_real_pct": 12.0513,
+          "penetracion_pct": 11.8993
+        }
+      ]
+    },
+    "fuentes": [
+      {
+        "herramienta": "consultar_ventas",
+        "distribuidor_id": "D01",
+        "fuente": "SINTETICA_ACADEMICA"
+      },
+      {
+        "herramienta": "consultar_presupuesto",
+        "distribuidor_id": "D01",
+        "fuente": "SINTETICA_ACADEMICA",
+        "version": "0.1"
+      },
+      {
+        "herramienta": "consultar_mercado",
+        "distribuidor_id": "D01",
+        "fuente": "SINTETICA_ACADEMICA",
+        "version": "0.1"
+      }
+    ]
+  }
+}

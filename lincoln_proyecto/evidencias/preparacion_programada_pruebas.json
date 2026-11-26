@@ -1,0 +1,24 @@
+{
+  "fecha_utc": "2026-11-26T03:03:13.662Z",
+  "alcance": "LOCAL; no acredita importación, publicación ni ejecución nativa del Schedule Trigger o v05",
+  "passed": 17,
+  "tests": [
+    "Skill válido calcula 50/50",
+    "Skill limita Chiapas al saldo",
+    "Skill rechaza fuente sin versión",
+    "Skill traza hash del archivo real",
+    "Centavo impar no significa saldo insuficiente",
+    "Vence caso sin aprobar ni modificar presupuesto",
+    "No vence estado APROBADO_SIMULADO",
+    "No vence decision_id decision-existente",
+    "No vence vence_en 2099-01-01",
+    "No vence vence_en fecha-invalida",
+    "No vence propuesta_json {",
+    "No modifica casos reales",
+    "Vencimiento repetido no duplica transición",
+    "Adapter carga dos instrucciones reales y hashes",
+    "Candidatos inactivos sin credenciales",
+    "Schedule 5min sin modelos ni Telegram",
+    "Update exige instantánea y estado pendientes"
+  ]
+}

@@ -37,6 +37,7 @@ jobs:
       - run: python3 tests/validar_web.py
       - run: node tests/test_web.cjs
       - run: node tests/test_workflow_v04.cjs
+      - run: node tests/test_preparacion_programada.cjs
       - run: python3 src/validar_paquete.py
   publicar:
     needs: validar

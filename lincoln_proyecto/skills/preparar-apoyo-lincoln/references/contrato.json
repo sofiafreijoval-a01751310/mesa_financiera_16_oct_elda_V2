@@ -1,0 +1,7 @@
+{
+  "version": "1.0.0",
+  "entrada": {"caso_id": "LIN-n-n", "modo": "SIMULADO", "solicitud_validada": "Salida íntegra de agente_1_solicitud, estado VALIDADO", "datos_verificados": "Salida íntegra de agente_2_datos, estado DATOS_VERIFICADOS"},
+  "reglas": {"distribuidores": 19, "ventas_nacionales_2025": 2000, "presupuesto_nacional_mxn": 5000000, "participacion_lincoln": 0.5, "moneda": "MXN", "iva": "antes de IVA", "fuente": "SINTETICA_ACADEMICA", "version_fuente": "0.1"},
+  "salida": ["caso_id", "agente", "estado", "resultado", "fuentes", "advertencias", "duracion_ms", "consumo_ref", "skills_cargados"],
+  "limites": {"vueltas": 3, "segundos": 10, "llamadas_api_script_local": 0, "aprobacion_humana": "obligatoria fuera del skill"}
+}
