@@ -30,14 +30,14 @@ def table(rows,widths):
 def page():flow.append(PageBreak())
 # 1
 title(1,'Apoyos a distribuidores Lincoln')
-p('Informe técnico y empresarial de revisión | Sofía Freijo Valdovinos | AI Tools | Prof. Elda C. Morales | 24 de noviembre de 2026','TinyX')
+p('Informe técnico y empresarial de revisión | Sofía Freijo Valdovinos | AI Tools | Prof. Elda C. Morales | 25 de noviembre de 2026','TinyX')
 p('La propuesta distribuye una bolsa ficticia y prepara apoyos con cofinanciamiento 50/50; cada decisión debe conservar evidencia, límites y aprobación humana.','LeadX')
 p('El usuario de negocio es la coordinación que recibe solicitudes de eventos de 19 distribuidores. Hoy el caso académico modela ventas 2025 y una bolsa de Lincoln para 2026. El problema es comparar solicitudes con criterios homogéneos sin inventar datos de mercado, confundir una revisión con una aprobación o conceder más apoyo que el saldo disponible.')
 h('Proceso y resultado esperado')
 p('Una solicitud entra por Telegram; el orquestador coordina extracción, consulta autorizada, propuesta y revisión. Una propuesta completa se registra con folio, versión y caducidad para decisión del usuario autorizado. El canal de voz consulta un caso por folio completo y versión; su alcance es lectura. No existen pagos ni compromisos comerciales reales.')
 table([['Rol','Responsabilidad y frontera'],['Orquestador','Conservar folio y coordinar entregas de los cuatro especialistas.'],['Agente 1: solicitud','Extraer campos y pedir aclaraciones; no inventar formato, fecha o inversión.'],['Agente 2: datos','Recuperar ventas, saldo y PMA de fuentes permitidas con versión.'],['Agente 3: propuesta','Usar cálculo determinista para apoyo, aportación y saldo; justificar enfoque comercial.'],['Agente 4: revisión','Revisar coherencia; devolver corrección o bloqueo. No aprobar presupuesto.']],[125,390])
 h('Alcance comprobado de esta versión')
-p("Se entregan código, dos loops, tres skills utilizados, controles, estimaciones y exportaciones sanitizadas. La ejecución nativa 53 completó los cuatro agentes, lecturas directas y revisión determinista; guardó LIN-53-1 como PENDIENTE_APROBACION. Gateway mostró USD0.16 agregados del workflow y saldo USD1.46. Pages tiene despliegue, bloqueo y recuperación acreditados. La copia n8n sigue sin publicar; faltan deduplicación y corte monetario vivos, pruebas de canales y revisión visual de Pages. El cierre académico permanece abierto.")
+p("Se entregan código, dos loops, cuatro skills con pruebas locales, controles, estimaciones y exportaciones sanitizadas. La ejecución nativa 53 completó los cuatro agentes, lecturas directas y revisión determinista; guardó LIN-53-1 como PENDIENTE_APROBACION. Gateway mostró USD0.16 agregados del workflow y saldo USD1.46. Pages tiene despliegue, bloqueo y recuperación acreditados. La copia n8n sigue sin publicar; faltan deduplicación y corte monetario vivos, pruebas de canales y revisión visual de Pages. El cierre académico permanece abierto.")
 page()
 #2
 title(2,'Datos y reparto verificable')
@@ -50,14 +50,15 @@ p('La gráfica usa barras horizontales con base cero y etiquetas exactas. VizDat
 page()
 #3
 title(3,'Skills y mejora acotada')
-p('Se utilizaron dos recursos previos aportados por la estudiante y se creó un nuevo revisor de negocio, validado e instalado como versión 1.0.1.','LeadX')
-table([['Skill','Uso real y evidencia'],['cotizar-tokens-ia','Cinco tokenizaciones y cinco cálculos por etapa; hashes, entradas y salidas guardados.'],['vizdata','Brief Lincoln; auditoría de datos, selección gráfica, tabla equivalente y auditor --strict sin errores ni warnings.'],['revisar-apoyo-lincoln','Cálculo/revisión con Decimal; corrige valores derivados, conserva fuentes y produce traza. Tres casos correctos y uno que escala.']],[125,390])
+p('Se reutilizaron cotizador y VizData. Los skills específicos son preparar-apoyo-lincoln v1.0.0 y revisar-apoyo-lincoln v1.0.1, instalados y probados.','LeadX')
+table([['Skill','Uso real y evidencia'],['cotizar-tokens-ia','Cinco tokenizaciones y cinco cálculos por etapa; hashes, entradas y salidas guardados.'],['vizdata','Brief Lincoln; auditoría de datos, selección gráfica, tabla equivalente y auditor --strict sin errores ni warnings.'],['preparar-apoyo-lincoln','Nuevo skill: valida fuentes y prepara 50/50; dos casos válidos y un rechazo. Adaptador v05 lee ambos SKILL.md y registra hashes; pendiente prueba nativa.'],['revisar-apoyo-lincoln','Cálculo/revisión con Decimal; corrige valores derivados, conserva fuentes y produce traza. Tres casos correctos y uno que escala.']],[125,390])
 h('Loop 1: calidad de negocio')
 p('Entrada: caso SIMULADO, inversión y datos verificados. Responsable: revisor determinista. V1 con propuesta vacía falla los criterios; se diagnostican campos, se corrigen cifras derivadas y V2 vuelve a validar el mismo folio. Máximo tres revisiones y diez segundos; si la fuente no tiene versión, escala al primer intento. No cambia inversión, distribuidor ni saldo original. Siempre mantiene PENDIENTE_APROBACION y modifica_presupuesto=false.')
 h('Loop 2: seguridad, costo y recuperación')
 p('Evalúa identidad y reserva una cota antes de cada intento. Reintenta solo TimeoutError o ConnectionError, hasta tres intentos y diez segundos. Un error de esquema, un evento duplicado o un límite agotado detienen la secuencia. En la prueba se inyectan dos timeouts locales y un éxito al tercero; las reservas se concilian después a USD0 porque no hubo API. Un adaptador HTTP vivo debe aplicar también timeout de transporte: un reloj no cancela una función bloqueada.')
 h('Qué queda en la traza')
 p('En n8n se ejecutó además una prueba aislada de cuatro nodos:ejecución50, PASS. Cargó las tres instrucciones y verificó V1/V2 y recuperación. No usa modelos ni protege todavía el bot operativo. Cada revisión registra caso, iteración, versión local, dictamen y hashes de instrucciones, script y contrato. El demostrador lee SKILL.md antes de ejecutar el recurso. Se preservan decisiones y validaciones, no razonamientos internos privados. Un forward-test independiente ejercitó dos casos y una fuente insuficiente; las pruebas posteriores agregan rechazo de objetos malformados y conservación de campos adicionales.')
+p('Tarea programada candidata: vencimientos simulados cada cinco minutos, sin modelos ni aprobaciones. Selector y filtros condicionales: 17 pruebas nuevas correctas. Falta importar, probar y activar en la cuenta. Detalle: docs/Entrega_y_cierre_25nov.md.','TinyX')
 p('Autoevaluación local: cotizador18/20; VizData19/20; revisor19/20; loop calidad19/20; loop seguridad/costo18/20. Ningún criterio menor a3. Estos puntajes son propios, no calificación docente ni prueba de integración viva.','TinyX')
 page()
 #4
@@ -118,7 +119,7 @@ p('La matriz completa con ruta de evidencia está en tests/pruebas.csv. El infor
 page()
 #9
 title(9,'Fuentes y declaración de uso de IA')
-p('Anexo de referencias | Consultas y contraste de precios: 24 de noviembre de 2026.','TinyX')
+p('Anexo de referencias | Consultas y contraste de precios: 25 de noviembre de 2026.','TinyX')
 h('Consigna y datos')
 p('Dra. Elda C. Morales. Proyecto final individual de AI Tools: Guía del estudiante. Versión30 oct 2026. PDF aportado por Sofía. Se revisaron mínimos de skills/loops, pruebas P01-P14, registro de costos y paquete final.')
 p('Base Lincoln v0.1: datos sintéticos creados para el ejercicio con restricciones de la estudiante. 19 distribuidores; cuatro nameplates;2,000 unidades; bolsa5 millones. No se usó una fuente real de Urban Science ni se afirma representatividad estadística.')
@@ -132,7 +133,7 @@ p('El repositorio conserva separada la actividad original Mesa Financiera (Batut
 def footer(canvas,doc):
  canvas.setStrokeColor(colors.HexColor('#b9c8cd'));canvas.line(40,40,555,40)
  canvas.setFont('DV',7.2);canvas.setFillColor(colors.HexColor('#54646b'))
- canvas.drawString(40,27,'LINCOLN | SIMULADO | REVISIÓN TÉCNICA | 24 NOV 2026')
+ canvas.drawString(40,27,'LINCOLN | SIMULADO | REVISIÓN TÉCNICA | 25 NOV 2026')
  canvas.drawRightString(555,27,str(doc.page))
  canvas.setFont('DV',6.5);canvas.drawRightString(555,805,'SOFÍA FREIJO VALDOVINOS · AI TOOLS')
 doc=SimpleDocTemplate(str(OUT),pagesize=A4,rightMargin=40,leftMargin=40,topMargin=55,bottomMargin=55,title='Lincoln - Informe técnico de revisión',author='Sofía Freijo Valdovinos')
