@@ -1,0 +1,40 @@
+{
+  "fecha_utc": "2026-11-26T23:14:50.093Z",
+  "workflow": "Lincoln | Apoyos a Distribuidores | Skills v05",
+  "workflow_id": "PGq4bRn2ehAy6YHt",
+  "caso_id": "LIN-54-1",
+  "execution_id": 54,
+  "alcance": "Ejecución parcial nativa: trigger manual → solicitud de prueba → inicializar caso → registrar skills. No ejecutó modelos ni demuestra aplicación completa de los skills por los agentes.",
+  "resultado": "PASS",
+  "duracion_workflow_segundos": 2.957,
+  "duracion_nodo_ms": 11,
+  "items_salida": 1,
+  "modo": "SIMULADO",
+  "canal": "prueba_manual",
+  "skills_cargados": [
+    {
+      "nombre": "preparar-apoyo-lincoln",
+      "sha256": "cdced18916595a6a1eb501b2f2706615518cb60cd9452236595a6c99cb21ce9a"
+    },
+    {
+      "nombre": "revisar-apoyo-lincoln",
+      "sha256": "e06e069048e0f94b4c6d60b9b8caee2a4cebf890b724424b31746501c772cbbc"
+    }
+  ],
+  "carga": "ARCHIVO_EMBEBIDO_AL_CONSTRUIR_EXPORT",
+  "comprobaciones_ui": [
+    "Salida del nodo mostró ambos nombres y hashes.",
+    "Agente3 systemMessage contiene las instrucciones completas del skill de preparación y adaptación Cloud.",
+    "Agente4 systemMessage contiene las instrucciones completas del revisor y adaptación Cloud.",
+    "Solo cuatro nodos ejecutados; ningún modelo ni escritura en tabla de casos."
+  ],
+  "cambio_para_prueba": "Telegram Trigger desactivado únicamente en candidato v05 no publicado para evitar esperar un mensaje durante la ejecución parcial manual.",
+  "costo_modelos_usd": 0,
+  "costo_plataforma": "No medido; ejecución consume capacidad de n8n.",
+  "pendientes": [
+    "Ejecutar agentes3 y4 con contrato completo y comprobar skills_cargados en salida persistida.",
+    "Integrar corte monetario Gateway y deduplicación antes del modelo.",
+    "La tarea programada sigue siendo un export candidato inactivo."
+  ],
+  "fuente": "Observación directa de UI autenticada n8n, éxito y salida JSON."
+}
