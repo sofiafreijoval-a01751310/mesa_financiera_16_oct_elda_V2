@@ -1,16 +1,16 @@
 {
-  "name": "Lincoln | Revision programada de vencimientos",
+  "name": "Lincoln | Vencimientos diarios 09h",
   "active": false,
   "nodes": [
     {
-      "name": "Cada cinco minutos",
+      "name": "Diario a las 09h",
       "type": "n8n-nodes-base.scheduleTrigger",
       "parameters": {
         "rule": {
           "interval": [
             {
-              "field": "minutes",
-              "minutesInterval": 5
+              "field": "cronExpression",
+              "expression": "0 9 * * *"
             }
           ]
         }
@@ -20,7 +20,7 @@
         0
       ],
       "typeVersion": 1.2,
-      "id": "48992f8b-bf3a-5ed6-ae90-3baeb853f8b2"
+      "id": "a7f062ca-8d48-5a27-94bf-9c565edf62e8"
     },
     {
       "name": "Prueba manual",
@@ -215,13 +215,13 @@
         720,
         0
       ],
-      "id": "45e51f98-a6e5-49a0-b9ac-8b86e5d41c5a",
+      "id": "f0378077-431e-44aa-8f16-acea28d3a595",
       "name": "Marcar vencimiento condicional",
       "alwaysOutputData": true
     }
   ],
   "connections": {
-    "Cada cinco minutos": {
+    "Diario a las 09h": {
       "main": [
         [
           {
@@ -268,7 +268,8 @@
   },
   "settings": {
     "executionOrder": "v1",
-    "timezone": "America/Mexico_City"
+    "timezone": "America/Mexico_City",
+    "availableInMCP": false
   },
   "pinData": {}
 }

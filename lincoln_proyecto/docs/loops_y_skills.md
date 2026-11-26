@@ -30,4 +30,4 @@ Se importó y ejecutó Lincoln | Prueba aislada de skills y loops v1 (4nodos, ma
 
 
 ## Actualización 25/nov: preparación e integración candidata
-Se creó preparar-apoyo-lincoln v1.0.0. Ver docs/Entrega_y_cierre_25nov.md y src/preparar_workflow_v05.py. Los dos SKILL.md se leen de archivos al construir el export. No se acredita aún uso nativo de v05 ni cierre del loop monetario. La tarea de vencimientos cada cinco minutos está construida y probada localmente, inactiva.
+Se creó preparar-apoyo-lincoln v1.0.0. Ver docs/Entrega_y_cierre_25nov.md y src/preparar_workflow_v05.py. Los dos SKILL.md se leen de archivos al construir el export. v05 completó agentes 1–4 y revisión determinista en LIN-56-1 el 26/nov; quedó PENDIENTE_APROBACION. El cierre del loop monetario sigue pendiente en Cloud. La tarea diaria 09h México quedó publicada y probada manualmente: LIN-53-1 vencido y repetición con cero actualizaciones. Falta observar el primer disparo horario. Ver evidencias/v05_integracion_26nov.json.

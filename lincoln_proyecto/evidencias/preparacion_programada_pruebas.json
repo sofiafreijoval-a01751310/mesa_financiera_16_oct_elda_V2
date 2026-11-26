@@ -1,7 +1,7 @@
 {
-  "fecha_utc": "2026-11-26T03:03:13.662Z",
+  "fecha_utc": "2026-11-26T23:39:24.933Z",
   "alcance": "LOCAL; no acredita importación, publicación ni ejecución nativa del Schedule Trigger o v05",
-  "passed": 17,
+  "passed": 19,
   "tests": [
     "Skill válido calcula 50/50",
     "Skill limita Chiapas al saldo",
@@ -18,7 +18,9 @@
     "Vencimiento repetido no duplica transición",
     "Adapter carga dos instrucciones reales y hashes",
     "Candidatos inactivos sin credenciales",
-    "Schedule 5min sin modelos ni Telegram",
+    "Schedule diario 09h sin modelos ni Telegram",
+    "Metadatos de skills admitidos sin abrir contrato financiero",
+    "Registro conserva configuración sin atribuir validación al modelo",
     "Update exige instantánea y estado pendientes"
   ]
 }

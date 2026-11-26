@@ -8,7 +8,7 @@ Guía del estudiante, versión 30/oct/2026, sección de entregables. No entregar
 | Repositorio GitHub | Código, instrucciones de reproducción, dependencias, datos sintéticos y versiones | Repositorio existente; cambios nuevos sujetos a Actions |
 | ZIP del mismo commit | Copia del repositorio, informe, manifiesto; SKILL.md, scripts, referencias y ejemplos de todos los skills utilizados | Se genera en Actions; sustituir cualquier ZIP antiguo |
 | Enlaces operativos | GitHub Pages, Actions correcto y bloqueo deliberado, bot y acceso sin secretos | Enlaces disponibles; faltan pruebas finales de canales |
-| Exports de n8n | Roles, contratos, prompts, skills, loops y configuración sin credenciales | v04 ejecutado; v05 y tarea programada candidatos inactivos |
+| Exports de n8n | Roles, contratos, prompts, skills, loops y configuración sin credenciales | v05 publicado el 26/nov; caso LIN-56-1 correcto; tarea diaria publicada y transición/idempotencia comprobadas. Exports inactivos al importar por seguridad |
 | Configuración/export de ElevenLabs | Voz, idioma, saludo, herramientas, conocimiento, dominios y recreación; pruebas | Consulta histórica por voz exitosa; cerrar export y evidencia vigente |
 | Costos y pruebas | CSV/XLSX, tarifas, proyecciones, matriz de casos, evidencias, diccionario y muestra | Existen archivos; completar medidas por llamada y casos exigidos |
 | Video y defensa individual | Video de 5–8 minutos; demo de hasta 12 minutos; declaración de IA y licencias | Requiere grabación de Sofía |
@@ -19,7 +19,7 @@ No se exige una presentación como archivo independiente. Puede utilizarse como 
 
 `preparar-apoyo-lincoln` v1.0.0: negocio, validación de fuentes y propuesta 50/50. Creado, instalado y probado con dos casos válidos y uno rechazado. Incluye contrato, recursos y CLI sin APIs.
 
-`revisar-apoyo-lincoln` v1.0.1: revisión de calidad y seguridad. Su uso local e integración aislada ya tienen evidencia. El constructor `src/preparar_workflow_v05.py` lee ambos SKILL.md y embebe las instrucciones y sus SHA256 en agentes 3 y 4. Un nodo registra la carga en el caso. Esto demuestra carga desde archivos al construir el export; aún no demuestra ejecución de v05 en n8n.
+`revisar-apoyo-lincoln` v1.0.1: revisión de calidad y seguridad. Su uso local e integración aislada ya tienen evidencia. El constructor `src/preparar_workflow_v05.py` lee ambos SKILL.md y embebe las instrucciones y sus SHA256 en agentes 3 y 4. Un nodo registra la carga en el caso. Ejecución nativa 56 completó agentes 1–4 y revisión determinista; LIN-56-1 quedó PENDIENTE_APROBACION. El revisor devolvió su hash; el proponente omitió esa metadata. El registro nuevo conserva configuración de los dos archivos sin atribuir al modelo una verificación no observada. Ejecución 55 detectó error de esquema por skills_cargados; se agregó metadata opcional y se conservó additionalProperties:false. Ver evidencias/v05_integracion_26nov.json.
 
 `cotizar-tokens-ia` y `vizdata` conservan sus evidencias auxiliares de uso. No se presentan como reemplazos de los dos skills específicos. Revisar también el recurso pendiente del tokenizador señalado en la auditoría.
 
@@ -30,23 +30,21 @@ No se exige una presentación como archivo independiente. Puede utilizarse como 
 
 No afirmar que ambos loops cumplen integralmente mientras el segundo siga local.
 
-## Tarea programada propuesta y construida
+## Tarea programada publicada y probada
 
-`exports/Lincoln_Vencimientos_Programados_PUBLICO.json`: Schedule Trigger cada cinco minutos, zona America/Mexico_City, lectura de pendientes y transición a VENCIDO solo de propuestas simuladas cuya fecha venció. Comparación condicional al actualizar: ID, folio, versión, estado pendiente, decisión vacía, vencimiento y propuesta original idénticos. No usa modelos ni Telegram; no aprueba, reserva, libera ni modifica presupuesto financiero. No interviene en casos reales.
+`exports/Lincoln_Vencimientos_Programados_PUBLICO.json`: Schedule Trigger diario a las 09:00 America/Mexico_City (`0 9 * * *`). Publicado el 26/nov/2026 como Lincoln | Vencimientos diarios 09h. Se eligió una ejecución diaria para cuidar la cuota de n8n; la guía no fija frecuencia. El export permanece inactivo al importarlo y exige asociar la tabla de casos.
 
-El selector evita fechas inválidas, propuestas corruptas y aprobaciones existentes. Repetir una transición no genera otra. La actualización compara la instantánea, para no sobrescribir una decisión concurrente. Hay que comprobar en el servicio la transición y la ausencia de filas actualizadas cuando cambie la instantánea. El registro de ejecuciones de n8n conserva la evidencia; el JSON de la propuesta añade fecha e ID de vencimiento.
-
-**Estado: export candidato, inactivo; no programado en la cuenta todavía.** La guía menciona una tarea programada sin fijar frecuencia. Cinco minutos limita a aproximadamente cinco minutos la demora de marcado, sujeto al funcionamiento del servicio. Consume ejecuciones de n8n, aunque no tokens; durante la demostración puede probarse manualmente antes de activar el horario. No dejarlo activo indefinidamente durante una prueba gratuita.
+Prueba nativa: LIN-53-1, fila 6, versión 1 pasó de PENDIENTE_APROBACION a VENCIDO, ID VENCIMIENTO:LIN-53-1:1. La repetición con la misma instantánea produjo cero filas actualizadas. La comparación condicional incluye ID, folio, versión, estado pendiente, decisión vacía, vencimiento y propuesta original idénticos. Solo casos simulados vencidos. No utiliza modelos ni Telegram ni modifica presupuestos. Configuración nativa: ejecución v1, zona México y acceso MCP deshabilitado. Se probó manualmente la lógica; el primer disparo horario queda pendiente de observación.
 
 ## Orden de cierre
 
-1. Importar v05 como candidato sin publicar otro Telegram Trigger; configurar referencias de tablas y credenciales existentes.
-2. Importar tarea programada, asociar tabla de casos, probar sin modelos y activar su horario solo tras verificar filtros.
+1. v05 ya publicado con Telegram habilitado; verificar /start desde la cuenta autorizada, sin consumir modelos.
+2. Tarea diaria ya publicada; conservar prueba de transición e idempotencia y verificar posteriormente el primer disparo horario.
 3. Integrar guardián/deduplicación y consulta `/estado`; ejecutar la matriz de pruebas con evidencia real de al menos tres casos completos y un error/rechazo.
 4. Exportar configuración actual de ElevenLabs y completar prueba de voz enlazada al caso, accesibilidad y pantalla móvil.
 5. Completar costos medidos y estimados separados, informe, reflexión personal y manifiesto del mismo commit.
 6. Sofía graba video y realiza defensa; descargar ZIP final únicamente después de Actions correcto y comprobar que coincide con el commit del informe.
 
-## Intervención concreta necesaria para continuar en las cuentas
+## Intervención concreta
 
-En esta sesión no hay herramienta de navegador conectada a n8n o ElevenLabs. Para editar sus configuraciones hace falta restablecer el navegador compartido. Los enlaces por sí solos no conceden control de una sesión autenticada. Los candidatos y pruebas locales pueden completarse sin ese acceso y sin gastar créditos Gateway.
+Enviar `/start` al bot para comprobar la ruta real de Telegram; no enviar otra solicitud completa mientras se revisa consumo Gateway. La grabación individual y reflexión personal corresponden a Sofía. No hace falta volver a compartir credenciales ni importar otra copia del workflow.

@@ -1,0 +1,102 @@
+{
+  "fecha_utc": "2026-11-26",
+  "alcance": "OBSERVACION_NATIVA_UI_N8N; no es prueba de todos los requisitos de entrega",
+  "workflow": "PGq4bRn2ehAy6YHt",
+  "publicacion": {
+    "observada": true,
+    "version": "Lincoln v05 prueba 56 y Telegram",
+    "telegram_habilitado": true,
+    "respuesta_start_pendiente": true
+  },
+  "ejecuciones": [
+    {
+      "id": "55",
+      "caso_id": "LIN-55-1",
+      "estado_tecnico": "Success",
+      "duracion": "1m42.616s",
+      "resultado_negocio": "DETENIDO_EN_CALCULO",
+      "error": "Received tool input did not match expected schema: Unrecognized key(s) in object: skills_cargados",
+      "correccion": "Metadata opcional tipada en esquema; additionalProperties:false conservado; no se ampliaron parámetros financieros",
+      "tokens_estimados_orquestador": 24044,
+      "costo_real_usd": null
+    },
+    {
+      "id": "56",
+      "caso_id": "LIN-56-1",
+      "estado_tecnico": "Success",
+      "duracion": "2m14.711s",
+      "agentes_completados": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "calcular_propuesta_llamadas_correctas": 1,
+      "calcular_propuesta_duracion": "1.636s",
+      "revision": "APROBAR_REVISION",
+      "control_determinista": {
+        "ok": true,
+        "version": "0.4",
+        "traza": [
+          {
+            "vuelta": 1,
+            "ok": true,
+            "errores": []
+          }
+        ],
+        "aprobacion_humana": false,
+        "modifica_presupuesto": false
+      },
+      "registro_observado": {
+        "id": 9,
+        "estado": "PENDIENTE_APROBACION",
+        "createdAt": "2026-11-26T23:33:42.806Z",
+        "vence_en": "2026-11-27T00:02:00.123Z",
+        "seguimiento_determinista_guardar": "1.134s"
+      },
+      "datos_sinteticos_mxn_antes_iva": {
+        "inversion": 400000,
+        "apoyo_lincoln": 200000,
+        "distribuidor": 200000,
+        "saldo_proyectado": 450000
+      },
+      "skill_revisor_hash_devuelto": "e06e069048e0f94b4c6d60b9b8caee2a4cebf890b724424b31746501c772cbbc",
+      "skill_proponente_hash_devuelto": null,
+      "limitacion": "El proponente omitió metadata; el registro de configuración se corrigió después y no se reinsertó el caso para evitar duplicados",
+      "costo_real_usd": null
+    }
+  ],
+  "tarea": {
+    "workflow": "pWP5V4Tjp5X6VkPo",
+    "nombre": "Lincoln | Vencimientos diarios 09h",
+    "publicada": true,
+    "cron": "0 9 * * *",
+    "timezone": "America/Mexico_City",
+    "executionOrder": "v1",
+    "availableInMCP": false,
+    "primera_ejecucion_horaria_observada": false,
+    "prueba_manual": {
+      "caso_id": "LIN-53-1",
+      "fila": 6,
+      "version": "1",
+      "estado": "VENCIDO",
+      "decision_id": "VENCIMIENTO:LIN-53-1:1",
+      "fecha_transicion": "2026-11-26T23:30:34.097Z",
+      "updatedAt": "2026-11-26T23:30:50.522Z",
+      "repeticion_filas_actualizadas": 0,
+      "repeticion_estado": "Success",
+      "repeticion_duracion": "791ms"
+    },
+    "modifica_presupuesto": false,
+    "usa_modelos": false
+  },
+  "pendientes": [
+    "Respuesta Telegram /start",
+    "Deduplicación persistente anterior al modelo y guardián monetario nativo",
+    "Tres casos distintos completos",
+    "V1 errónea a V2 corregida en flujo operativo",
+    "Costos medidos por llamada",
+    "Export final ElevenLabs y QA accesibilidad",
+    "Grabación individual"
+  ]
+}
