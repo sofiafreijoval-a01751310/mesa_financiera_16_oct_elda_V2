@@ -40,7 +40,7 @@ Prueba nativa: LIN-53-1, fila 6, versión 1 pasó de PENDIENTE_APROBACION a VENC
 
 1. v05 ya publicado con Telegram habilitado; verificar /start desde la cuenta autorizada, sin consumir modelos.
 2. Tarea diaria ya publicada; conservar prueba de transición e idempotencia y verificar posteriormente el primer disparo horario.
-3. Integrar guardián/deduplicación y consulta `/estado`; ejecutar la matriz de pruebas con evidencia real de al menos tres casos completos y un error/rechazo.
+3. Consulta `/estado FOLIO VERSION` publicada y probada localmente; falta prueba nativa de Telegram. Integrar guardián/deduplicación; ejecutar la matriz de pruebas con evidencia real de al menos tres casos completos y un error/rechazo.
 4. Exportar configuración actual de ElevenLabs y completar prueba de voz enlazada al caso, accesibilidad y pantalla móvil.
 5. Completar costos medidos y estimados separados, informe, reflexión personal y manifiesto del mismo commit.
 6. Sofía graba video y realiza defensa; descargar ZIP final únicamente después de Actions correcto y comprobar que coincide con el commit del informe.

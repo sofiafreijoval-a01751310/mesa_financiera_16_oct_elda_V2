@@ -1,7 +1,7 @@
 {
-  "fecha_utc": "2026-11-26T23:39:24.933Z",
+  "fecha_utc": "2026-11-26T23:42:31.225Z",
   "alcance": "LOCAL; no acredita importación, publicación ni ejecución nativa del Schedule Trigger o v05",
-  "passed": 19,
+  "passed": 23,
   "tests": [
     "Skill válido calcula 50/50",
     "Skill limita Chiapas al saldo",
@@ -16,6 +16,10 @@
     "No vence propuesta_json {",
     "No modifica casos reales",
     "Vencimiento repetido no duplica transición",
+    "Estado usa ruta de lectura sin modelo",
+    "Estado rechaza formato y usuario ajeno",
+    "Estado vencido informa sin escribir ni aprobar",
+    "Estado no revela folios de otro dueño o duplicados",
     "Adapter carga dos instrucciones reales y hashes",
     "Candidatos inactivos sin credenciales",
     "Schedule diario 09h sin modelos ni Telegram",

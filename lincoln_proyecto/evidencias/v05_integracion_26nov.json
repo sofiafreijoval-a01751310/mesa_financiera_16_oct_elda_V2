@@ -4,7 +4,7 @@
   "workflow": "PGq4bRn2ehAy6YHt",
   "publicacion": {
     "observada": true,
-    "version": "Lincoln v05 prueba 56 y Telegram",
+    "version": "Lincoln v05 consulta estado sin IA",
     "telegram_habilitado": true,
     "respuesta_start_pendiente": true
   },
@@ -98,5 +98,18 @@
     "Costos medidos por llamada",
     "Export final ElevenLabs y QA accesibilidad",
     "Grabación individual"
-  ]
+  ],
+  "consulta_estado": {
+    "comando": "/estado FOLIO VERSION",
+    "configurada_y_publicada": true,
+    "verificada_nativamente_por_telegram": false,
+    "pruebas_locales": [
+      "ruta sin modelo",
+      "formato y usuario",
+      "vencido solo lectura",
+      "dueño y duplicados"
+    ]
+  },
+  "gateway_saldo_observado_usd": 1.3,
+  "gateway_saldo_alcance": "Saldo visible agregado; no factura ni costo por llamada"
 }

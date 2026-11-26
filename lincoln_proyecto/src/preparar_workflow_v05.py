@@ -21,6 +21,24 @@ for private in [False,True]:
    n['parameters']['inputSchema']=json.dumps(schema,ensure_ascii=False,indent=2)
   if n['name']=='Preparar registro del caso':
    n['parameters']['jsCode']=n['parameters']['jsCode'].replace('caso_original:original,resultado,aprobacion_humana:false','caso_original:original,resultado,skills_configurados:$("Registrar skills cargados").first().json.skills_cargados,evidencia_skills:"INSTRUCCIONES_EMBEBIDAS_EN_PROMPTS; NO_EQUIVALE_A_VALIDACION_DEL_MODELO",aprobacion_humana:false')
+  if n['name']=='Validar entrada Telegram':
+   branch=''' else if(/^\\/(estado)(?:@\\w+)?(?:\\s|$)/i.test(texto)){
+  const c=texto.match(/^\\/estado(?:@\\w+)?\\s+(LIN-\\d+-\\d+)\\s+([1-9]\\d*)$/i);
+  if(!c){ruta="RESPONDER";respuesta="Formato: /estado LIN-25-1 1. Incluye folio y versión.";}
+  else {ruta="DECIDIR";decision={accion:"estado",caso_id:c[1].toUpperCase(),version:c[2],decision_id:String(e.update_id??"")};}
+ }
+'''
+   n['parameters']['jsCode']=n['parameters']['jsCode'].replace(' else if(/^\\/(aprobar|rechazar)',branch+' else if(/^\\/(aprobar|rechazar)').replace('Para decidir usa /aprobar','Para consultar usa /estado FOLIO VERSION. Para decidir usa /aprobar')
+  if n['name']=='Validar decisión humana':
+   anchor='if(r.estado!=="PENDIENTE_APROBACION"||r.decision_id)'
+   branch='''if(d.accion==="estado"){
+ const estados=["PENDIENTE_APROBACION","APROBADO_SIMULADO","RECHAZADO","VENCIDO","REQUIERE_ACLARACION","DETENIDO"];
+ if(!estados.includes(r.estado))return [{json:base}];
+ const vence=Date.parse(r.vence_en),vencido=r.estado==="PENDIENTE_APROBACION"&&Number.isFinite(vence)&&Date.now()>=vence;
+ return [{json:{...base,respuesta:"Consulta de solo lectura. Caso "+r.caso_id+", versión "+r.version_propuesta+", estado registrado: "+r.estado+(vencido?". Su vigencia ya terminó; no puede aprobarse":"")+". Simulación académica; sin cambios de presupuesto."}}];
+}
+'''
+   n['parameters']['jsCode']=n['parameters']['jsCode'].replace(anchor,branch+anchor)
  meta=[{k:v for k,v in x.items() if k!='instrucciones'} for x in metadata]
  w['nodes'].append(node('Registrar skills cargados','n8n-nodes-base.code',{'jsCode':'const skills='+json.dumps(meta,ensure_ascii=False)+';return $input.all().map((i,index)=>({json:{...i.json,skills_cargados:skills},pairedItem:{item:index}}));'},[800,-160]))
  edge(w,'Inicializar caso','Registrar skills cargados');edge(w,'Registrar skills cargados','Orquestador Lincoln')

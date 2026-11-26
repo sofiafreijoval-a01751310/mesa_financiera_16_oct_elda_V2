@@ -16,6 +16,15 @@ for(const [field,value]of [['estado','APROBADO_SIMULADO'],['decision_id','decisi
 t('No modifica casos reales',()=>{let r=row(),p=JSON.parse(r.propuesta_json);p.caso_original.modo='REAL';r.propuesta_json=JSON.stringify(p);assert.equal(run([r],now).length,0);});
 t('Vencimiento repetido no duplica transición',()=>{const o=run([row()],now);assert.equal(run(o,now).length,0);});
 const w=JSON.parse(read('exports/Lincoln_Apoyos_v05_PUBLICO.json')),s=JSON.parse(read('exports/Lincoln_Vencimientos_Programados_PUBLICO.json'));
+const tgCode=w.nodes.find(n=>n.name==='Validar entrada Telegram').parameters.jsCode;
+const tg=(text,id=1000000001)=>new Function('$input',tgCode)({all:()=>[{json:{update_id:91,message:{text,from:{id,is_bot:false},chat:{id,type:'private'}}}}]})[0].json;
+t('Estado usa ruta de lectura sin modelo',()=>{const e=tg('/estado LIN-56-1 1');assert.equal(e.ruta,'DECIDIR');assert.equal(e.decision.accion,'estado');assert.equal(e.decision.caso_id,'LIN-56-1');});
+t('Estado rechaza formato y usuario ajeno',()=>{assert.equal(tg('/estado LIN-56-1').ruta,'RESPONDER');assert.equal(tg('/estado LIN-56-1 1',1000000002).ruta,'NO_AUTORIZADO');});
+const estadoCode=w.nodes.find(n=>n.name==='Validar decisión humana').parameters.jsCode;
+const consultar=(rows,entrada=tg('/estado LIN-56-1 1'))=>new Function('$input','$',estadoCode)({all:()=>rows.map(json=>({json}))},()=>({first:()=>({json:entrada})}))[0].json;
+const consultaRow={id:9,caso_id:'LIN-56-1',usuario:'1000000001',version_propuesta:'1',estado:'PENDIENTE_APROBACION',decision_id:'',vence_en:'2020-01-01T00:00:00Z'};
+t('Estado vencido informa sin escribir ni aprobar',()=>{const o=consultar([consultaRow]);assert.equal(o.aplicar,false);assert(o.respuesta.includes('vigencia ya terminó'));assert(!('propuesta_json' in o));assert.equal(consultaRow.estado,'PENDIENTE_APROBACION');});
+t('Estado no revela folios de otro dueño o duplicados',()=>{assert(!consultar([{...consultaRow,usuario:'otro'}]).respuesta.includes('PENDIENTE_APROBACION'));assert(consultar([consultaRow,consultaRow]).respuesta.includes('no es único'));});
 t('Adapter carga dos instrucciones reales y hashes',()=>{for(const name of ['preparar-apoyo-lincoln','revisar-apoyo-lincoln'])assert(JSON.stringify(w).includes(read('skills/'+name+'/SKILL.md').slice(0,100).replaceAll('\n','\\n')));assert(w.nodes.some(n=>n.name==='Registrar skills cargados'));});
 t('Candidatos inactivos sin credenciales',()=>{assert.equal(w.active,false);assert.equal(s.active,false);assert([...w.nodes,...s.nodes].every(n=>!n.credentials));});
 t('Schedule diario 09h sin modelos ni Telegram',()=>{assert.equal(s.nodes[0].parameters.rule.interval[0].expression,'0 9 * * *');assert.equal(s.settings.timezone,'America/Mexico_City');assert(s.nodes.every(n=>!(/langchain|telegram/i.test(n.type))));});
