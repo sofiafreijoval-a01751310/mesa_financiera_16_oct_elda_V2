@@ -1,4 +1,4 @@
-# Adaptador de admisión y modelos v07 — inactivo
+# Adaptador de admisión y modelos v07 — export inactivo, versión nativa publicada
 
 Este export conserva Telegram, los cuatro especialistas, la revisión versionada y la decisión humana. Antes de cualquier modelo, intenta admitir el evento en el proxy. Solo una respuesta HTTP200 con `ok:true`, `admitido:true` y el mismo folio permite continuar. Un fallo, folio ajeno o repetición devuelve un aviso seguro y no crea otro registro del caso.
 
@@ -10,9 +10,9 @@ Si el orquestador o el contrato de respuesta fallan, el caso se detiene con un m
 
 ## Estado y activación pendiente
 
-El adaptador está importado como candidato inactivo; el bot publicado sigue en Gateway. Los cinco modelos ya seleccionan Lincoln Proxy Cliente con Responses API desactivada. La selección de credenciales, la disponibilidad/calidad del modelo, la compatibilidad SDK/SSE y la concurrencia CAS requieren pruebas en n8n antes de sustituir la ruta publicada. El export público no contiene credenciales ni datos fijados. Cada llamada al proxy agrega una ejecución n8n.
+El adaptador se importó primero inactivo; la versión nativa fue publicada después de las pruebas123 y136. Los cinco modelos ya seleccionan Lincoln Proxy Cliente con Responses API desactivada. Las credenciales y la compatibilidad SDK/SSE pasaron la evaluación123. La prueba136 cubre un lote duplicado; falta carga amplia y nueva recepción Telegram. El export público no contiene credenciales ni datos fijados. Cada llamada al proxy agrega una ejecución n8n.
 
-El26/nov se observó la credencial OpenAI seleccionada en el nodo servidor y se verificaron los cuatro enlaces a la tabla privada. La prueba mínima81 sí acreditó reserva previa y conciliación de19 tokens de entrada y1 de salida. La autenticación cliente/servidor se corrigió después: el caso87 pasó el primer especialista, pero se detuvo por formato de historial;92 reprodujo el bloqueo. El proxy ya normaliza assistant con tool_calls y contenido ausente o array vacío, y bloques exclusivamente textuales. El caso97 pasó además las tres fuentes y alcanzó propuesta/revisión; el calculador rechazó metadatos de transporte nuevos. Se corrigió el esquema sin relajar importes. La evaluación manual123 sí pasó: cuatro especialistas, transferencia observada y revisión determinista V1→V2; registro21 pendiente de aprobación. Sus11 llamadas conciliadas suman USD0.007041300 a tarifa estándar, sin infraestructura ni voz. Fuente: evidencias/v07_integracion_27nov.json y costos/consumo_proxy_27nov.csv. Ninguna de estas observaciones certifica todavía concurrencia CAS ni un límite monetario activo en el bot Gateway.
+El26/nov se observó la credencial OpenAI seleccionada en el nodo servidor y se verificaron los cuatro enlaces a la tabla privada. La prueba mínima81 sí acreditó reserva previa y conciliación de19 tokens de entrada y1 de salida. La autenticación cliente/servidor se corrigió después: el caso87 pasó el primer especialista, pero se detuvo por formato de historial;92 reprodujo el bloqueo. El proxy ya normaliza assistant con tool_calls y contenido ausente o array vacío, y bloques exclusivamente textuales. El caso97 pasó además las tres fuentes y alcanzó propuesta/revisión; el calculador rechazó metadatos de transporte nuevos. Se corrigió el esquema sin relajar importes. La evaluación manual123 sí pasó: cuatro especialistas, transferencia observada y revisión determinista V1→V2; registro21 pendiente de aprobación. Sus11 llamadas conciliadas suman USD0.007041300 a tarifa estándar, sin infraestructura ni voz. Fuente: evidencias/v07_integracion_27nov.json y costos/consumo_proxy_27nov.csv. Ninguna de estas observaciones certifica todavía concurrencia CAS ni toda condición de concurrencia remota.
 
 Validación local: `node tests/test_admission_v07.cjs` comprueba admisión, bloqueo de respuestas ambiguas, ausencia de camino hacia modelos o registro en la rama denegada y sanitización de errores. No certifica las credenciales ni sustituye las pruebas vivas.
 
@@ -20,3 +20,9 @@ Validación local: `node tests/test_admission_v07.cjs` comprueba admisión, bloq
 Los metadatos control_admitido, control_estado y respuesta_control se admiten exclusivamente como transporte. La etiqueta skills_cargados.carga no es evidencia de uso ni autorización; el cálculo la ignora. Los hashes e instrucciones configurados se registran separadamente.
 
 La salida final usa Return Intermediate Steps: reconstruye exclusivamente observaciones de herramientas ejecutadas, con folio/rol/estado y orden verificados. El contrato original sigue validando audiencia y datos; una traza incompleta, ajena o adversa detiene el caso. No se guardan pensamientos del modelo ni se convierte una revisión técnica en aprobación humana.
+
+## Publicación y prueba negativa27/nov
+
+La prueba136 envió un lote HTTP de3peticiones:409 LIMITE_COSTO con11reservas sintéticas previas,200 ADMITIDO y409 DUPLICADO para las dos admisiones del mismo evento. No invocó al proveedor. El fixture permanece marcado y no se contabiliza como consumo real. Esto verifica el lote ensayado, no toda concurrencia posible.
+
+Se despublicó la ruta Gateway anterior y se publicó la versión nativa Lincoln v07 OpenAI protegido - prueba123 y136. La interfaz confirmó que escucha eventos de Telegram. Pendiente una entrada nueva desde la cuenta autorizada de Sofía. El export público conserva active:false, sin credenciales.

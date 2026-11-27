@@ -59,3 +59,7 @@ El26/nov se publicó Lincoln v06 revisión versionada en el workflow operativo e
 La ejecución manual123 completó los cuatro especialistas vía proxy protegido, con transferencia reconstruida desde observaciones reales. El loop determinista pasó de V1 con indicadores faltantes a V2 correcta y guardó registro21 PENDIENTE_APROBACION:200000MXN Lincoln,200000distribuidor, saldo450000. Sin aprobación humana ni cambios de presupuesto. Sus11 llamadas quedaron CONCILIADO:30414tokens entrada,4132salida, USD0.007041300 a tarifa estándar. No incluye infraestructura/voz/factura. Ver evidencias/v07_integracion_27nov.json y costos/consumo_proxy_27nov.csv.
 
 Esto acredita V1→V2 dentro del candidato manual real, no un evento nuevo de Telegram. El bot publicado sigue Gateway; faltan concurrencia CAS nativa, bloqueo monetario negativo nativo, migración controlada y nueva entrada Telegram. Las secciones anteriores conservan sus observaciones históricas.
+
+### Cierre de pruebas negativas y publicación27/nov
+
+136 pasó: lote3, corte LIMITE_COSTO previo al proveedor y admisión única frente a duplicado.11reservas de fixture están marcadas como sintéticas y no son cargos. Se despublicó Gateway y se activó v07; la interfaz confirmó escucha de Telegram. Pendiente entrada nueva de Sofía y pruebas de carga amplias. Ver evidencias/guard_negativo_27nov.json.

@@ -28,7 +28,7 @@ Resultado esperado: base consistente; pruebas Python y JavaScript satisfactorias
 - `costos/`:conteos medidos de texto estático, supuestos, tarifas y estimaciones.
 - `docs/`:costos, ciberseguridad, loops, VizData y pendientes de cierre.
 
-No importar el export sobre un flujo activo sin configurar credenciales/tablas/identidad:es copia pública para revisión. El proxy protegido está publicado para pruebas; el adaptador v07 manual pasó en123, pero el bot publicado conserva Gateway. Los controles financieros requieren una cota máxima por llamada calculada en servidor y una reserva transaccional antes del modelo. El gasto completo por request no está conciliado; sí existen observaciones parciales de Gateway y una llamada de voz.
+No importar el export sobre un flujo activo sin configurar credenciales/tablas/identidad:es copia pública para revisión. El proxy protegido está publicado para pruebas; el adaptador v07 pasó en123 y se publicó tras la prueba negativa136. Los controles financieros requieren una cota máxima por llamada calculada en servidor y una reserva transaccional antes del modelo. El uso por request de123 está conciliado a tarifa estándar; siguen pendientes la factura histórica total, infraestructura y voz.
 
 El tokenizador binario original permanece en la instalación personal de cotizar-tokens-ia. Su salida medida se conserva con hashes. El script cotizar.py copiado reproduce los cálculos por las entradas JSON, sin necesitar el tokenizador.
 
@@ -60,4 +60,4 @@ Consultar docs/Entrega_y_cierre_25nov.md, tests/pruebas.csv y evidencias/v05_int
 
 La revisión versionada v06 se publicó sobre el workflow vigente; conserva fuentes y aprobación humana. El export v06 es inactivo al importar.44pruebas locales; ensayo integral nuevo pendiente. Ver docs/Workflow_v06.md.
 
-Alternativa con API propia: docs/Proxy_OpenAI_CANDIDATO.md. Proxy protegido publicado; evaluación manual123 correcta con11 llamadas conciliadas y revisión V1→V2. Falta verificar concurrencia CAS y migrar el bot. Ver evidencias/v07_integracion_27nov.json.
+Alternativa con API propia: docs/Proxy_OpenAI_CANDIDATO.md. Proxy protegido publicado; evaluación manual123 correcta con11 llamadas conciliadas y revisión V1→V2. La prueba136 verificó corte por cota y duplicados en un lote de3peticiones. Versión nativa v07 publicada; falta nueva entrada Telegram y pruebas de carga amplias. Ver evidencias/v07_integracion_27nov.json.

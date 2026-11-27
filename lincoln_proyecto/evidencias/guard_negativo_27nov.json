@@ -1,0 +1,44 @@
+{
+  "fecha_local": "2026-11-27",
+  "zona": "America/Mexico_City",
+  "ejecucion": "136",
+  "duracion_segundos": 3.49,
+  "workflow": "Prueba manual aislada SIN MODELOS, inactiva",
+  "lote_http": {
+    "items_per_batch": 3,
+    "batch_interval_ms": 0,
+    "duracion_ms": 868
+  },
+  "caso_cota": "LIN-136000-1",
+  "caso_duplicado": "LIN-136001-1",
+  "fixture": {
+    "reservas_sinteticas": 11,
+    "usd_reservado_por_fixture": 0.2382336,
+    "no_es_consumo": true,
+    "nota": "Reservas TEST_BUDGET marcadas RESERVA_SINTETICA_SIN_LLAMADA_API; no añadidas al CSV de consumo real."
+  },
+  "resultados": [
+    {
+      "status": 409,
+      "code": "LIMITE_COSTO"
+    },
+    {
+      "status": 200,
+      "code": "ADMITIDO"
+    },
+    {
+      "status": 409,
+      "code": "DUPLICADO"
+    }
+  ],
+  "ok": true,
+  "llamadas_proveedor": 0,
+  "alcance": "Tres peticiones del mismo lote HTTP nativo; una admisión y una denegación para el mismo evento. No certifica toda concurrencia posible ni prueba de carga general.",
+  "publicacion_bot": {
+    "version": "Lincoln v07 OpenAI protegido - prueba123 y136",
+    "workflow": "CuEemQjP0jbKACLG",
+    "verificacion_ui": "Published deshabilitado y diálogo confirma que escucha eventos Telegram",
+    "anterior": "PGq4bRn2ehAy6YHt despublicado antes de activar el nuevo",
+    "nueva_entrada_telegram": "PENDIENTE_DE_USUARIA"
+  }
+}
