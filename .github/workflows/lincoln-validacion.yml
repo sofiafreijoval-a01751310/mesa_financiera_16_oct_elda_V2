@@ -40,6 +40,7 @@ jobs:
       - run: node tests/test_preparacion_programada.cjs
       - run: node tests/test_workflow_v06.cjs
       - run: node tests/test_guard_proxy.cjs
+      - run: node tests/test_admission_v07.cjs
       - run: python3 src/validar_paquete.py
   publicar:
     needs: validar

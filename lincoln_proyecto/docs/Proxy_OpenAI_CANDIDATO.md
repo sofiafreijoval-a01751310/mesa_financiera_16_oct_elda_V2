@@ -1,6 +1,6 @@
 # Alternativa OpenAI: candidato para revisión y conexión
 
-Sofía confirmó que dispone de API OpenAI con saldo. Este candidato aún no está activo: no se hicieron llamadas a su API ni se guardó su clave. El bot publicado conserva Gateway.
+Sofía confirmó que dispone de API OpenAI con saldo. Este candidato aún no está activo. La usuaria guardó su clave privadamente y se observó la credencial seleccionada. Una prueba manual aislada en n8n llamó a OpenAI tras una reserva y concilió `usage`; el bot publicado conserva Gateway.
 
 ## Diseño preparado
 
@@ -29,7 +29,7 @@ Fuentes oficiales revisadas26/nov/2026:
 1. Crear tabla y semilla, asociarla a las cuatro operaciones de lectura/actualización. El JSON público contiene únicamente un marcador de tabla.
 2. En `OpenAI controlado`, Sofía guarda su API Key en una credencial OpenAI con URL oficial. Esa entrada debe realizarla ella en la interfaz; no pegar la clave en el chat.
 3. Configurar un secreto exclusivo para el proxy en Header Auth y la credencial cliente OpenAI compatible. El cliente apunta al webhook del proxy y añade `X-Lincoln-Case` con el folio generado por el servidor. Esta protección nueva debe revisarse antes de publicar el endpoint.
-4. Preparar el adaptador del flujo principal: admisión del evento, todos los modelos a través del proxy, sin reintentos automáticos y respuesta segura de bloqueo. Este adaptador sigue pendiente; no cambiar un solo modelo dejando otros fuera del guardián.
+4. Preparar el adaptador del flujo principal: admisión del evento, todos los modelos a través del proxy, sin reintentos automáticos y respuesta segura de bloqueo. El candidato v07 está preparado y probado localmente, todavía sin importar ni publicar; no cambiar un solo modelo dejando otros fuera del guardián.
 5. Probar CAS simultáneo, fallo/timeout y costo antes de una evaluación completa. Después comprobar calidad y conservación del folio en Telegram/voz. Solo entonces activar y actualizar la matriz.
 
 ## Evidencia actual
@@ -37,3 +37,7 @@ Fuentes oficiales revisadas26/nov/2026:
 `tests/test_guard_proxy.cjs`:21pruebas locales del planificador. Prueban esquema, admisión, presupuesto, reservas sin conciliar, conciliación, límites, incertidumbre y respuesta compatible. No ejecutan peticiones reales ni certifican atomicidad de DataTable.
 
 `exports/Lincoln_Proxy_OpenAI_CANDIDATO_PUBLICO.json`:26nodos, inactivo, sin credenciales y sin datos fijados. No debe presentarse como integración terminada. Cada invocación del proxy consume una ejecución adicional de n8n; medir la cuota y la latencia antes de escalar.
+
+## Prueba aislada en n8n del26/nov
+
+La ejecución80 admitió el evento sintético `manual:900001`. La81 reservó USD0.0216576, llamó al snapshot configurado y concilió19tokens de entrada y1de salida: USD0.00000345 a tarifa estándar, no factura. La82 rechazó la misma admisión con `DUPLICADO`, sin llegar al nodo OpenAI. Se usó un workflow privado de diagnóstico, sin webhooks públicos; no prueba todavía la ruta HTTP publicada, el SDK de los agentes ni la concurrencia real. Véase `evidencias/proxy_prueba_nativa_26nov.json`.

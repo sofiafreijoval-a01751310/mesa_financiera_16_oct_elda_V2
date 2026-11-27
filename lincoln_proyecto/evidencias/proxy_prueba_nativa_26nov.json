@@ -1,0 +1,13 @@
+{
+  "fecha_local": "2026-11-26",
+  "zona": "America/Mexico_City",
+  "entorno": "n8n, workflow manual privado de diagnóstico, sin webhooks publicados",
+  "observacion": "Datos vistos en los nodos de la interfaz; no exportación de ejecución persistida",
+  "caso_sintetico": "LIN-900001-1",
+  "pruebas": [
+    {"ejecucion": "80", "tipo": "admitir", "resultado": "Reserva propia ok true, ruta Responder admisión", "duracion_segundos": 2.167, "llamadas_openai": 0},
+    {"ejecucion": "81", "tipo": "llamada mínima", "resultado": "CONCILIADO", "duracion_segundos": 4.299, "reserva_previa_usd": 0.0216576, "modelo": "gpt-4o-mini-2024-07-18", "prompt_tokens": 19, "completion_tokens": 1, "costo_usd_tarifa_estandar": 0.00000345, "tipo_costo": "USAGE_X_TARIFA_ESTANDAR_NO_FACTURA", "reserva_creada_utc": "2026-11-27T04:43:26.151Z", "conciliada_utc": "2026-11-27T04:43:27.831Z", "llamadas_openai": 1},
+    {"ejecucion": "82", "tipo": "misma admisión repetida", "resultado": "DUPLICADO", "status_logico": 409, "duracion_segundos": 2.29, "llamadas_openai": 0}
+  ],
+  "limitaciones": ["No prueba concurrencia CAS simultánea", "No prueba proxy publicado con Header Auth", "No prueba los cinco modelos del flujo principal", "No acredita deduplicación general del bot Gateway", "No es gasto de factura ni costo completo del proyecto"]
+}
