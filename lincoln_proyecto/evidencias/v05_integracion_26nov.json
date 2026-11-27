@@ -4,7 +4,7 @@
   "workflow": "PGq4bRn2ehAy6YHt",
   "publicacion": {
     "observada": true,
-    "version": "Lincoln v05 contrato Telegram corregido",
+    "version": "Lincoln v05 respuesta Telegram literal",
     "telegram_habilitado": true,
     "respuesta_start_pendiente": false
   },
@@ -232,6 +232,15 @@
       "respuesta": "Consulta de solo lectura. Caso LIN-34-1, versión 1, estado registrado: APROBADO_SIMULADO. Simulación académica; sin cambios de presupuesto.",
       "confirmacion": "Respuesta aportada por Sofía el26nov después de prueba con bot vigente",
       "alcance": "Lectura de caso histórico propio. No acredita solicitud completa nueva por Telegram ni cambia aprobación previa."
+    },
+    "consulta_positiva_72": {
+      "entrada": "/estado LIN-72-1 1",
+      "confirmacion": "Respuesta textual aportada por Sofía en este chat el26nov",
+      "estado_reportado": "PENDIENTE_APROBACION",
+      "respuesta": "Consulta de solo lectura. Caso LIN-72-1, versión 1, estado registrado: PENDIENTE_APROBACION. Simulación académica; sin cambios de presupuesto.",
+      "nota": "El pegado trae cursivas en guiones bajos. Se publicó modoHTML explícito y escape&,<,>; nueva recepción visual aún no confirmada.",
+      "modelo_invocado": false,
+      "escrituras": false
     }
   },
   "gateway_saldo_observado_usd": 1.3,

@@ -1,7 +1,7 @@
 {
-  "fecha_utc": "2026-11-27T00:36:55.804Z",
+  "fecha_utc": "2026-11-27T00:50:33.038Z",
   "alcance": "LOCAL; no acredita importación, publicación ni ejecución nativa del Schedule Trigger o v05",
-  "passed": 25,
+  "passed": 26,
   "tests": [
     "Skill válido calcula 50/50",
     "Skill limita Chiapas al saldo",
@@ -27,6 +27,7 @@
     "Schedule diario 09h sin modelos ni Telegram",
     "Metadatos de skills admitidos sin abrir contrato financiero",
     "Registro conserva configuración sin atribuir validación al modelo",
-    "Update exige instantánea y estado pendientes"
+    "Update exige instantánea y estado pendientes",
+    "Respuesta conserva comando y escapa HTML no confiable"
   ]
 }

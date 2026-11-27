@@ -502,8 +502,10 @@
     {
       "parameters": {
         "chatId": "={{ (()=>{const e=$(\"Validar entrada Telegram\").first().json;if(e.autorizado!==true||!e.chat_id)throw new Error(\"Destinatario no autorizado\");return e.chat_id;})() }}",
-        "text": "={{ (()=>{if(typeof $json.respuesta===\"string\" && $json.respuesta)return $json.respuesta;const v=$(\"Validar decisión humana\").first().json;if($json.id===v.id && $json.estado===v.estado && String($json.decision_id)===v.decision_id)return v.respuesta.replaceAll(\"_\",\" \");return \"La decisión no se aplicó: el registro cambió o ya fue atendido. No se realizó otro cambio.\";})() }}",
-        "additionalFields": {}
+        "text": "={{ ((s)=>String(s).replaceAll(\"&\",\"&amp;\").replaceAll(\"<\",\"&lt;\").replaceAll(\">\",\"&gt;\"))((()=>{if(typeof $json.respuesta===\"string\" && $json.respuesta)return $json.respuesta;const v=$(\"Validar decisión humana\").first().json;if($json.id===v.id && $json.estado===v.estado && String($json.decision_id)===v.decision_id)return v.respuesta;return \"La decisión no se aplicó: el registro cambió o ya fue atendido. No se realizó otro cambio.\";})()) }}",
+        "additionalFields": {
+          "parse_mode": "HTML"
+        }
       },
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,

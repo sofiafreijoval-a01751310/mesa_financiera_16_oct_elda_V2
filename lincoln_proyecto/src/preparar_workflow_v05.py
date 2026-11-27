@@ -31,6 +31,10 @@ for private in [False,True]:
  }
 '''
    n['parameters']['jsCode']=n['parameters']['jsCode'].replace(' else if(/^\\/(aprobar|rechazar)',branch+' else if(/^\\/(aprobar|rechazar)').replace('Para decidir usa /aprobar','Para consultar usa /estado FOLIO VERSION. Para decidir usa /aprobar')
+  if n['name']=='Responder instrucciones Telegram':
+   text=n['parameters']['text'].removeprefix('={{').removesuffix('}}').strip().replace('v.respuesta.replaceAll("_"," ")','v.respuesta')
+   n['parameters']['text']='={{ ((s)=>String(s).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;"))('+text+') }}'
+   n['parameters'].setdefault('additionalFields',{})['parse_mode']='HTML'
   if n['name']=='Validar decisión humana':
    anchor='if(r.estado!=="PENDIENTE_APROBACION"||r.decision_id)'
    branch='''if(d.accion==="estado"){
