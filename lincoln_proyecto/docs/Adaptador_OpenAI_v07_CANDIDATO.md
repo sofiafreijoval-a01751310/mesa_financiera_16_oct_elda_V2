@@ -10,8 +10,11 @@ Si el orquestador o el contrato de respuesta fallan, el caso se detiene con un m
 
 ## Estado y activación pendiente
 
-El adaptador no está importado ni publicado y el bot sigue en Gateway. La selección de credenciales, la disponibilidad/calidad del modelo, la compatibilidad SDK/SSE y la concurrencia CAS requieren pruebas en n8n antes de sustituir la ruta publicada. El export público no contiene credenciales ni datos fijados. Cada llamada al proxy agrega una ejecución n8n.
+El adaptador está importado como candidato inactivo; el bot publicado sigue en Gateway. Los cinco modelos ya seleccionan Lincoln Proxy Cliente con Responses API desactivada. La selección de credenciales, la disponibilidad/calidad del modelo, la compatibilidad SDK/SSE y la concurrencia CAS requieren pruebas en n8n antes de sustituir la ruta publicada. El export público no contiene credenciales ni datos fijados. Cada llamada al proxy agrega una ejecución n8n.
 
-El26/nov se observó la credencial OpenAI seleccionada en el nodo servidor y se verificaron los cuatro enlaces a la tabla privada. Esta observación no acredita todavía una llamada de API satisfactoria ni un límite monetario activo.
+El26/nov se observó la credencial OpenAI seleccionada en el nodo servidor y se verificaron los cuatro enlaces a la tabla privada. La prueba mínima81 sí acreditó reserva previa y conciliación de19 tokens de entrada y1 de salida. La autenticación cliente/servidor se corrigió después: el caso87 pasó el primer especialista, pero se detuvo por formato de historial;92 reprodujo el bloqueo. El proxy ya normaliza assistant con tool_calls y contenido ausente o array vacío, y bloques exclusivamente textuales. El caso97 pasó además las tres fuentes y alcanzó propuesta/revisión; el calculador rechazó metadatos de transporte nuevos. Se corrigió el esquema sin relajar importes. La evaluación completa posterior sigue en verificación. Ninguna de estas observaciones certifica todavía concurrencia CAS ni un límite monetario activo en el bot Gateway.
 
 Validación local: `node tests/test_admission_v07.cjs` comprueba admisión, bloqueo de respuestas ambiguas, ausencia de camino hacia modelos o registro en la rama denegada y sanitización de errores. No certifica las credenciales ni sustituye las pruebas vivas.
+
+
+Los metadatos control_admitido, control_estado y respuesta_control se admiten exclusivamente como transporte. La etiqueta skills_cargados.carga no es evidencia de uso ni autorización; el cálculo la ignora. Los hashes e instrucciones configurados se registran separadamente.

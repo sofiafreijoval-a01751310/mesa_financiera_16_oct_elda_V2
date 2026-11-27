@@ -53,6 +53,12 @@ def build(source):
     edge('¿Avisar bloqueo por Telegram?','Responder bloqueo de control')
     edge('¿Avisar bloqueo por Telegram?','Resultado manual bloqueado',1)
     for n in w['nodes']:
+        if n['name']=='calcular_propuesta':
+            schema=json.loads(n['parameters']['inputSchema'])
+            for key,kind in [('control_admitido','boolean'),('control_estado','string'),('respuesta_control','string')]:
+                schema['properties'][key]={'type':kind,'description':'Metadata de transporte ignorada por cálculo y autorización.'}
+            schema['properties']['skills_cargados']['items']['properties']['carga']={'type':'string','maxLength':120,'description':'Etiqueta de transporte no usada como evidencia de carga ni autorización.'}
+            n['parameters']['inputSchema']=json.dumps(schema,ensure_ascii=False,indent=2)
         if n['type'].endswith('.lmChatOpenAi'):
             # La credencial cliente debe usar BASE, nunca la API key real.
             n.pop('credentials',None)

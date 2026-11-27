@@ -16,6 +16,13 @@ for(const response of [{statusCode:409,body:{ok:false}}, {error:'API key SECRETO
  });
 }
 const w=require('../exports/Lincoln_Apoyos_v07_CANDIDATO_PUBLICO.json');
+test('Calculador admite metadatos sin relajar importes ni campos desconocidos',()=>{
+ const s=JSON.parse(w.nodes.find(n=>n.name==='calcular_propuesta').parameters.inputSchema);
+ assert.equal(s.additionalProperties,false);assert.equal(s.properties.control_admitido.type,'boolean');
+ for(const k of ['control_estado','respuesta_control'])assert.equal(s.properties[k].type,'string');
+ assert.equal(s.properties.inversion_total_mxn.multipleOf,0.01);assert.equal(s.properties.inversion_total_mxn.exclusiveMinimum,0);
+ assert.equal(s.properties.skills_cargados.items.properties.carga.maxLength,120);
+});
 test('Una denegación no tiene camino al modelo ni al registro de caso',()=>{
  const reachable=new Set(),stack=[w.connections['¿Caso admitido?'].main[1][0].node];
  while(stack.length){const n=stack.pop();if(reachable.has(n))continue;reachable.add(n);
