@@ -15,13 +15,20 @@ function normalizeCall(body){
  if(!body||typeof body!=='object'||Array.isArray(body)||JSON.stringify(body).length>300000)fail('ESQUEMA_INVALIDO');
  const allowed=new Set(['model','messages','tools','tool_choice','parallel_tool_calls','temperature','top_p','response_format','stop','frequency_penalty','presence_penalty','seed','max_tokens','max_completion_tokens','stream','stream_options','n','user','service_tier','store']);
  if(Object.keys(body).some(k=>!allowed.has(k))||body.model!==POLICY.model||!Array.isArray(body.messages)||!body.messages.length||body.messages.length>100)fail('ESQUEMA_INVALIDO');
- for(const m of body.messages){if(!m||!['system','developer','user','assistant','tool'].includes(m.role)||(m.content!==null&&typeof m.content!=='string'))fail('SOLO_TEXTO');}
+ const messages=body.messages.map(m=>{
+  if(!m||!['system','developer','user','assistant','tool'].includes(m.role))fail('SOLO_TEXTO');
+  const calls=m.role==='assistant'&&Array.isArray(m.tool_calls)&&m.tool_calls.length>0&&m.tool_calls.length<=10&&m.tool_calls.every(t=>typeof t.id==='string'&&t.id.length>0&&t.type==='function'&&typeof t.function?.name==='string'&&typeof t.function?.arguments==='string');
+  if((m.content===undefined||(Array.isArray(m.content)&&m.content.length===0))&&calls)return {...m,content:null};
+  if(Array.isArray(m.content)&&m.content.length>0&&m.content.every(p=>p&&p.type==='text'&&typeof p.text==='string'&&Object.keys(p).every(k=>['type','text'].includes(k))))return {...m,content:m.content.map(p=>p.text).join('\n')};
+  if(m.content!==null&&typeof m.content!=='string')fail('SOLO_TEXTO_'+m.role+'_'+(Array.isArray(m.content)?'array_'+m.content.length:typeof m.content));
+  return m;
+ });
  if(body.n!==undefined&&body.n!==1)fail('MULTIPLES_SALIDAS');
  if(body.service_tier!==undefined&&body.service_tier!=='default')fail('TARIFA_NO_AUTORIZADA');
  const max=body.max_completion_tokens??body.max_tokens??POLICY.maxOutputTokens;
  if(!Number.isInteger(max)||max<1||max>POLICY.maxOutputTokens)fail('LIMITE_SALIDA');
  if(body.tools!==undefined&&(!Array.isArray(body.tools)||body.tools.length>10||body.tools.some(t=>t.type!=='function'||typeof t.function?.name!=='string')))fail('HERRAMIENTA_INVALIDA');
- const upstream={...body,stream:false,n:1,service_tier:'default',store:false,max_tokens:max};delete upstream.max_completion_tokens;delete upstream.stream_options;delete upstream.user;
+ const upstream={...body,messages,stream:false,n:1,service_tier:'default',store:false,max_tokens:max};delete upstream.max_completion_tokens;delete upstream.stream_options;delete upstream.user;
  return {upstream,clientStream:body.stream===true};
 }
 function plan(raw,req,nowMs){const s=readLedger(raw);if(!Number.isFinite(nowMs)||nowMs>=Date.parse(POLICY.validUntil))fail('REVALIDAR_TARIFAS');
