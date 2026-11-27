@@ -53,3 +53,9 @@ Prueba nativa: LIN-53-1, fila 6, versión 1 pasó de PENDIENTE_APROBACION a VENC
 ## Revisión versionada publicada
 
 El26/nov se publicó Lincoln v06 revisión versionada en el workflow operativo existente: traza por versión, persistencia de la versión final revisada y comando de aceptación completo.44pruebas locales pasan. No se ejecutó una evaluación nueva después de publicar; ese ensayo sigue pendiente. Detalle: docs/Workflow_v06.md. La reflexión individual ya fue integrada y confirmada por Sofía.
+
+## Actualización del27/nov: candidato OpenAI
+
+La ejecución manual123 completó los cuatro especialistas vía proxy protegido, con transferencia reconstruida desde observaciones reales. El loop determinista pasó de V1 con indicadores faltantes a V2 correcta y guardó registro21 PENDIENTE_APROBACION:200000MXN Lincoln,200000distribuidor, saldo450000. Sin aprobación humana ni cambios de presupuesto. Sus11 llamadas quedaron CONCILIADO:30414tokens entrada,4132salida, USD0.007041300 a tarifa estándar. No incluye infraestructura/voz/factura. Ver evidencias/v07_integracion_27nov.json y costos/consumo_proxy_27nov.csv.
+
+Esto acredita V1→V2 dentro del candidato manual real, no un evento nuevo de Telegram. El bot publicado sigue Gateway; faltan concurrencia CAS nativa, bloqueo monetario negativo nativo, migración controlada y nueva entrada Telegram. Las secciones anteriores conservan sus observaciones históricas.

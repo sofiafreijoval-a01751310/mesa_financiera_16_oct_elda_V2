@@ -68,10 +68,14 @@ def build(source):
         if n['name']=='Orquestador Lincoln':
             n['onError']='continueRegularOutput'
             n['parameters']['options']['maxIterations']=12
+            n['parameters']['options']['returnIntermediateSteps']=True
     contract=by_name['Validar contrato de salida']['parameters']['jsCode']
     by_name['Validar contrato de salida']['parameters']['jsCode']='try {\n'+contract+'\n} catch {\n'+'''const o=$('Inicializar caso').first().json;
 return [{json:{output:JSON.stringify({caso_id:o.caso_id,agente:'orquestador',estado:'DETENIDO',resultado:'La evaluación se detuvo por un fallo de integración, control o respuesta inválida. No hay propuesta aprobable. Solicita revisión del sistema.',fuentes:[],advertencias:['CONTROL_O_INTEGRACION_NO_VERIFICADO']}),requiere_revision:false}}];
 }'''
+    target=by_name['Validar contrato de salida']['parameters']
+    marker="if(!r||typeof r!=='object'||Array.isArray(r)||r.caso_id!==original.caso_id"
+    target['jsCode']=(ROOT/'src/n8n_v07/transfer.js').read_text()+target['jsCode'].replace(marker,"r=conservarSalidas(r,item.json.intermediateSteps,original.caso_id);\n "+marker)
     return w
 
 if __name__=='__main__':

@@ -42,4 +42,12 @@ test('Fallo del modelo devuelve DETENIDO sin propagar información interna',()=>
  assert(!JSON.stringify(r).includes('SECRETO_NO_DIVULGAR'));assert.equal(out[0].json.requiere_revision,false);
 });
 test('El candidato se conserva inactivo y sin datos fijados',()=>{assert.equal(w.active,false);assert.deepEqual(w.pinData,{});});
+const transfer=new Function(fs.readFileSync(require('node:path').join(__dirname,'../src/n8n_v07/transfer.js'),'utf8')+';return conservarSalidas;')();
+const roles=[['solicitud_validada','agente_1_solicitud','VALIDADO'],['datos_verificados','agente_2_datos','DATOS_VERIFICADOS'],['propuesta','agente_3_propuesta','PROPUESTA_GENERADA'],['revision','agente_4_revision','APROBAR_REVISION']];
+const observed=roles.map(([field,tool,state])=>({action:{tool},observation:JSON.stringify([{output:JSON.stringify({caso_id:original.caso_id,agente:tool,estado:state,resultado:{verificado:true}})}])}));
+const finalSummary={caso_id:original.caso_id,estado:'PENDIENTE_APROBACION',revision:{estado:'INVENTADO'}};
+test('Transferencia conserva observaciones reales y reemplaza copia inventada',()=>{const out=transfer(finalSummary,observed,original.caso_id);assert.equal(out.revision.estado,'APROBAR_REVISION');assert.equal(finalSummary.revision.estado,'INVENTADO');assert.equal(out.transferencia_verificada,'SALIDAS_HERRAMIENTAS_MISMO_CASO');});
+test('Sin cuatro observaciones no se completa la propuesta',()=>{for(const steps of [undefined,[],observed.slice(0,3),[observed[1],observed[0],...observed.slice(2)]])assert.throws(()=>transfer(finalSummary,steps,original.caso_id));});
+test('Última revisión adversa o folio ajeno bloquean transferencia',()=>{for(const change of [{estado:'CORREGIR'},{caso_id:'LIN-900002-1'}]){const steps=structuredClone(observed);steps[3].observation=JSON.stringify({caso_id:original.caso_id,agente:'agente_4_revision',estado:'APROBAR_REVISION',resultado:{},...change});assert.throws(()=>transfer(finalSummary,steps,original.caso_id));}});
+test('No convierte DETENIDO en una propuesta ni acepta traza sin límite',()=>{assert.equal(transfer({estado:'DETENIDO'},observed,original.caso_id).estado,'DETENIDO');assert.throws(()=>transfer(finalSummary,Array(13).fill(observed[0]),original.caso_id));assert.equal(w.nodes.find(n=>n.name==='Orquestador Lincoln').parameters.options.returnIntermediateSteps,true);});
 console.log('PASS: '+tests+' pruebas del adaptador; no equivalen a integración viva.');

@@ -1,0 +1,70 @@
+{
+  "fecha_local": "2026-11-27",
+  "zona": "America/Mexico_City",
+  "entorno": "n8n adaptador v07 inactivo; ejecución manual real con API OpenAI; no entrada nueva Telegram",
+  "caso_id": "LIN-123-1",
+  "ejecucion": "123",
+  "duracion_segundos": 78.759,
+  "estado": "PENDIENTE_APROBACION",
+  "version_propuesta": 2,
+  "registro_id": 21,
+  "createdAt": "2026-11-27T13:25:01.373Z",
+  "vence_en": "2026-11-27T13:55:01.302Z",
+  "especialistas": [
+    "agente_1_solicitud",
+    "agente_2_datos",
+    "agente_3_propuesta",
+    "agente_4_revision"
+  ],
+  "transferencia_verificada": "SALIDAS_HERRAMIENTAS_MISMO_CASO",
+  "loop_determinista": [
+    {
+      "version": 1,
+      "vuelta": 1,
+      "ok": false,
+      "errores": [
+        "ok",
+        "errores"
+      ],
+      "nota": "Faltaban indicadores del contrato del calculador; las cifras ya eran correctas."
+    },
+    {
+      "version": 2,
+      "vuelta": 2,
+      "ok": true,
+      "errores": []
+    }
+  ],
+  "calculo": {
+    "inversion_total_mxn": 400000,
+    "apoyo_lincoln_mxn": 200000,
+    "aportacion_distribuidor_mxn": 200000,
+    "saldo_proyectado_mxn": 450000,
+    "requiere_aceptacion_ajuste": false
+  },
+  "aprobacion_humana": false,
+  "modifica_presupuesto": false,
+  "consumo": {
+    "modelo": "gpt-4o-mini-2024-07-18",
+    "llamadas": 11,
+    "conciliadas": 11,
+    "prompt_tokens": 30414,
+    "completion_tokens": 4132,
+    "usd_tarifa_estandar": 0.0070413,
+    "tipo": "USAGE_X_TARIFA_ESTANDAR_NO_FACTURA",
+    "incluye": [
+      "11 llamadas LLM de esta evaluación"
+    ],
+    "no_incluye": [
+      "n8n infraestructura",
+      "ElevenLabs",
+      "factura total del proyecto"
+    ],
+    "fuente": "CSV descargado de tabla privada desde UI; proyección pública sin secretos"
+  },
+  "limitaciones": [
+    "Falta prueba nativa simultánea CAS",
+    "Bot publicado todavía Gateway",
+    "No prueba caso completo nuevo recibido por Telegram"
+  ]
+}
