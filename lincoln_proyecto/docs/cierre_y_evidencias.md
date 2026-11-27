@@ -21,7 +21,7 @@ Actualización26/nov/2026. Datos sintéticos; versión de revisión, no cierre t
 2. Corrección operativa V1→V2 del mismo caso y comparación de costo incremental; los fixtures locales no la sustituyen.
 3. Entrada completa nueva por webhook tras la corrección (las positivas72/76 son reprocesamientos), pruebas restantes de permisos, fallas y denegación del micrófono.
 4. Conciliación de costos por request y factura; no confundir créditos del panel con un precio monetario total.
-5. Reflexión propia con seis respuestas de la guía, video5–8min, demostración≤12min y entrega individual en Canvas.
+5. Reflexión propia integrada; quedan video5–8min, demostración≤12min y entrega individual en Canvas.
 
 Rutas de detalle: tests/pruebas.csv; evidencias/v05_integracion_26nov.json; evidencias/elevenlabs_26nov.json; evidencias/pages_qa_26nov.json; docs/control_concurrencia_n8n.md; docs/Entrega_y_cierre_25nov.md. Las versiones históricas siguen fechadas; esta página es el índice vigente.
 

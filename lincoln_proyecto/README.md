@@ -16,7 +16,7 @@ python3 skills/vizdata/scripts/audit_viz_spec.py docs/vizdata_brief.json --stric
 python3 src/validar_paquete.py
 ```
 
-Resultado esperado: base consistente; pruebas Python y JavaScript satisfactorias;3casos convergen en2revisiones y1escala; recuperación3intentos. El comando python3 src/run_checks.py ejecuta las11comprobaciones vigentes. Las pruebas no llaman APIs ni mandan Telegram. `run_demo.py` regenera un ledger SQLite de DEMO; nunca apuntarlo a una base operativa.
+Resultado esperado: base consistente; pruebas Python y JavaScript satisfactorias;3casos convergen en2revisiones y1escala; recuperación3intentos. El comando python3 src/run_checks.py ejecuta las13comprobaciones vigentes. Las pruebas no llaman APIs ni mandan Telegram. `run_demo.py` regenera un ledger SQLite de DEMO; nunca apuntarlo a una base operativa.
 
 ## Contenido
 
@@ -54,6 +54,10 @@ Pruebas web: `python3 tests/validar_web.py` y `node tests/test_web.cjs` (12 prue
 - Telegram: consulta de solo lectura, aceptación explícita de alcance, vencimiento, aprobación humana77 y repetición bloqueada78.
 - Voz Pages: consultó el mismo LIN-76-1 aprobado simulado; el historial mostró46s y630créditos. No se hicieron pagos ni reservas de presupuesto.
 - Skills: dos previos utilizados y dos nuevos instalados; instrucciones reales de preparación y revisión incorporadas en agentes3/4.
-- Pendientes principales: corte monetario por llamada y deduplicación antes del modelo en Cloud; corrección V1→V2 operativa; matriz integral restante y reflexión/video individuales.
+- Pendientes principales: corte monetario por llamada y deduplicación antes del modelo en Cloud; corrección V1→V2 operativa; matriz integral restante y video individual.
 
 Consultar docs/Entrega_y_cierre_25nov.md, tests/pruebas.csv y evidencias/v05_integracion_26nov.json para el estado detallado. Los archivos históricos conservan sus fechas. Guion reproducible de grabación: docs/guion_video_y_demo.md.
+
+La revisión versionada v06 se publicó sobre el workflow vigente; conserva fuentes y aprobación humana. El export v06 es inactivo al importar.44pruebas locales; ensayo integral nuevo pendiente. Ver docs/Workflow_v06.md.
+
+Alternativa con API propia: docs/Proxy_OpenAI_CANDIDATO.md. Proxy preparado y probado localmente; inactivo, sin clave y sin conexión del bot. No acredita aún el corte monetario vivo.

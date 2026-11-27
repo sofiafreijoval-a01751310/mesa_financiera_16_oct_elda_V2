@@ -19,8 +19,8 @@ def git(*args):
 
 def main():
     data=PDF.read_bytes()
-    if not data.startswith(b'%PDF-') or len(re.findall(rb'/Type\s*/Page\b',data))!=9:
-        raise ValueError('PDF ausente o distinto de nueve páginas')
+    if not data.startswith(b'%PDF-') or len(re.findall(rb'/Type\s*/Page\b',data))!=10:
+        raise ValueError('PDF ausente o distinto de diez páginas')
     names=git('ls-files','-z').decode().strip('\0').split('\0')
     commit=git('rev-parse','HEAD').decode().strip()
     files=[];payload=[]
@@ -39,9 +39,9 @@ def main():
         for name,raw in payload:z.writestr(name,raw)
         z.writestr(PDF.name,data)
         z.writestr('MANIFIESTO.json',json.dumps(manifest,ensure_ascii=False,indent=2))
-        z.writestr('LEEME_ENTREGA.txt','Proyecto Lincoln - VERSION DE REVISION.\nAbrir Informe_Lincoln_Revision.pdf y repositorio/lincoln_proyecto/docs/cierre_y_evidencias.md.\nCaso nativo53 verificado; USD0.16 agregados Gateway observados.\nPendientes: corte monetario y deduplicación nativos, canales y demostración personal.\nEl manifiesto identifica el commit y los archivos. No sustituye la entrega de la estudiante.\n')
+        z.writestr('LEEME_ENTREGA.txt','Proyecto Lincoln - VERSION DE REVISION.\nAbrir Informe_Lincoln_Revision.pdf y repositorio/lincoln_proyecto/docs/cierre_y_evidencias.md.\nCaso76 consultado por voz y aprobado por decisión humana77; reflexión individual integrada.\nPendientes: corte monetario y deduplicación nativos, V1/V2 operativa, matriz restante y video personal.\nEl manifiesto identifica el commit y los archivos. No sustituye la entrega de la estudiante.\n')
     with zipfile.ZipFile(ZIP) as z:
         if z.testzip() is not None:raise ValueError('ZIP corrupto')
-    print(json.dumps({'zip':str(ZIP),'bytes':ZIP.stat().st_size,'commit':commit,'archivos_git':len(files),'pdf_paginas':9}))
+    print(json.dumps({'zip':str(ZIP),'bytes':ZIP.stat().st_size,'commit':commit,'archivos_git':len(files),'pdf_paginas':10}))
 
 if __name__=='__main__':main()

@@ -4,7 +4,7 @@ Guía del estudiante, versión 30/oct/2026, sección de entregables. No entregar
 
 | Entregable | Qué contiene | Estado |
 |---|---|---|
-| Informe técnico y de negocio | 8–12 páginas de cuerpo; arquitectura, decisiones, controles, resultados, reflexión y referencias; anexos aparte | PDF de revisión de 9 páginas; actualizar con integración y pruebas finales |
+| Informe técnico y de negocio | 8–12 páginas de cuerpo; arquitectura, decisiones, controles, resultados, reflexión y referencias; anexos aparte | PDF de revisión de10páginas (9de cuerpo y1de referencias); actualizar con integración y pruebas finales |
 | Repositorio GitHub | Código, instrucciones de reproducción, dependencias, datos sintéticos y versiones | Repositorio existente; cambios nuevos sujetos a Actions |
 | ZIP del mismo commit | Copia del repositorio, informe, manifiesto; SKILL.md, scripts, referencias y ejemplos de todos los skills utilizados | Se genera en Actions; sustituir cualquier ZIP antiguo |
 | Enlaces operativos | GitHub Pages, Actions correcto y bloqueo deliberado, bot y acceso sin secretos | Enlaces disponibles; faltan pruebas finales de canales |
@@ -42,9 +42,14 @@ Prueba nativa: LIN-53-1, fila 6, versión 1 pasó de PENDIENTE_APROBACION a VENC
 2. Tarea diaria ya publicada; conservar prueba de transición e idempotencia y verificar posteriormente el primer disparo horario.
 3. Consulta `/estado FOLIO VERSION` publicada y probada localmente; prueba nativa62 bloqueó LIN-56-1 duplicado sin escrituras ni modelos. Consulta positiva LIN-34-1 respondió APROBADO_SIMULADO según respuesta compartida por Sofía. Integrar guardián/deduplicación; completar matriz: Monterrey56, Mérida69 y Chiapas72 pasaron revisión; Chiapas70 falló contrato y72 reprocesó el mismo mensaje con corrección. Faltan cierre monetario, V1→V2 del loop operativo ; decisión humana positiva ya confirmada en77 y repetición bloqueada en78.
 4. Configuración y recreación de ElevenLabs agregadas, pruebas reales de texto/webhook y rechazo de inyección correctas. Diseño390/1366, filtros y teclado parcial verificados. Llamada audible final verificada; falta probar micrófono denegado.
-5. Completar costos medidos y estimados separados, informe, reflexión personal y manifiesto del mismo commit.
+5. Completar costos medidos y estimados separados, informe y manifiesto del mismo commit; reflexión personal ya integrada.
 6. Sofía graba video y realiza defensa; descargar ZIP final únicamente después de Actions correcto y comprobar que coincide con el commit del informe.
 
 ## Intervención concreta
 
-`/start` pasó. `/estado LIN-34-1 1` respondió correctamente según la respuesta aportada por Sofía; LIN-56-1 pertenece a prueba manual y tiene dos inserciones, bloqueadas correctamente. Chiapas72 ya tuvo respuesta real de Telegram; ejecución74 bloqueó aprobar sin ACEPTAR_AJUSTE (aplicar:false, sin escritura ni modelo). Ejecución77 aprobó LIN-76-1 con ACEPTAR_AJUSTE;78 bloqueó la repetición sin modelo ni segunda escritura. Acceso ElevenLabs recuperado, configuración publicada y pruebas de herramienta/texto correctas. Sofía confirmó audio audible; el historial nativo acredita consulta LIN-76-1,46s,630créditos y USD0.00892 del LLM (desgloses no aditivos). La grabación individual y reflexión personal corresponden a Sofía. No hace falta volver a compartir credenciales ni importar otra copia del workflow.
+`/start` pasó. `/estado LIN-34-1 1` respondió correctamente según la respuesta aportada por Sofía; LIN-56-1 pertenece a prueba manual y tiene dos inserciones, bloqueadas correctamente. Chiapas72 ya tuvo respuesta real de Telegram; ejecución74 bloqueó aprobar sin ACEPTAR_AJUSTE (aplicar:false, sin escritura ni modelo). Ejecución77 aprobó LIN-76-1 con ACEPTAR_AJUSTE;78 bloqueó la repetición sin modelo ni segunda escritura. Acceso ElevenLabs recuperado, configuración publicada y pruebas de herramienta/texto correctas. Sofía confirmó audio audible; el historial nativo acredita consulta LIN-76-1,46s,630créditos y USD0.00892 del LLM (desgloses no aditivos). Reflexión individual integrada con su confirmación; la grabación corresponde a Sofía. No hace falta volver a compartir credenciales ni importar otra copia del workflow.
+
+
+## Revisión versionada publicada
+
+El26/nov se publicó Lincoln v06 revisión versionada en el workflow operativo existente: traza por versión, persistencia de la versión final revisada y comando de aceptación completo.44pruebas locales pasan. No se ejecutó una evaluación nueva después de publicar; ese ensayo sigue pendiente. Detalle: docs/Workflow_v06.md. La reflexión individual ya fue integrada y confirmada por Sofía.

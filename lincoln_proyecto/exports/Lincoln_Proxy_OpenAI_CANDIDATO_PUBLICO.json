@@ -1,0 +1,1007 @@
+{
+  "name": "Lincoln | Proxy OpenAI con reserva previa | CANDIDATO",
+  "active": false,
+  "nodes": [
+    {
+      "id": "36875b75-9b6f-5108-a985-06aa35e2aa98",
+      "name": "Webhook call",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "lincoln-llm-guard/v1/chat/completions",
+        "authentication": "headerAuth",
+        "responseMode": "responseNode",
+        "options": {}
+      }
+    },
+    {
+      "id": "b4de766a-5d3d-59fc-b849-26bdbf7cac5b",
+      "name": "Ruta call",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        210,
+        0
+      ],
+      "parameters": {
+        "jsCode": "return $input.all().map(i=>({json:{...i.json,kind:'call'}}));"
+      }
+    },
+    {
+      "id": "45b42d40-721b-5e35-840d-8624195c1778",
+      "name": "Webhook admit",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        420,
+        0
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "lincoln-llm-guard/v1/admit",
+        "authentication": "headerAuth",
+        "responseMode": "responseNode",
+        "options": {}
+      }
+    },
+    {
+      "id": "2fe631ca-5710-5ddf-a26e-0c179ad85889",
+      "name": "Ruta admit",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        630,
+        0
+      ],
+      "parameters": {
+        "jsCode": "return $input.all().map(i=>({json:{...i.json,kind:'admit'}}));"
+      }
+    },
+    {
+      "id": "e3a7115a-6bfb-5fcb-8a97-5ff29d21ae00",
+      "name": "Normalizar",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        840,
+        0
+      ],
+      "parameters": {
+        "jsCode": "// Política del servidor. Importes en nanoUSD (1 USD=1e9); no usa valores de costo del cliente.\nconst POLICY=Object.freeze({model:'gpt-4o-mini-2024-07-18',contextTokens:128000,maxOutputTokens:4096,inputNanoPerToken:150,outputNanoPerToken:600,capNano:250000000,maxCalls:25,maxCases:100,maxSeconds:360,validUntil:'2026-12-04T00:00:00Z'});\nfunction fail(code){const e=new Error(code);e.code=code;throw e;}\nfunction safeInt(n,max=Number.MAX_SAFE_INTEGER){if(!Number.isSafeInteger(n)||n<0||n>max)fail('LEDGER_INVALIDO');return n;}\nfunction emptyLedger(){return {schema:1,seq:0,cases:[],requests:[]};}\nfunction readLedger(raw){let s;try{s=JSON.parse(raw);}catch{fail('LEDGER_INVALIDO');}\n if(!s||s.schema!==1||!Array.isArray(s.cases)||!Array.isArray(s.requests)||s.cases.length>POLICY.maxCases||s.requests.length>2500)fail('LEDGER_INVALIDO');\n safeInt(s.seq);const seen=new Set(),events=new Set();\n for(const c of s.cases){if(!c||!/^LIN-\\d+-\\d+$/.test(c.case_id)||seen.has(c.case_id)||typeof c.event_id!=='string'||!c.event_id||events.has(c.event_id)||c.capNano!==POLICY.capNano||!Number.isFinite(Date.parse(c.created)))fail('LEDGER_INVALIDO');seen.add(c.case_id);events.add(c.event_id);}\n const ids=new Set();for(const r of s.requests){if(!r||typeof r.id!=='string'||ids.has(r.id)||!seen.has(r.case_id)||!['RESERVADO','CONCILIADO','INCIERTO'].includes(r.state))fail('LEDGER_INVALIDO');ids.add(r.id);safeInt(r.reservedNano);if(r.actualNano!==null)safeInt(r.actualNano);if(r.state==='CONCILIADO'&&r.actualNano===null)fail('LEDGER_INVALIDO');}\n for(const c of s.cases){const total=s.requests.filter(r=>r.case_id===c.case_id).reduce((a,r)=>a+(r.actualNano??r.reservedNano),0);safeInt(total);if(total>c.capNano&&!s.requests.some(r=>r.case_id===c.case_id&&r.state==='INCIERTO'))fail('LEDGER_INVALIDO');}return s;\n}\nfunction quote(){return POLICY.contextTokens*POLICY.inputNanoPerToken+POLICY.maxOutputTokens*POLICY.outputNanoPerToken;}\nfunction normalizeCall(body){\n if(!body||typeof body!=='object'||Array.isArray(body)||JSON.stringify(body).length>300000)fail('ESQUEMA_INVALIDO');\n const allowed=new Set(['model','messages','tools','tool_choice','parallel_tool_calls','temperature','top_p','response_format','stop','frequency_penalty','presence_penalty','seed','max_tokens','max_completion_tokens','stream','stream_options','n','user','service_tier','store']);\n if(Object.keys(body).some(k=>!allowed.has(k))||body.model!==POLICY.model||!Array.isArray(body.messages)||!body.messages.length||body.messages.length>100)fail('ESQUEMA_INVALIDO');\n for(const m of body.messages){if(!m||!['system','developer','user','assistant','tool'].includes(m.role)||(m.content!==null&&typeof m.content!=='string'))fail('SOLO_TEXTO');}\n if(body.n!==undefined&&body.n!==1)fail('MULTIPLES_SALIDAS');\n if(body.service_tier!==undefined&&body.service_tier!=='default')fail('TARIFA_NO_AUTORIZADA');\n const max=body.max_completion_tokens??body.max_tokens??POLICY.maxOutputTokens;\n if(!Number.isInteger(max)||max<1||max>POLICY.maxOutputTokens)fail('LIMITE_SALIDA');\n if(body.tools!==undefined&&(!Array.isArray(body.tools)||body.tools.length>10||body.tools.some(t=>t.type!=='function'||typeof t.function?.name!=='string')))fail('HERRAMIENTA_INVALIDA');\n const upstream={...body,stream:false,n:1,service_tier:'default',store:false,max_tokens:max};delete upstream.max_completion_tokens;delete upstream.stream_options;delete upstream.user;\n return {upstream,clientStream:body.stream===true};\n}\nfunction plan(raw,req,nowMs){const s=readLedger(raw);if(!Number.isFinite(nowMs)||nowMs>=Date.parse(POLICY.validUntil))fail('REVALIDAR_TARIFAS');\n if(!req||!/^LIN-\\d+-\\d+$/.test(req.case_id)||typeof req.id!=='string'||!/^\\d+$/.test(req.id))fail('CASO_INVALIDO');\n if(req.kind==='admit'){\n  if(typeof req.event_id!=='string'||!/^telegram:\\d+$|^manual:\\d+$/.test(req.event_id))fail('EVENTO_INVALIDO');\n  if(s.cases.some(c=>c.event_id===req.event_id))fail('DUPLICADO');\n  if(s.cases.some(c=>c.case_id===req.case_id))fail('CASO_YA_ADMITIDO');if(s.cases.length>=POLICY.maxCases)fail('LEDGER_LLENO');\n  s.cases.push({case_id:req.case_id,event_id:req.event_id,created:new Date(nowMs).toISOString(),capNano:POLICY.capNano});\n }else if(req.kind==='call'){\n  const c=s.cases.find(c=>c.case_id===req.case_id);if(!c)fail('CASO_NO_ADMITIDO');\n  if(nowMs-Date.parse(c.created)>=POLICY.maxSeconds*1000)fail('TIEMPO_AGOTADO');\n  if(s.requests.some(r=>r.id===req.id))fail('PETICION_DUPLICADA');\n  const rows=s.requests.filter(r=>r.case_id===req.case_id);if(rows.some(r=>r.state==='INCIERTO'))fail('CASO_INCIERTO');\n  if(rows.length>=POLICY.maxCalls)fail('LIMITE_LLAMADAS');normalizeCall(req.body);\n  if(rows.reduce((a,r)=>a+(r.actualNano??r.reservedNano),0)+quote()>c.capNano)fail('LIMITE_COSTO');\n  s.requests.push({id:req.id,case_id:req.case_id,state:'RESERVADO',reservedNano:quote(),actualNano:null,model:POLICY.model,created:new Date(nowMs).toISOString()});\n }else fail('OPERACION_INVALIDA');s.seq++;return JSON.stringify(s);\n}\nfunction reconcile(raw,req,response,nowMs){const s=readLedger(raw),r=s.requests.find(r=>r.id===req.id&&r.case_id===req.case_id);if(!r||r.state!=='RESERVADO')fail('RESERVA_INVALIDA');\n const u=response?.usage;let valid=response?.model===POLICY.model&&u&&Number.isSafeInteger(u.prompt_tokens)&&u.prompt_tokens>=0&&u.prompt_tokens<=POLICY.contextTokens&&Number.isSafeInteger(u.completion_tokens)&&u.completion_tokens>=0&&u.completion_tokens<=POLICY.maxOutputTokens&&Array.isArray(response.choices)&&response.choices.length===1;\n if(valid){r.actualNano=u.prompt_tokens*POLICY.inputNanoPerToken+u.completion_tokens*POLICY.outputNanoPerToken;r.state=r.actualNano<=r.reservedNano?'CONCILIADO':'INCIERTO';r.prompt_tokens=u.prompt_tokens;r.completion_tokens=u.completion_tokens;r.provider_request_id=String(response.id??'').slice(0,120);r.costType='USAGE_X_TARIFA_ESTANDAR_NO_FACTURA';}\n else r.state='INCIERTO';r.finished=new Date(nowMs).toISOString();s.seq++;return JSON.stringify(s);\n}\nfunction responseEnvelope(response,clientStream){if(!clientStream)return {contentType:'application/json',body:JSON.stringify(response)};\n const c=response.choices[0],delta={...c.message};if(delta.tool_calls)delta.tool_calls=delta.tool_calls.map((t,i)=>({...t,index:i}));\n const chunk={id:response.id,object:'chat.completion.chunk',created:response.created,model:response.model,choices:[{index:0,delta,finish_reason:null}]};\n const end={...chunk,choices:[{index:0,delta:{},finish_reason:c.finish_reason??'stop'}]};\n return {contentType:'text/event-stream',body:'data: '+JSON.stringify(chunk)+'\\n\\ndata: '+JSON.stringify(end)+'\\n\\ndata: '+JSON.stringify({...chunk,choices:[],usage:response.usage})+'\\n\\ndata: [DONE]\\n\\n'};\n}\nif(typeof module!=='undefined')module.exports={POLICY,emptyLedger,readLedger,quote,normalizeCall,plan,reconcile,responseEnvelope};\n\ntry {\n const i=$input.first().json,case_id=String(i.headers?.['x-lincoln-case']??'');\n if(!/^LIN-\\d+-\\d+$/.test(case_id))fail('CASO_INVALIDO');\n const req={kind:i.kind,id:String($execution.id),case_id};\n if(req.kind==='admit'){if(!i.body||i.body.case_id!==case_id)fail('CASO_INVALIDO');req.event_id=i.body.event_id;}\n else {req.body=i.body;Object.assign(req,normalizeCall(req.body));}\n return [{json:{ok:true,req}}];\n}catch(e){return [{json:{ok:false,code:e.code??'ESQUEMA_INVALIDO',status:400}}];}\n"
+      }
+    },
+    {
+      "id": "1dc2e4c1-a44d-527f-9d86-b9fdb332a392",
+      "name": "Solicitud válida",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1050,
+        0
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "7d0de160-b8e2-56b3-9357-460a93dd4b25",
+              "leftValue": "={{ $json.ok===true }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "18cd4d6c-fb5a-52f1-bfb0-74f2e1a97b49",
+      "name": "Leer reserva",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        1260,
+        0
+      ],
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "CONFIGURAR_TABLA_lincoln_guard_ledger",
+          "mode": "id"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyValue": 1
+            }
+          ]
+        },
+        "returnAll": false,
+        "limit": 2
+      },
+      "alwaysOutputData": true
+    },
+    {
+      "id": "bf3d2d2e-b156-51dd-9897-99d1c8b56280",
+      "name": "Plan reserva",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1470,
+        0
+      ],
+      "parameters": {
+        "jsCode": "// Política del servidor. Importes en nanoUSD (1 USD=1e9); no usa valores de costo del cliente.\nconst POLICY=Object.freeze({model:'gpt-4o-mini-2024-07-18',contextTokens:128000,maxOutputTokens:4096,inputNanoPerToken:150,outputNanoPerToken:600,capNano:250000000,maxCalls:25,maxCases:100,maxSeconds:360,validUntil:'2026-12-04T00:00:00Z'});\nfunction fail(code){const e=new Error(code);e.code=code;throw e;}\nfunction safeInt(n,max=Number.MAX_SAFE_INTEGER){if(!Number.isSafeInteger(n)||n<0||n>max)fail('LEDGER_INVALIDO');return n;}\nfunction emptyLedger(){return {schema:1,seq:0,cases:[],requests:[]};}\nfunction readLedger(raw){let s;try{s=JSON.parse(raw);}catch{fail('LEDGER_INVALIDO');}\n if(!s||s.schema!==1||!Array.isArray(s.cases)||!Array.isArray(s.requests)||s.cases.length>POLICY.maxCases||s.requests.length>2500)fail('LEDGER_INVALIDO');\n safeInt(s.seq);const seen=new Set(),events=new Set();\n for(const c of s.cases){if(!c||!/^LIN-\\d+-\\d+$/.test(c.case_id)||seen.has(c.case_id)||typeof c.event_id!=='string'||!c.event_id||events.has(c.event_id)||c.capNano!==POLICY.capNano||!Number.isFinite(Date.parse(c.created)))fail('LEDGER_INVALIDO');seen.add(c.case_id);events.add(c.event_id);}\n const ids=new Set();for(const r of s.requests){if(!r||typeof r.id!=='string'||ids.has(r.id)||!seen.has(r.case_id)||!['RESERVADO','CONCILIADO','INCIERTO'].includes(r.state))fail('LEDGER_INVALIDO');ids.add(r.id);safeInt(r.reservedNano);if(r.actualNano!==null)safeInt(r.actualNano);if(r.state==='CONCILIADO'&&r.actualNano===null)fail('LEDGER_INVALIDO');}\n for(const c of s.cases){const total=s.requests.filter(r=>r.case_id===c.case_id).reduce((a,r)=>a+(r.actualNano??r.reservedNano),0);safeInt(total);if(total>c.capNano&&!s.requests.some(r=>r.case_id===c.case_id&&r.state==='INCIERTO'))fail('LEDGER_INVALIDO');}return s;\n}\nfunction quote(){return POLICY.contextTokens*POLICY.inputNanoPerToken+POLICY.maxOutputTokens*POLICY.outputNanoPerToken;}\nfunction normalizeCall(body){\n if(!body||typeof body!=='object'||Array.isArray(body)||JSON.stringify(body).length>300000)fail('ESQUEMA_INVALIDO');\n const allowed=new Set(['model','messages','tools','tool_choice','parallel_tool_calls','temperature','top_p','response_format','stop','frequency_penalty','presence_penalty','seed','max_tokens','max_completion_tokens','stream','stream_options','n','user','service_tier','store']);\n if(Object.keys(body).some(k=>!allowed.has(k))||body.model!==POLICY.model||!Array.isArray(body.messages)||!body.messages.length||body.messages.length>100)fail('ESQUEMA_INVALIDO');\n for(const m of body.messages){if(!m||!['system','developer','user','assistant','tool'].includes(m.role)||(m.content!==null&&typeof m.content!=='string'))fail('SOLO_TEXTO');}\n if(body.n!==undefined&&body.n!==1)fail('MULTIPLES_SALIDAS');\n if(body.service_tier!==undefined&&body.service_tier!=='default')fail('TARIFA_NO_AUTORIZADA');\n const max=body.max_completion_tokens??body.max_tokens??POLICY.maxOutputTokens;\n if(!Number.isInteger(max)||max<1||max>POLICY.maxOutputTokens)fail('LIMITE_SALIDA');\n if(body.tools!==undefined&&(!Array.isArray(body.tools)||body.tools.length>10||body.tools.some(t=>t.type!=='function'||typeof t.function?.name!=='string')))fail('HERRAMIENTA_INVALIDA');\n const upstream={...body,stream:false,n:1,service_tier:'default',store:false,max_tokens:max};delete upstream.max_completion_tokens;delete upstream.stream_options;delete upstream.user;\n return {upstream,clientStream:body.stream===true};\n}\nfunction plan(raw,req,nowMs){const s=readLedger(raw);if(!Number.isFinite(nowMs)||nowMs>=Date.parse(POLICY.validUntil))fail('REVALIDAR_TARIFAS');\n if(!req||!/^LIN-\\d+-\\d+$/.test(req.case_id)||typeof req.id!=='string'||!/^\\d+$/.test(req.id))fail('CASO_INVALIDO');\n if(req.kind==='admit'){\n  if(typeof req.event_id!=='string'||!/^telegram:\\d+$|^manual:\\d+$/.test(req.event_id))fail('EVENTO_INVALIDO');\n  if(s.cases.some(c=>c.event_id===req.event_id))fail('DUPLICADO');\n  if(s.cases.some(c=>c.case_id===req.case_id))fail('CASO_YA_ADMITIDO');if(s.cases.length>=POLICY.maxCases)fail('LEDGER_LLENO');\n  s.cases.push({case_id:req.case_id,event_id:req.event_id,created:new Date(nowMs).toISOString(),capNano:POLICY.capNano});\n }else if(req.kind==='call'){\n  const c=s.cases.find(c=>c.case_id===req.case_id);if(!c)fail('CASO_NO_ADMITIDO');\n  if(nowMs-Date.parse(c.created)>=POLICY.maxSeconds*1000)fail('TIEMPO_AGOTADO');\n  if(s.requests.some(r=>r.id===req.id))fail('PETICION_DUPLICADA');\n  const rows=s.requests.filter(r=>r.case_id===req.case_id);if(rows.some(r=>r.state==='INCIERTO'))fail('CASO_INCIERTO');\n  if(rows.length>=POLICY.maxCalls)fail('LIMITE_LLAMADAS');normalizeCall(req.body);\n  if(rows.reduce((a,r)=>a+(r.actualNano??r.reservedNano),0)+quote()>c.capNano)fail('LIMITE_COSTO');\n  s.requests.push({id:req.id,case_id:req.case_id,state:'RESERVADO',reservedNano:quote(),actualNano:null,model:POLICY.model,created:new Date(nowMs).toISOString()});\n }else fail('OPERACION_INVALIDA');s.seq++;return JSON.stringify(s);\n}\nfunction reconcile(raw,req,response,nowMs){const s=readLedger(raw),r=s.requests.find(r=>r.id===req.id&&r.case_id===req.case_id);if(!r||r.state!=='RESERVADO')fail('RESERVA_INVALIDA');\n const u=response?.usage;let valid=response?.model===POLICY.model&&u&&Number.isSafeInteger(u.prompt_tokens)&&u.prompt_tokens>=0&&u.prompt_tokens<=POLICY.contextTokens&&Number.isSafeInteger(u.completion_tokens)&&u.completion_tokens>=0&&u.completion_tokens<=POLICY.maxOutputTokens&&Array.isArray(response.choices)&&response.choices.length===1;\n if(valid){r.actualNano=u.prompt_tokens*POLICY.inputNanoPerToken+u.completion_tokens*POLICY.outputNanoPerToken;r.state=r.actualNano<=r.reservedNano?'CONCILIADO':'INCIERTO';r.prompt_tokens=u.prompt_tokens;r.completion_tokens=u.completion_tokens;r.provider_request_id=String(response.id??'').slice(0,120);r.costType='USAGE_X_TARIFA_ESTANDAR_NO_FACTURA';}\n else r.state='INCIERTO';r.finished=new Date(nowMs).toISOString();s.seq++;return JSON.stringify(s);\n}\nfunction responseEnvelope(response,clientStream){if(!clientStream)return {contentType:'application/json',body:JSON.stringify(response)};\n const c=response.choices[0],delta={...c.message};if(delta.tool_calls)delta.tool_calls=delta.tool_calls.map((t,i)=>({...t,index:i}));\n const chunk={id:response.id,object:'chat.completion.chunk',created:response.created,model:response.model,choices:[{index:0,delta,finish_reason:null}]};\n const end={...chunk,choices:[{index:0,delta:{},finish_reason:c.finish_reason??'stop'}]};\n return {contentType:'text/event-stream',body:'data: '+JSON.stringify(chunk)+'\\n\\ndata: '+JSON.stringify(end)+'\\n\\ndata: '+JSON.stringify({...chunk,choices:[],usage:response.usage})+'\\n\\ndata: [DONE]\\n\\n'};\n}\nif(typeof module!=='undefined')module.exports={POLICY,emptyLedger,readLedger,quote,normalizeCall,plan,reconcile,responseEnvelope};\n\ntry {\n if($runIndex>=3)fail('CONFLICTO_PERSISTENTE');\n const rows=$input.all().map(i=>i.json);if(rows.length!==1||rows[0].id!==1||typeof rows[0].state_json!=='string')fail('INICIALIZAR_LEDGER');\n const old_json=rows[0].state_json,req=$('Normalizar').first().json.req;\n return [{json:{ok:true,old_json,next_json:plan(old_json,req,Date.now())}}];\n}catch(e){return [{json:{ok:false,code:e.code??'LEDGER_INVALIDO',status:409}}];}\n"
+      }
+    },
+    {
+      "id": "3cc9174f-89f2-5d76-8e4c-5b93d37cd9f1",
+      "name": "Puede reservar",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1680,
+        0
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "0587502a-f7e0-582b-bb9d-7f26e8f7f17c",
+              "leftValue": "={{ $json.ok===true }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "6795df3a-aa7e-5afd-b045-33eacde4d728",
+      "name": "Reservar CAS",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        1890,
+        0
+      ],
+      "parameters": {
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "value": "CONFIGURAR_TABLA_lincoln_guard_ledger",
+          "mode": "id"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyValue": 1
+            },
+            {
+              "keyName": "state_json",
+              "keyValue": "={{ $(\"Plan reserva\").item.json.old_json }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "state_json": "={{ $(\"Plan reserva\").item.json.next_json }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "state_json",
+              "displayName": "state_json",
+              "type": "string",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "alwaysOutputData": true
+    },
+    {
+      "id": "51bb06d9-bb2a-5aeb-9a39-8abc4dcc8c93",
+      "name": "Verificar reserva",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2100,
+        0
+      ],
+      "parameters": {
+        "jsCode": "// Política del servidor. Importes en nanoUSD (1 USD=1e9); no usa valores de costo del cliente.\nconst POLICY=Object.freeze({model:'gpt-4o-mini-2024-07-18',contextTokens:128000,maxOutputTokens:4096,inputNanoPerToken:150,outputNanoPerToken:600,capNano:250000000,maxCalls:25,maxCases:100,maxSeconds:360,validUntil:'2026-12-04T00:00:00Z'});\nfunction fail(code){const e=new Error(code);e.code=code;throw e;}\nfunction safeInt(n,max=Number.MAX_SAFE_INTEGER){if(!Number.isSafeInteger(n)||n<0||n>max)fail('LEDGER_INVALIDO');return n;}\nfunction emptyLedger(){return {schema:1,seq:0,cases:[],requests:[]};}\nfunction readLedger(raw){let s;try{s=JSON.parse(raw);}catch{fail('LEDGER_INVALIDO');}\n if(!s||s.schema!==1||!Array.isArray(s.cases)||!Array.isArray(s.requests)||s.cases.length>POLICY.maxCases||s.requests.length>2500)fail('LEDGER_INVALIDO');\n safeInt(s.seq);const seen=new Set(),events=new Set();\n for(const c of s.cases){if(!c||!/^LIN-\\d+-\\d+$/.test(c.case_id)||seen.has(c.case_id)||typeof c.event_id!=='string'||!c.event_id||events.has(c.event_id)||c.capNano!==POLICY.capNano||!Number.isFinite(Date.parse(c.created)))fail('LEDGER_INVALIDO');seen.add(c.case_id);events.add(c.event_id);}\n const ids=new Set();for(const r of s.requests){if(!r||typeof r.id!=='string'||ids.has(r.id)||!seen.has(r.case_id)||!['RESERVADO','CONCILIADO','INCIERTO'].includes(r.state))fail('LEDGER_INVALIDO');ids.add(r.id);safeInt(r.reservedNano);if(r.actualNano!==null)safeInt(r.actualNano);if(r.state==='CONCILIADO'&&r.actualNano===null)fail('LEDGER_INVALIDO');}\n for(const c of s.cases){const total=s.requests.filter(r=>r.case_id===c.case_id).reduce((a,r)=>a+(r.actualNano??r.reservedNano),0);safeInt(total);if(total>c.capNano&&!s.requests.some(r=>r.case_id===c.case_id&&r.state==='INCIERTO'))fail('LEDGER_INVALIDO');}return s;\n}\nfunction quote(){return POLICY.contextTokens*POLICY.inputNanoPerToken+POLICY.maxOutputTokens*POLICY.outputNanoPerToken;}\nfunction normalizeCall(body){\n if(!body||typeof body!=='object'||Array.isArray(body)||JSON.stringify(body).length>300000)fail('ESQUEMA_INVALIDO');\n const allowed=new Set(['model','messages','tools','tool_choice','parallel_tool_calls','temperature','top_p','response_format','stop','frequency_penalty','presence_penalty','seed','max_tokens','max_completion_tokens','stream','stream_options','n','user','service_tier','store']);\n if(Object.keys(body).some(k=>!allowed.has(k))||body.model!==POLICY.model||!Array.isArray(body.messages)||!body.messages.length||body.messages.length>100)fail('ESQUEMA_INVALIDO');\n for(const m of body.messages){if(!m||!['system','developer','user','assistant','tool'].includes(m.role)||(m.content!==null&&typeof m.content!=='string'))fail('SOLO_TEXTO');}\n if(body.n!==undefined&&body.n!==1)fail('MULTIPLES_SALIDAS');\n if(body.service_tier!==undefined&&body.service_tier!=='default')fail('TARIFA_NO_AUTORIZADA');\n const max=body.max_completion_tokens??body.max_tokens??POLICY.maxOutputTokens;\n if(!Number.isInteger(max)||max<1||max>POLICY.maxOutputTokens)fail('LIMITE_SALIDA');\n if(body.tools!==undefined&&(!Array.isArray(body.tools)||body.tools.length>10||body.tools.some(t=>t.type!=='function'||typeof t.function?.name!=='string')))fail('HERRAMIENTA_INVALIDA');\n const upstream={...body,stream:false,n:1,service_tier:'default',store:false,max_tokens:max};delete upstream.max_completion_tokens;delete upstream.stream_options;delete upstream.user;\n return {upstream,clientStream:body.stream===true};\n}\nfunction plan(raw,req,nowMs){const s=readLedger(raw);if(!Number.isFinite(nowMs)||nowMs>=Date.parse(POLICY.validUntil))fail('REVALIDAR_TARIFAS');\n if(!req||!/^LIN-\\d+-\\d+$/.test(req.case_id)||typeof req.id!=='string'||!/^\\d+$/.test(req.id))fail('CASO_INVALIDO');\n if(req.kind==='admit'){\n  if(typeof req.event_id!=='string'||!/^telegram:\\d+$|^manual:\\d+$/.test(req.event_id))fail('EVENTO_INVALIDO');\n  if(s.cases.some(c=>c.event_id===req.event_id))fail('DUPLICADO');\n  if(s.cases.some(c=>c.case_id===req.case_id))fail('CASO_YA_ADMITIDO');if(s.cases.length>=POLICY.maxCases)fail('LEDGER_LLENO');\n  s.cases.push({case_id:req.case_id,event_id:req.event_id,created:new Date(nowMs).toISOString(),capNano:POLICY.capNano});\n }else if(req.kind==='call'){\n  const c=s.cases.find(c=>c.case_id===req.case_id);if(!c)fail('CASO_NO_ADMITIDO');\n  if(nowMs-Date.parse(c.created)>=POLICY.maxSeconds*1000)fail('TIEMPO_AGOTADO');\n  if(s.requests.some(r=>r.id===req.id))fail('PETICION_DUPLICADA');\n  const rows=s.requests.filter(r=>r.case_id===req.case_id);if(rows.some(r=>r.state==='INCIERTO'))fail('CASO_INCIERTO');\n  if(rows.length>=POLICY.maxCalls)fail('LIMITE_LLAMADAS');normalizeCall(req.body);\n  if(rows.reduce((a,r)=>a+(r.actualNano??r.reservedNano),0)+quote()>c.capNano)fail('LIMITE_COSTO');\n  s.requests.push({id:req.id,case_id:req.case_id,state:'RESERVADO',reservedNano:quote(),actualNano:null,model:POLICY.model,created:new Date(nowMs).toISOString()});\n }else fail('OPERACION_INVALIDA');s.seq++;return JSON.stringify(s);\n}\nfunction reconcile(raw,req,response,nowMs){const s=readLedger(raw),r=s.requests.find(r=>r.id===req.id&&r.case_id===req.case_id);if(!r||r.state!=='RESERVADO')fail('RESERVA_INVALIDA');\n const u=response?.usage;let valid=response?.model===POLICY.model&&u&&Number.isSafeInteger(u.prompt_tokens)&&u.prompt_tokens>=0&&u.prompt_tokens<=POLICY.contextTokens&&Number.isSafeInteger(u.completion_tokens)&&u.completion_tokens>=0&&u.completion_tokens<=POLICY.maxOutputTokens&&Array.isArray(response.choices)&&response.choices.length===1;\n if(valid){r.actualNano=u.prompt_tokens*POLICY.inputNanoPerToken+u.completion_tokens*POLICY.outputNanoPerToken;r.state=r.actualNano<=r.reservedNano?'CONCILIADO':'INCIERTO';r.prompt_tokens=u.prompt_tokens;r.completion_tokens=u.completion_tokens;r.provider_request_id=String(response.id??'').slice(0,120);r.costType='USAGE_X_TARIFA_ESTANDAR_NO_FACTURA';}\n else r.state='INCIERTO';r.finished=new Date(nowMs).toISOString();s.seq++;return JSON.stringify(s);\n}\nfunction responseEnvelope(response,clientStream){if(!clientStream)return {contentType:'application/json',body:JSON.stringify(response)};\n const c=response.choices[0],delta={...c.message};if(delta.tool_calls)delta.tool_calls=delta.tool_calls.map((t,i)=>({...t,index:i}));\n const chunk={id:response.id,object:'chat.completion.chunk',created:response.created,model:response.model,choices:[{index:0,delta,finish_reason:null}]};\n const end={...chunk,choices:[{index:0,delta:{},finish_reason:c.finish_reason??'stop'}]};\n return {contentType:'text/event-stream',body:'data: '+JSON.stringify(chunk)+'\\n\\ndata: '+JSON.stringify(end)+'\\n\\ndata: '+JSON.stringify({...chunk,choices:[],usage:response.usage})+'\\n\\ndata: [DONE]\\n\\n'};\n}\nif(typeof module!=='undefined')module.exports={POLICY,emptyLedger,readLedger,quote,normalizeCall,plan,reconcile,responseEnvelope};\n\ntry {\n const rows=$input.all().map(i=>i.json),req=$('Normalizar').first().json.req;\n if(rows.length!==1||rows[0].id!==1||typeof rows[0].state_json!=='string')return [{json:{ok:false,retry:true}}];\n const s=readLedger(rows[0].state_json);\n const owned=req.kind==='admit'?s.cases.some(c=>c.case_id===req.case_id&&c.event_id===req.event_id):s.requests.some(r=>r.id===req.id&&r.case_id===req.case_id&&r.state==='RESERVADO'&&r.reservedNano===quote());\n return [{json:{ok:owned,retry:!owned}}];\n}catch(e){return [{json:{ok:false,retry:false,code:'LEDGER_INVALIDO',status:409}}];}\n"
+      }
+    },
+    {
+      "id": "ac541018-7929-5eed-9ccc-1791e3dbda62",
+      "name": "Reserva propia",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2310,
+        0
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "30bf494a-5f33-571f-a578-b145c6a66b83",
+              "leftValue": "={{ $json.ok===true }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "61764af3-cc14-568a-923d-0cef93e9ad9f",
+      "name": "Reintentar reserva",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2520,
+        0
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "de5138c2-85cf-5203-a1a9-4a59ef930a76",
+              "leftValue": "={{ $json.retry===true }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "aec350fe-7567-582d-98e1-721bc1c7cfd1",
+      "name": "Es admisión",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2730,
+        0
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "f7e61cb5-8347-5701-95aa-701ebc4499f3",
+              "leftValue": "={{ $(\"Normalizar\").first().json.req.kind===\"admit\" }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "e2a8f0c5-61b0-541b-b167-5b3e4a75c43e",
+      "name": "OpenAI controlado",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2940,
+        0
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/chat/completions",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify($(\"Normalizar\").first().json.req.upstream) }}",
+        "options": {
+          "timeout": 60000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          },
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true,
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "onError": "continueRegularOutput",
+      "retryOnFail": false
+    },
+    {
+      "id": "eb677c66-ffc6-5e68-bb82-657e6626a0ab",
+      "name": "Leer conciliación",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        3150,
+        0
+      ],
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "CONFIGURAR_TABLA_lincoln_guard_ledger",
+          "mode": "id"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyValue": 1
+            }
+          ]
+        },
+        "returnAll": false,
+        "limit": 2
+      },
+      "alwaysOutputData": true
+    },
+    {
+      "id": "34ffba27-bf75-5cfd-bf71-356b496e6adc",
+      "name": "Plan conciliación",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3360,
+        0
+      ],
+      "parameters": {
+        "jsCode": "// Política del servidor. Importes en nanoUSD (1 USD=1e9); no usa valores de costo del cliente.\nconst POLICY=Object.freeze({model:'gpt-4o-mini-2024-07-18',contextTokens:128000,maxOutputTokens:4096,inputNanoPerToken:150,outputNanoPerToken:600,capNano:250000000,maxCalls:25,maxCases:100,maxSeconds:360,validUntil:'2026-12-04T00:00:00Z'});\nfunction fail(code){const e=new Error(code);e.code=code;throw e;}\nfunction safeInt(n,max=Number.MAX_SAFE_INTEGER){if(!Number.isSafeInteger(n)||n<0||n>max)fail('LEDGER_INVALIDO');return n;}\nfunction emptyLedger(){return {schema:1,seq:0,cases:[],requests:[]};}\nfunction readLedger(raw){let s;try{s=JSON.parse(raw);}catch{fail('LEDGER_INVALIDO');}\n if(!s||s.schema!==1||!Array.isArray(s.cases)||!Array.isArray(s.requests)||s.cases.length>POLICY.maxCases||s.requests.length>2500)fail('LEDGER_INVALIDO');\n safeInt(s.seq);const seen=new Set(),events=new Set();\n for(const c of s.cases){if(!c||!/^LIN-\\d+-\\d+$/.test(c.case_id)||seen.has(c.case_id)||typeof c.event_id!=='string'||!c.event_id||events.has(c.event_id)||c.capNano!==POLICY.capNano||!Number.isFinite(Date.parse(c.created)))fail('LEDGER_INVALIDO');seen.add(c.case_id);events.add(c.event_id);}\n const ids=new Set();for(const r of s.requests){if(!r||typeof r.id!=='string'||ids.has(r.id)||!seen.has(r.case_id)||!['RESERVADO','CONCILIADO','INCIERTO'].includes(r.state))fail('LEDGER_INVALIDO');ids.add(r.id);safeInt(r.reservedNano);if(r.actualNano!==null)safeInt(r.actualNano);if(r.state==='CONCILIADO'&&r.actualNano===null)fail('LEDGER_INVALIDO');}\n for(const c of s.cases){const total=s.requests.filter(r=>r.case_id===c.case_id).reduce((a,r)=>a+(r.actualNano??r.reservedNano),0);safeInt(total);if(total>c.capNano&&!s.requests.some(r=>r.case_id===c.case_id&&r.state==='INCIERTO'))fail('LEDGER_INVALIDO');}return s;\n}\nfunction quote(){return POLICY.contextTokens*POLICY.inputNanoPerToken+POLICY.maxOutputTokens*POLICY.outputNanoPerToken;}\nfunction normalizeCall(body){\n if(!body||typeof body!=='object'||Array.isArray(body)||JSON.stringify(body).length>300000)fail('ESQUEMA_INVALIDO');\n const allowed=new Set(['model','messages','tools','tool_choice','parallel_tool_calls','temperature','top_p','response_format','stop','frequency_penalty','presence_penalty','seed','max_tokens','max_completion_tokens','stream','stream_options','n','user','service_tier','store']);\n if(Object.keys(body).some(k=>!allowed.has(k))||body.model!==POLICY.model||!Array.isArray(body.messages)||!body.messages.length||body.messages.length>100)fail('ESQUEMA_INVALIDO');\n for(const m of body.messages){if(!m||!['system','developer','user','assistant','tool'].includes(m.role)||(m.content!==null&&typeof m.content!=='string'))fail('SOLO_TEXTO');}\n if(body.n!==undefined&&body.n!==1)fail('MULTIPLES_SALIDAS');\n if(body.service_tier!==undefined&&body.service_tier!=='default')fail('TARIFA_NO_AUTORIZADA');\n const max=body.max_completion_tokens??body.max_tokens??POLICY.maxOutputTokens;\n if(!Number.isInteger(max)||max<1||max>POLICY.maxOutputTokens)fail('LIMITE_SALIDA');\n if(body.tools!==undefined&&(!Array.isArray(body.tools)||body.tools.length>10||body.tools.some(t=>t.type!=='function'||typeof t.function?.name!=='string')))fail('HERRAMIENTA_INVALIDA');\n const upstream={...body,stream:false,n:1,service_tier:'default',store:false,max_tokens:max};delete upstream.max_completion_tokens;delete upstream.stream_options;delete upstream.user;\n return {upstream,clientStream:body.stream===true};\n}\nfunction plan(raw,req,nowMs){const s=readLedger(raw);if(!Number.isFinite(nowMs)||nowMs>=Date.parse(POLICY.validUntil))fail('REVALIDAR_TARIFAS');\n if(!req||!/^LIN-\\d+-\\d+$/.test(req.case_id)||typeof req.id!=='string'||!/^\\d+$/.test(req.id))fail('CASO_INVALIDO');\n if(req.kind==='admit'){\n  if(typeof req.event_id!=='string'||!/^telegram:\\d+$|^manual:\\d+$/.test(req.event_id))fail('EVENTO_INVALIDO');\n  if(s.cases.some(c=>c.event_id===req.event_id))fail('DUPLICADO');\n  if(s.cases.some(c=>c.case_id===req.case_id))fail('CASO_YA_ADMITIDO');if(s.cases.length>=POLICY.maxCases)fail('LEDGER_LLENO');\n  s.cases.push({case_id:req.case_id,event_id:req.event_id,created:new Date(nowMs).toISOString(),capNano:POLICY.capNano});\n }else if(req.kind==='call'){\n  const c=s.cases.find(c=>c.case_id===req.case_id);if(!c)fail('CASO_NO_ADMITIDO');\n  if(nowMs-Date.parse(c.created)>=POLICY.maxSeconds*1000)fail('TIEMPO_AGOTADO');\n  if(s.requests.some(r=>r.id===req.id))fail('PETICION_DUPLICADA');\n  const rows=s.requests.filter(r=>r.case_id===req.case_id);if(rows.some(r=>r.state==='INCIERTO'))fail('CASO_INCIERTO');\n  if(rows.length>=POLICY.maxCalls)fail('LIMITE_LLAMADAS');normalizeCall(req.body);\n  if(rows.reduce((a,r)=>a+(r.actualNano??r.reservedNano),0)+quote()>c.capNano)fail('LIMITE_COSTO');\n  s.requests.push({id:req.id,case_id:req.case_id,state:'RESERVADO',reservedNano:quote(),actualNano:null,model:POLICY.model,created:new Date(nowMs).toISOString()});\n }else fail('OPERACION_INVALIDA');s.seq++;return JSON.stringify(s);\n}\nfunction reconcile(raw,req,response,nowMs){const s=readLedger(raw),r=s.requests.find(r=>r.id===req.id&&r.case_id===req.case_id);if(!r||r.state!=='RESERVADO')fail('RESERVA_INVALIDA');\n const u=response?.usage;let valid=response?.model===POLICY.model&&u&&Number.isSafeInteger(u.prompt_tokens)&&u.prompt_tokens>=0&&u.prompt_tokens<=POLICY.contextTokens&&Number.isSafeInteger(u.completion_tokens)&&u.completion_tokens>=0&&u.completion_tokens<=POLICY.maxOutputTokens&&Array.isArray(response.choices)&&response.choices.length===1;\n if(valid){r.actualNano=u.prompt_tokens*POLICY.inputNanoPerToken+u.completion_tokens*POLICY.outputNanoPerToken;r.state=r.actualNano<=r.reservedNano?'CONCILIADO':'INCIERTO';r.prompt_tokens=u.prompt_tokens;r.completion_tokens=u.completion_tokens;r.provider_request_id=String(response.id??'').slice(0,120);r.costType='USAGE_X_TARIFA_ESTANDAR_NO_FACTURA';}\n else r.state='INCIERTO';r.finished=new Date(nowMs).toISOString();s.seq++;return JSON.stringify(s);\n}\nfunction responseEnvelope(response,clientStream){if(!clientStream)return {contentType:'application/json',body:JSON.stringify(response)};\n const c=response.choices[0],delta={...c.message};if(delta.tool_calls)delta.tool_calls=delta.tool_calls.map((t,i)=>({...t,index:i}));\n const chunk={id:response.id,object:'chat.completion.chunk',created:response.created,model:response.model,choices:[{index:0,delta,finish_reason:null}]};\n const end={...chunk,choices:[{index:0,delta:{},finish_reason:c.finish_reason??'stop'}]};\n return {contentType:'text/event-stream',body:'data: '+JSON.stringify(chunk)+'\\n\\ndata: '+JSON.stringify(end)+'\\n\\ndata: '+JSON.stringify({...chunk,choices:[],usage:response.usage})+'\\n\\ndata: [DONE]\\n\\n'};\n}\nif(typeof module!=='undefined')module.exports={POLICY,emptyLedger,readLedger,quote,normalizeCall,plan,reconcile,responseEnvelope};\n\ntry {\n if($runIndex>=3)fail('CONCILIACION_PENDIENTE');\n const rows=$input.all().map(i=>i.json);if(rows.length!==1||rows[0].id!==1||typeof rows[0].state_json!=='string')fail('LEDGER_INVALIDO');\n const req=$('Normalizar').first().json.req,r=$('OpenAI controlado').first().json;\n const old_json=rows[0].state_json,next_json=reconcile(old_json,req,r.statusCode===200?r.body:{},Date.now());\n return [{json:{ok:true,old_json,next_json}}];\n}catch(e){return [{json:{ok:false,code:e.code??'CONCILIACION_PENDIENTE',status:502}}];}\n"
+      }
+    },
+    {
+      "id": "9f5ce53b-01ae-5201-a967-2ecb49447f9e",
+      "name": "Puede conciliar",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3570,
+        0
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "81229949-c738-5c19-8b8f-46196120f48c",
+              "leftValue": "={{ $json.ok===true }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "59e02148-d129-549d-b636-eaac1347bc98",
+      "name": "Conciliar CAS",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        3780,
+        0
+      ],
+      "parameters": {
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "value": "CONFIGURAR_TABLA_lincoln_guard_ledger",
+          "mode": "id"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyValue": 1
+            },
+            {
+              "keyName": "state_json",
+              "keyValue": "={{ $(\"Plan conciliación\").item.json.old_json }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "state_json": "={{ $(\"Plan conciliación\").item.json.next_json }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "state_json",
+              "displayName": "state_json",
+              "type": "string",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "alwaysOutputData": true
+    },
+    {
+      "id": "8b622f88-55e7-5dea-b454-72400619453a",
+      "name": "Verificar conciliación",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3990,
+        0
+      ],
+      "parameters": {
+        "jsCode": "// Política del servidor. Importes en nanoUSD (1 USD=1e9); no usa valores de costo del cliente.\nconst POLICY=Object.freeze({model:'gpt-4o-mini-2024-07-18',contextTokens:128000,maxOutputTokens:4096,inputNanoPerToken:150,outputNanoPerToken:600,capNano:250000000,maxCalls:25,maxCases:100,maxSeconds:360,validUntil:'2026-12-04T00:00:00Z'});\nfunction fail(code){const e=new Error(code);e.code=code;throw e;}\nfunction safeInt(n,max=Number.MAX_SAFE_INTEGER){if(!Number.isSafeInteger(n)||n<0||n>max)fail('LEDGER_INVALIDO');return n;}\nfunction emptyLedger(){return {schema:1,seq:0,cases:[],requests:[]};}\nfunction readLedger(raw){let s;try{s=JSON.parse(raw);}catch{fail('LEDGER_INVALIDO');}\n if(!s||s.schema!==1||!Array.isArray(s.cases)||!Array.isArray(s.requests)||s.cases.length>POLICY.maxCases||s.requests.length>2500)fail('LEDGER_INVALIDO');\n safeInt(s.seq);const seen=new Set(),events=new Set();\n for(const c of s.cases){if(!c||!/^LIN-\\d+-\\d+$/.test(c.case_id)||seen.has(c.case_id)||typeof c.event_id!=='string'||!c.event_id||events.has(c.event_id)||c.capNano!==POLICY.capNano||!Number.isFinite(Date.parse(c.created)))fail('LEDGER_INVALIDO');seen.add(c.case_id);events.add(c.event_id);}\n const ids=new Set();for(const r of s.requests){if(!r||typeof r.id!=='string'||ids.has(r.id)||!seen.has(r.case_id)||!['RESERVADO','CONCILIADO','INCIERTO'].includes(r.state))fail('LEDGER_INVALIDO');ids.add(r.id);safeInt(r.reservedNano);if(r.actualNano!==null)safeInt(r.actualNano);if(r.state==='CONCILIADO'&&r.actualNano===null)fail('LEDGER_INVALIDO');}\n for(const c of s.cases){const total=s.requests.filter(r=>r.case_id===c.case_id).reduce((a,r)=>a+(r.actualNano??r.reservedNano),0);safeInt(total);if(total>c.capNano&&!s.requests.some(r=>r.case_id===c.case_id&&r.state==='INCIERTO'))fail('LEDGER_INVALIDO');}return s;\n}\nfunction quote(){return POLICY.contextTokens*POLICY.inputNanoPerToken+POLICY.maxOutputTokens*POLICY.outputNanoPerToken;}\nfunction normalizeCall(body){\n if(!body||typeof body!=='object'||Array.isArray(body)||JSON.stringify(body).length>300000)fail('ESQUEMA_INVALIDO');\n const allowed=new Set(['model','messages','tools','tool_choice','parallel_tool_calls','temperature','top_p','response_format','stop','frequency_penalty','presence_penalty','seed','max_tokens','max_completion_tokens','stream','stream_options','n','user','service_tier','store']);\n if(Object.keys(body).some(k=>!allowed.has(k))||body.model!==POLICY.model||!Array.isArray(body.messages)||!body.messages.length||body.messages.length>100)fail('ESQUEMA_INVALIDO');\n for(const m of body.messages){if(!m||!['system','developer','user','assistant','tool'].includes(m.role)||(m.content!==null&&typeof m.content!=='string'))fail('SOLO_TEXTO');}\n if(body.n!==undefined&&body.n!==1)fail('MULTIPLES_SALIDAS');\n if(body.service_tier!==undefined&&body.service_tier!=='default')fail('TARIFA_NO_AUTORIZADA');\n const max=body.max_completion_tokens??body.max_tokens??POLICY.maxOutputTokens;\n if(!Number.isInteger(max)||max<1||max>POLICY.maxOutputTokens)fail('LIMITE_SALIDA');\n if(body.tools!==undefined&&(!Array.isArray(body.tools)||body.tools.length>10||body.tools.some(t=>t.type!=='function'||typeof t.function?.name!=='string')))fail('HERRAMIENTA_INVALIDA');\n const upstream={...body,stream:false,n:1,service_tier:'default',store:false,max_tokens:max};delete upstream.max_completion_tokens;delete upstream.stream_options;delete upstream.user;\n return {upstream,clientStream:body.stream===true};\n}\nfunction plan(raw,req,nowMs){const s=readLedger(raw);if(!Number.isFinite(nowMs)||nowMs>=Date.parse(POLICY.validUntil))fail('REVALIDAR_TARIFAS');\n if(!req||!/^LIN-\\d+-\\d+$/.test(req.case_id)||typeof req.id!=='string'||!/^\\d+$/.test(req.id))fail('CASO_INVALIDO');\n if(req.kind==='admit'){\n  if(typeof req.event_id!=='string'||!/^telegram:\\d+$|^manual:\\d+$/.test(req.event_id))fail('EVENTO_INVALIDO');\n  if(s.cases.some(c=>c.event_id===req.event_id))fail('DUPLICADO');\n  if(s.cases.some(c=>c.case_id===req.case_id))fail('CASO_YA_ADMITIDO');if(s.cases.length>=POLICY.maxCases)fail('LEDGER_LLENO');\n  s.cases.push({case_id:req.case_id,event_id:req.event_id,created:new Date(nowMs).toISOString(),capNano:POLICY.capNano});\n }else if(req.kind==='call'){\n  const c=s.cases.find(c=>c.case_id===req.case_id);if(!c)fail('CASO_NO_ADMITIDO');\n  if(nowMs-Date.parse(c.created)>=POLICY.maxSeconds*1000)fail('TIEMPO_AGOTADO');\n  if(s.requests.some(r=>r.id===req.id))fail('PETICION_DUPLICADA');\n  const rows=s.requests.filter(r=>r.case_id===req.case_id);if(rows.some(r=>r.state==='INCIERTO'))fail('CASO_INCIERTO');\n  if(rows.length>=POLICY.maxCalls)fail('LIMITE_LLAMADAS');normalizeCall(req.body);\n  if(rows.reduce((a,r)=>a+(r.actualNano??r.reservedNano),0)+quote()>c.capNano)fail('LIMITE_COSTO');\n  s.requests.push({id:req.id,case_id:req.case_id,state:'RESERVADO',reservedNano:quote(),actualNano:null,model:POLICY.model,created:new Date(nowMs).toISOString()});\n }else fail('OPERACION_INVALIDA');s.seq++;return JSON.stringify(s);\n}\nfunction reconcile(raw,req,response,nowMs){const s=readLedger(raw),r=s.requests.find(r=>r.id===req.id&&r.case_id===req.case_id);if(!r||r.state!=='RESERVADO')fail('RESERVA_INVALIDA');\n const u=response?.usage;let valid=response?.model===POLICY.model&&u&&Number.isSafeInteger(u.prompt_tokens)&&u.prompt_tokens>=0&&u.prompt_tokens<=POLICY.contextTokens&&Number.isSafeInteger(u.completion_tokens)&&u.completion_tokens>=0&&u.completion_tokens<=POLICY.maxOutputTokens&&Array.isArray(response.choices)&&response.choices.length===1;\n if(valid){r.actualNano=u.prompt_tokens*POLICY.inputNanoPerToken+u.completion_tokens*POLICY.outputNanoPerToken;r.state=r.actualNano<=r.reservedNano?'CONCILIADO':'INCIERTO';r.prompt_tokens=u.prompt_tokens;r.completion_tokens=u.completion_tokens;r.provider_request_id=String(response.id??'').slice(0,120);r.costType='USAGE_X_TARIFA_ESTANDAR_NO_FACTURA';}\n else r.state='INCIERTO';r.finished=new Date(nowMs).toISOString();s.seq++;return JSON.stringify(s);\n}\nfunction responseEnvelope(response,clientStream){if(!clientStream)return {contentType:'application/json',body:JSON.stringify(response)};\n const c=response.choices[0],delta={...c.message};if(delta.tool_calls)delta.tool_calls=delta.tool_calls.map((t,i)=>({...t,index:i}));\n const chunk={id:response.id,object:'chat.completion.chunk',created:response.created,model:response.model,choices:[{index:0,delta,finish_reason:null}]};\n const end={...chunk,choices:[{index:0,delta:{},finish_reason:c.finish_reason??'stop'}]};\n return {contentType:'text/event-stream',body:'data: '+JSON.stringify(chunk)+'\\n\\ndata: '+JSON.stringify(end)+'\\n\\ndata: '+JSON.stringify({...chunk,choices:[],usage:response.usage})+'\\n\\ndata: [DONE]\\n\\n'};\n}\nif(typeof module!=='undefined')module.exports={POLICY,emptyLedger,readLedger,quote,normalizeCall,plan,reconcile,responseEnvelope};\n\ntry {\n const rows=$input.all().map(i=>i.json),req=$('Normalizar').first().json.req;\n if(rows.length!==1||rows[0].id!==1||typeof rows[0].state_json!=='string')return [{json:{ok:false,retry:true}}];\n const r=readLedger(rows[0].state_json).requests.find(r=>r.id===req.id&&r.case_id===req.case_id);\n if(r?.state==='CONCILIADO')return [{json:{ok:true,retry:false}}];\n if(r?.state==='INCIERTO')return [{json:{ok:false,retry:false,code:'USAGE_INCIERTO',status:502}}];\n return [{json:{ok:false,retry:true}}];\n}catch(e){return [{json:{ok:false,retry:false,code:'CONCILIACION_PENDIENTE',status:502}}];}\n"
+      }
+    },
+    {
+      "id": "bfc7faa9-019d-5584-8c29-deeae8ec5d83",
+      "name": "Conciliación propia",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        4200,
+        0
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "cbcffbda-f138-591b-b8de-394a38b55766",
+              "leftValue": "={{ $json.ok===true }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "0d075309-c240-5fae-a663-cd150081771e",
+      "name": "Reintentar conciliación",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        4410,
+        0
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "6444d274-29c8-596b-b6cf-767046ffd264",
+              "leftValue": "={{ $json.retry===true }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "fa30acbe-8d11-50f2-99e4-ad743d8963bc",
+      "name": "Formar respuesta",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4620,
+        0
+      ],
+      "parameters": {
+        "jsCode": "// Política del servidor. Importes en nanoUSD (1 USD=1e9); no usa valores de costo del cliente.\nconst POLICY=Object.freeze({model:'gpt-4o-mini-2024-07-18',contextTokens:128000,maxOutputTokens:4096,inputNanoPerToken:150,outputNanoPerToken:600,capNano:250000000,maxCalls:25,maxCases:100,maxSeconds:360,validUntil:'2026-12-04T00:00:00Z'});\nfunction fail(code){const e=new Error(code);e.code=code;throw e;}\nfunction safeInt(n,max=Number.MAX_SAFE_INTEGER){if(!Number.isSafeInteger(n)||n<0||n>max)fail('LEDGER_INVALIDO');return n;}\nfunction emptyLedger(){return {schema:1,seq:0,cases:[],requests:[]};}\nfunction readLedger(raw){let s;try{s=JSON.parse(raw);}catch{fail('LEDGER_INVALIDO');}\n if(!s||s.schema!==1||!Array.isArray(s.cases)||!Array.isArray(s.requests)||s.cases.length>POLICY.maxCases||s.requests.length>2500)fail('LEDGER_INVALIDO');\n safeInt(s.seq);const seen=new Set(),events=new Set();\n for(const c of s.cases){if(!c||!/^LIN-\\d+-\\d+$/.test(c.case_id)||seen.has(c.case_id)||typeof c.event_id!=='string'||!c.event_id||events.has(c.event_id)||c.capNano!==POLICY.capNano||!Number.isFinite(Date.parse(c.created)))fail('LEDGER_INVALIDO');seen.add(c.case_id);events.add(c.event_id);}\n const ids=new Set();for(const r of s.requests){if(!r||typeof r.id!=='string'||ids.has(r.id)||!seen.has(r.case_id)||!['RESERVADO','CONCILIADO','INCIERTO'].includes(r.state))fail('LEDGER_INVALIDO');ids.add(r.id);safeInt(r.reservedNano);if(r.actualNano!==null)safeInt(r.actualNano);if(r.state==='CONCILIADO'&&r.actualNano===null)fail('LEDGER_INVALIDO');}\n for(const c of s.cases){const total=s.requests.filter(r=>r.case_id===c.case_id).reduce((a,r)=>a+(r.actualNano??r.reservedNano),0);safeInt(total);if(total>c.capNano&&!s.requests.some(r=>r.case_id===c.case_id&&r.state==='INCIERTO'))fail('LEDGER_INVALIDO');}return s;\n}\nfunction quote(){return POLICY.contextTokens*POLICY.inputNanoPerToken+POLICY.maxOutputTokens*POLICY.outputNanoPerToken;}\nfunction normalizeCall(body){\n if(!body||typeof body!=='object'||Array.isArray(body)||JSON.stringify(body).length>300000)fail('ESQUEMA_INVALIDO');\n const allowed=new Set(['model','messages','tools','tool_choice','parallel_tool_calls','temperature','top_p','response_format','stop','frequency_penalty','presence_penalty','seed','max_tokens','max_completion_tokens','stream','stream_options','n','user','service_tier','store']);\n if(Object.keys(body).some(k=>!allowed.has(k))||body.model!==POLICY.model||!Array.isArray(body.messages)||!body.messages.length||body.messages.length>100)fail('ESQUEMA_INVALIDO');\n for(const m of body.messages){if(!m||!['system','developer','user','assistant','tool'].includes(m.role)||(m.content!==null&&typeof m.content!=='string'))fail('SOLO_TEXTO');}\n if(body.n!==undefined&&body.n!==1)fail('MULTIPLES_SALIDAS');\n if(body.service_tier!==undefined&&body.service_tier!=='default')fail('TARIFA_NO_AUTORIZADA');\n const max=body.max_completion_tokens??body.max_tokens??POLICY.maxOutputTokens;\n if(!Number.isInteger(max)||max<1||max>POLICY.maxOutputTokens)fail('LIMITE_SALIDA');\n if(body.tools!==undefined&&(!Array.isArray(body.tools)||body.tools.length>10||body.tools.some(t=>t.type!=='function'||typeof t.function?.name!=='string')))fail('HERRAMIENTA_INVALIDA');\n const upstream={...body,stream:false,n:1,service_tier:'default',store:false,max_tokens:max};delete upstream.max_completion_tokens;delete upstream.stream_options;delete upstream.user;\n return {upstream,clientStream:body.stream===true};\n}\nfunction plan(raw,req,nowMs){const s=readLedger(raw);if(!Number.isFinite(nowMs)||nowMs>=Date.parse(POLICY.validUntil))fail('REVALIDAR_TARIFAS');\n if(!req||!/^LIN-\\d+-\\d+$/.test(req.case_id)||typeof req.id!=='string'||!/^\\d+$/.test(req.id))fail('CASO_INVALIDO');\n if(req.kind==='admit'){\n  if(typeof req.event_id!=='string'||!/^telegram:\\d+$|^manual:\\d+$/.test(req.event_id))fail('EVENTO_INVALIDO');\n  if(s.cases.some(c=>c.event_id===req.event_id))fail('DUPLICADO');\n  if(s.cases.some(c=>c.case_id===req.case_id))fail('CASO_YA_ADMITIDO');if(s.cases.length>=POLICY.maxCases)fail('LEDGER_LLENO');\n  s.cases.push({case_id:req.case_id,event_id:req.event_id,created:new Date(nowMs).toISOString(),capNano:POLICY.capNano});\n }else if(req.kind==='call'){\n  const c=s.cases.find(c=>c.case_id===req.case_id);if(!c)fail('CASO_NO_ADMITIDO');\n  if(nowMs-Date.parse(c.created)>=POLICY.maxSeconds*1000)fail('TIEMPO_AGOTADO');\n  if(s.requests.some(r=>r.id===req.id))fail('PETICION_DUPLICADA');\n  const rows=s.requests.filter(r=>r.case_id===req.case_id);if(rows.some(r=>r.state==='INCIERTO'))fail('CASO_INCIERTO');\n  if(rows.length>=POLICY.maxCalls)fail('LIMITE_LLAMADAS');normalizeCall(req.body);\n  if(rows.reduce((a,r)=>a+(r.actualNano??r.reservedNano),0)+quote()>c.capNano)fail('LIMITE_COSTO');\n  s.requests.push({id:req.id,case_id:req.case_id,state:'RESERVADO',reservedNano:quote(),actualNano:null,model:POLICY.model,created:new Date(nowMs).toISOString()});\n }else fail('OPERACION_INVALIDA');s.seq++;return JSON.stringify(s);\n}\nfunction reconcile(raw,req,response,nowMs){const s=readLedger(raw),r=s.requests.find(r=>r.id===req.id&&r.case_id===req.case_id);if(!r||r.state!=='RESERVADO')fail('RESERVA_INVALIDA');\n const u=response?.usage;let valid=response?.model===POLICY.model&&u&&Number.isSafeInteger(u.prompt_tokens)&&u.prompt_tokens>=0&&u.prompt_tokens<=POLICY.contextTokens&&Number.isSafeInteger(u.completion_tokens)&&u.completion_tokens>=0&&u.completion_tokens<=POLICY.maxOutputTokens&&Array.isArray(response.choices)&&response.choices.length===1;\n if(valid){r.actualNano=u.prompt_tokens*POLICY.inputNanoPerToken+u.completion_tokens*POLICY.outputNanoPerToken;r.state=r.actualNano<=r.reservedNano?'CONCILIADO':'INCIERTO';r.prompt_tokens=u.prompt_tokens;r.completion_tokens=u.completion_tokens;r.provider_request_id=String(response.id??'').slice(0,120);r.costType='USAGE_X_TARIFA_ESTANDAR_NO_FACTURA';}\n else r.state='INCIERTO';r.finished=new Date(nowMs).toISOString();s.seq++;return JSON.stringify(s);\n}\nfunction responseEnvelope(response,clientStream){if(!clientStream)return {contentType:'application/json',body:JSON.stringify(response)};\n const c=response.choices[0],delta={...c.message};if(delta.tool_calls)delta.tool_calls=delta.tool_calls.map((t,i)=>({...t,index:i}));\n const chunk={id:response.id,object:'chat.completion.chunk',created:response.created,model:response.model,choices:[{index:0,delta,finish_reason:null}]};\n const end={...chunk,choices:[{index:0,delta:{},finish_reason:c.finish_reason??'stop'}]};\n return {contentType:'text/event-stream',body:'data: '+JSON.stringify(chunk)+'\\n\\ndata: '+JSON.stringify(end)+'\\n\\ndata: '+JSON.stringify({...chunk,choices:[],usage:response.usage})+'\\n\\ndata: [DONE]\\n\\n'};\n}\nif(typeof module!=='undefined')module.exports={POLICY,emptyLedger,readLedger,quote,normalizeCall,plan,reconcile,responseEnvelope};\n\nreturn [{json:responseEnvelope($('OpenAI controlado').first().json.body,$('Normalizar').first().json.req.clientStream)}];"
+      }
+    },
+    {
+      "id": "3907be1a-6815-533b-a0b4-6f862c5bef4c",
+      "name": "Responder modelo",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        4830,
+        0
+      ],
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.body }}",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "={{ $json.contentType }}"
+              },
+              {
+                "name": "Cache-Control",
+                "value": "no-store"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "bf4540e8-75c0-5e85-bc10-c1faba487f3d",
+      "name": "Responder admisión",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        5040,
+        0
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ {ok:true,admitido:true,caso_id:$(\"Normalizar\").first().json.req.case_id} }}",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Cache-Control",
+                "value": "no-store"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "44b96982-76be-56ce-a5c6-6c259ecb82f6",
+      "name": "Responder error",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        5250,
+        0
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ {error:{message:\"Control Lincoln: \"+($json.code??\"CONTROL_BLOQUEADO\"),type:\"lincoln_guard\",code:$json.code??\"CONTROL_BLOQUEADO\"},ok:false,admitido:false} }}",
+        "options": {
+          "responseCode": "={{ $json.status??409 }}",
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Cache-Control",
+                "value": "no-store"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook call": {
+      "main": [
+        [
+          {
+            "node": "Ruta call",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ruta call": {
+      "main": [
+        [
+          {
+            "node": "Normalizar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook admit": {
+      "main": [
+        [
+          {
+            "node": "Ruta admit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ruta admit": {
+      "main": [
+        [
+          {
+            "node": "Normalizar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalizar": {
+      "main": [
+        [
+          {
+            "node": "Solicitud válida",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Solicitud válida": {
+      "main": [
+        [
+          {
+            "node": "Leer reserva",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Responder error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Leer reserva": {
+      "main": [
+        [
+          {
+            "node": "Plan reserva",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Plan reserva": {
+      "main": [
+        [
+          {
+            "node": "Puede reservar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Puede reservar": {
+      "main": [
+        [
+          {
+            "node": "Reservar CAS",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Responder error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reservar CAS": {
+      "main": [
+        [
+          {
+            "node": "Verificar reserva",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verificar reserva": {
+      "main": [
+        [
+          {
+            "node": "Reserva propia",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reserva propia": {
+      "main": [
+        [
+          {
+            "node": "Es admisión",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Reintentar reserva",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reintentar reserva": {
+      "main": [
+        [
+          {
+            "node": "Leer reserva",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Responder error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Es admisión": {
+      "main": [
+        [
+          {
+            "node": "Responder admisión",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "OpenAI controlado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI controlado": {
+      "main": [
+        [
+          {
+            "node": "Leer conciliación",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Leer conciliación": {
+      "main": [
+        [
+          {
+            "node": "Plan conciliación",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Plan conciliación": {
+      "main": [
+        [
+          {
+            "node": "Puede conciliar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Puede conciliar": {
+      "main": [
+        [
+          {
+            "node": "Conciliar CAS",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Responder error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Conciliar CAS": {
+      "main": [
+        [
+          {
+            "node": "Verificar conciliación",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verificar conciliación": {
+      "main": [
+        [
+          {
+            "node": "Conciliación propia",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Conciliación propia": {
+      "main": [
+        [
+          {
+            "node": "Formar respuesta",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Reintentar conciliación",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reintentar conciliación": {
+      "main": [
+        [
+          {
+            "node": "Leer conciliación",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Responder error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Formar respuesta": {
+      "main": [
+        [
+          {
+            "node": "Responder modelo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "executionTimeout": 240,
+    "saveDataErrorExecution": "none",
+    "saveDataSuccessExecution": "none",
+    "saveManualExecutions": false,
+    "saveExecutionProgress": false,
+    "availableInMCP": false
+  },
+  "pinData": {}
+}

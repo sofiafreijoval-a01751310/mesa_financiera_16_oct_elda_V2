@@ -1,0 +1,37 @@
+{
+  "fecha_local": "2026-11-26",
+  "workflow_titulo_historico": "Lincoln | Apoyos a Distribuidores | Skills v05",
+  "version_publicada": "Lincoln v06 revisión versionada",
+  "publicacion_observada": true,
+  "boton_final": "Published (disabled)",
+  "cambios": [
+    {
+      "nodo": "Loop revisión determinista",
+      "parametro": "jsCode",
+      "sha256_export_publico": "635f385adaa3b93034cb6ec0c0331e1800b81f8ba12b40a65eabb01c61d566c3",
+      "metodo_native": "Edición puntual en interfaz, sin reimportar nodos ni credenciales"
+    },
+    {
+      "nodo": "Preparar registro del caso",
+      "parametro": "jsCode",
+      "sha256_export_publico": "a9165523af303ba1f566ad824619663a6a0adb489bf69381e64e882c76110924",
+      "metodo_native": "Edición puntual en interfaz, sin reimportar nodos ni credenciales"
+    },
+    {
+      "nodo": "Enviar resultado Lincoln",
+      "parametro": "text",
+      "sha256_export_publico": "1e8fa6fdabbc8c18566dbae9923bacfa705a6060f9239fc66474426abbd2d827",
+      "metodo_native": "Edición puntual en interfaz, sin reimportar nodos ni credenciales"
+    }
+  ],
+  "pruebas_locales": {
+    "archivo": "evidencias/v06_pruebas.json",
+    "passed": 44
+  },
+  "ejecucion_integral_posterior": false,
+  "no_acredita": [
+    "Caso vivo nuevo V1→V2",
+    "Corte monetario por llamada Gateway",
+    "Deduplicación antes del modelo"
+  ]
+}

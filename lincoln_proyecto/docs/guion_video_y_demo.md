@@ -17,7 +17,7 @@ Objetivo: video de7minutos (guía:5–8) y demostración total de hasta12minutos
 
 Cerrar pestañas personales y ocultar perfil, correo, chats ajenos y credenciales. Usar ventana del proyecto. Verificar acceso a Pages, GitHub y servicios antes de grabar. Mantener informe y matriz abiertos para distinguir pruebas históricas, locales y vivas. Mostrar la fecha y la etiqueta de simulación.
 
-## Reflexión individual que debe aportar Sofía
+## Reflexión individual integrada
 
 1. ¿Qué decisión resuelve la solución?
 2. ¿Qué aporte real tuvo cada agente?
@@ -26,4 +26,4 @@ Cerrar pestañas personales y ocultar perfil, correo, chats ajenos y credenciale
 5. ¿Qué cambia al multiplicar el volumen por diez?
 6. ¿Qué validarías antes de usar datos reales?
 
-La explicación final debe ser propia. Se pueden ordenar o corregir sus respuestas, pero no atribuirle experiencias o conclusiones que no haya confirmado.
+La reflexión fue integrada con las aportaciones y confirmación de Sofía; consultar docs/reflexion_individual.md. En el video debe explicar con sus propias palabras el funcionamiento y los límites.
