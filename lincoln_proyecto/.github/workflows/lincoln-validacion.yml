@@ -95,16 +95,19 @@ jobs:
           python-version: '3.12'
       - name: Instalar generador PDF
         run: python3 -m pip install reportlab==4.4.10
-      - name: Generar informe de revisión
+      - name: Generar informe de entrega
         run: python3 lincoln_proyecto/src/generar_informe.py
+      - name: Generar guía de entrega y grabación
+        run: python3 lincoln_proyecto/src/generar_guia_entrega.py
       - name: Verificar y empaquetar commit
         run: python3 lincoln_proyecto/src/empaquetar_entrega.py
-      - name: Guardar paquete de revisión
+      - name: Guardar paquete de entrega
         uses: actions/upload-artifact@v4
         with:
-          name: Lincoln-Proyecto-Revision
+          name: Lincoln-Proyecto-Entrega
           path: |
-            output/Freijo_Valdovinos_Sofia_AI_Tools_ProyectoFinal_REVISION.zip
-            output/pdf/Informe_Lincoln_Revision.pdf
+            output/Freijo_Valdovinos_Sofia_AI_Tools_ProyectoFinal.zip
+            output/pdf/Informe_Lincoln.pdf
+            output/pdf/Guia_Entrega_y_Grabacion.pdf
           if-no-files-found: error
           retention-days: 30

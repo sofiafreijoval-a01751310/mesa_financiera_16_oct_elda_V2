@@ -40,3 +40,11 @@ Se conserva la conexión Gateway de n8n por indicación de Sofía. Sus tarifas y
 La versión final v5 consultó LIN-76-1 desde Pages a las19:25 México. Sofía confirmó que escuchó la respuesta. El historial de ElevenLabs mostró46segundos,9mensajes,630créditos totales:511de plataforma y119de LLM; el panel monetario del LLM mostró USD0.00892 para4turnos facturados. La herramienta tardó2.3s. Son datos del panel del proveedor, no una factura conciliada ni el costo total monetario de la llamada.
 
 Ver costos/voz_observada_26nov.csv y evidencias/elevenlabs_26nov.json. Los630créditos ya incluyen los119del LLM. No sumar el importe USD del LLM a una conversión del total de créditos sin comprobar la política de facturación. A46s por consulta,100/1000/10000consultas serían76.67/766.67/7666.67minutos: extrapolación de una muestra, no predicción ni tarifa.
+
+## Estado vigente27/nov: proxy OpenAI propio
+
+La conexión Gateway anterior es histórica y quedó despublicada. La ruta v07 usa la API propia mediante proxy: gpt-4o-mini-2024-07-18, USD0.15/millón de entrada yUSD0.60/millón de salida, tarifa estándar incorporada en la política revisada26/nov. Reserva previa USD0.0216576 por llamada y cota USD0.25/caso. Revalidación obligatoria desde2026-12-04T00:00:00Z.
+
+123:11llamadas conciliadas,30414tokens entrada y4132salida, USD0.007041300 a tarifa estándar. Se cuenta todo prompt a la tarifa estándar sin descuento por caché no conciliado. No es factura ni costo total con n8n/voz. El CSV consumo_proxy_27nov.csv incluye también intentos fallidos; no ocultarlos al calcular promedios.140 funciona por Telegram, pero no se infiere su costo de los tokens aproximados del editor.
+
+`costos.csv` consolida las columnas exigidas por la guía y distingue campos desconocidos. El ledger actual identifica caso/petición/modelo, pero no registra el especialista; la etapa por llamada queda NO_ATRIBUIDA y no se inventa. El detalle por etapa del respaldo está en costos_por_etapa.csv y es una estimación histórica separada, no un reparto del gasto real de123. Falta instrumentar identificador de agente por request y conciliar factura total/desarrollo. Las reservas sintéticas136 no se incluyen en consumo real.

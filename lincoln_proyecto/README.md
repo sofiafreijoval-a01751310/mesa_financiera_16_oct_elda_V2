@@ -1,63 +1,64 @@
-# Lincoln | Apoyos a Distribuidores - complemento reproducible
+# Lincoln | Apoyos a Distribuidores
 
-Sofía Freijo Valdovinos · AI Tools · Prof. Elda Morales.
-Datos sintéticos académicos; corte23nov2026. Este subproyecto conserva separada la actividad Mesa Financiera de Batuta, Iris, Euler y Vera.
+Sofía Freijo Valdovinos · AI Tools · Dra.Elda C.Morales. Corte27/nov/2026. Proyecto académico con datos sintéticos; no es una aprobación comercial de Lincoln/Ford. La actividad anterior Mesa Financiera permanece separada.
+
+**Leer primero [índice de entrega](docs/ENTREGA_FINAL.md)** y [manual vigente](docs/manual_importacion.md). El ZIP identifica su commit exacto en MANIFIESTO.json. El video individual y ciertas pruebas de la matriz siguen pendientes; no se declara cumplimiento total.
+
+## Objetivo y resultado
+
+Evaluar si conviene apoyar una acción local de un distribuidor, con fuentes, cálculo50/50 y revisión antes de una decisión humana simulada. Telegram recibe y decide; n8n coordina un orquestador y cuatro especialistas; ElevenLabs consulta el mismo registro; Pages muestra una proyección sanitizada estática. No se efectúan pagos ni cambios de presupuesto.
+
+## Estado probado
+
+-140:entrada nueva Telegram, cuatro agentes, revisión V1→V2, registro22 PENDIENTE_APROBACION y respuesta confirmada por Sofía en75.68s. No aprobado automáticamente.
+-123:recorrido manual equivalente,11llamadas OpenAI conciliadas;30414tokens entrada+4132salida, USD0.007041300 a tarifa estándar, sin infraestructura ni voz y sin afirmar factura.
+-136:lote HTTP de3peticiones; corte por cota antes del proveedor y una admisión frente a un duplicado. Sus11reservas sintéticas no son cargos. No certifica toda carga concurrente.
+-76:decisión humana77 y voz Pages confirmada,46s/630créditos.78 bloqueó segunda decisión. No atribuir esa decisión al caso140.
+-Cron diario09h México publicado; transición e idempotencia manuales probadas. Actions tiene validación, bloqueo deliberado y recuperación documentados.
 
 ## Ejecutar sin llaves
 
-Desde `lincoln_proyecto`, Python3.12 y Node22 (sin paquetes externos para las pruebas):
+Python3.12 y Node22. Desde lincoln_proyecto:
 
 ```bash
-python3 tests/validar_base.py
-python3 -m unittest discover -s tests -p 'test_*.py' -v
-node exports/verificar_workflow_v03.cjs
+python3 src/run_checks.py
 python3 src/run_demo.py
-python3 skills/vizdata/scripts/audit_viz_spec.py docs/vizdata_brief.json --strict
-python3 src/validar_paquete.py
 ```
 
-Resultado esperado: base consistente; pruebas Python y JavaScript satisfactorias;3casos convergen en2revisiones y1escala; recuperación3intentos. El comando python3 src/run_checks.py ejecuta las13comprobaciones vigentes. Las pruebas no llaman APIs ni mandan Telegram. `run_demo.py` regenera un ledger SQLite de DEMO; nunca apuntarlo a una base operativa.
+El primer comando ejecuta14comprobaciones locales. No llama modelos ni envía Telegram. El segundo recrea una base SQLite de DEMO; no apuntarlo a una base operativa. Resultado esperado:3casos convergentes en2revisiones,1escalado y recuperación acotada. La validación local no certifica canales externos.
 
-## Contenido
+Para regenerar informes:instalar requirements-report.txt, fuentes DejaVuSans y ejecutar `python3 src/generar_informe.py`, `python3 src/generar_guia_entrega.py`. `python3 src/consolidar_costos.py` reconstruye el registro sin inventar campos desconocidos. `src/empaquetar_entrega.py` usa exclusivamente fuentes del commit, no cambios locales sin commit.
 
-- `skills/`:dos previos documentados y revisor nuevo reproducible.
-- `src/`:guardianes, loops y prueba de paquete.
-- `exports/`:respaldo n8n v03 sin credenciales, inactivo y con usuario DEMO.
-- `datos/`:base y PMA ficticios v0.1.
-- `evidencias/`:dictámenes/trazas/reports de ejecución local.
-- `costos/`:conteos medidos de texto estático, supuestos, tarifas y estimaciones.
-- `docs/`:costos, ciberseguridad, loops, VizData y pendientes de cierre.
+## Importación actual
 
-No importar el export sobre un flujo activo sin configurar credenciales/tablas/identidad:es copia pública para revisión. El proxy protegido está publicado para pruebas; el adaptador v07 pasó en123 y se publicó tras la prueba negativa136. Los controles financieros requieren una cota máxima por llamada calculada en servidor y una reserva transaccional antes del modelo. El uso por request de123 está conciliado a tarifa estándar; siguen pendientes la factura histórica total, infraestructura y voz.
+Usar exports/Lincoln_Proxy_OpenAI_CANDIDATO_PUBLICO.json, Lincoln_Apoyos_v07_CANDIDATO_PUBLICO.json, Lincoln_Consulta_Voz_PUBLICO.json y Lincoln_Vencimientos_Programados_PUBLICO.json. Los nombres CANDIDATO son antecedentes; las versiones nativas están publicadas. Todos los exports públicos son inactivos, sin credenciales ni datos fijados. v03-v06 conservan historia, no son la ruta inicial de esta entrega.
 
-El tokenizador binario original permanece en la instalación personal de cotizar-tokens-ia. Su salida medida se conserva con hashes. El script cotizar.py copiado reproduce los cálculos por las entradas JSON, sin necesitar el tokenizador.
+El manual detalla tablas, fila inicial del ledger, credenciales por función, identidad autorizada, publicación, parada y fallas. Crear un workflow vacío por export. Solo un receptor Telegram por bot. La API key real OpenAI va únicamente en el servidor; la contraseña del proxy es otra credencial. No publicar valores ni identidades.
 
-Ver `docs/cierre_y_evidencias.md` para pendientes de rúbrica y límites. Ningún dictamen numérico aprueba apoyos ni mueve presupuesto.
+## Navegar la entrega
 
-## Regenerar el informe y figura (opcional)
+| Carpeta | Contenido |
+|---|---|
+|skills/|cotizar-tokens-ia y VizData reutilizados; preparar-apoyo-lincoln y revisar-apoyo-lincoln específicos, con SKILL.md y recursos|
+|src/|validaciones, loops, constructores y reproducción|
+|exports/|workflows y configuración sanitizada ElevenLabs|
+|datos/|muestras y PMA sintéticos v0.1; no datos oficiales|
+|costos/|costos.csv, uso por petición, subtotales, voz y proyecciones históricas separadas|
+|tests/|matriz P01-P14 con estados honestos y pruebas locales|
+|evidencias/|trazas, observaciones nativas y antecedentes con fecha|
+|docs/|informe fuente, arquitectura, manual, ciberseguridad, reflexión, guion e índice|
+|web/|HTML, interfaz y proyección pública estática|
 
-Instalar `python3 -m pip install -r requirements-report.txt`. Ejecutar `python3 src/generar_grafica.py` y `python3 src/generar_informe.py`. Requieren fuentes DejaVuSans de la distribución Linux; las pruebas de negocio no dependen de estas librerías. El informe se escribe fuera de la carpeta de código, en output/pdf.
+El tokenizador original conserva su instalación personal y aviso MIT; los conteos entregados tienen motor/hash. El cotizador copiado reproduce cálculos, no se presenta como un binario del tokenizador.
 
-## Prueba aislada en n8n
+## Enlaces y acceso
 
-El export `exports/Lincoln_Prueba_Aislada_Skills_Loops.json` tiene4nodos manuales y no necesita credenciales. Fue importado y ejecutado con PASS (ejecución50). La salida muestra carga de las tres instrucciones, V1/V2 y recuperación acotada. Continúa separado del bot operativo. Validación local del mismo JS:`node tests/verificar_n8n_loops.cjs`.
+[Pages](https://sofiafreijoval-a01751310.github.io/mesa_financiera_16_oct_elda_V2/) · [Actions](https://github.com/sofiafreijoval-a01751310/mesa_financiera_16_oct_elda_V2/actions) · bot @lincoln_apoyo_distribuidores_bot. El bot está restringido; solicitar autorización a Sofía por el canal privado del curso, sin compartir token. Pages usa exportación manual sanitizada seguida de commit y Actions, no tiempo real. Fechas, datos vacíos y fuentes se muestran en la interfaz.
 
-## Panel y publicación
+## Límites que no deben omitirse
 
-[Panel Lincoln](https://sofiafreijoval-a01751310.github.io/mesa_financiera_16_oct_elda_V2/) · datos ficticios, exportación manual con fecha, sin datos de chats. GitHub confirmó el despliegue inicial. El control de datos bloqueó una publicación deliberadamente inconsistente; ver `evidencias/pages_despliegue.json` y `docs/Panel_GitHub_Pages.md`.
+Video5–8min y defensa≤12min pendientes de Sofía. P01 aún requiere cierre humano del mismo caso nuevo;140 fue revisado y entregado, no decidido. Rechazo explícito, micrófono denegado y ciertos escenarios negativos nativos siguen en tests/pruebas.csv. El ledger no atribuye todavía agente/etapa por request; costos.csv lo declara. La factura total y el gasto de desarrollo son desconocidos. La voz pública maneja solo muestra sintética; no usarla para información privada.
 
-Pruebas web: `python3 tests/validar_web.py` y `node tests/test_web.cjs` (12 pruebas). La voz embebida v5 ya se verificó desde Pages: LIN-76-1,46s, audio confirmado por Sofía. Diseño390/1366 y teclado parcial verificados; falta denegación del micrófono. El ZIP de revisión incluye un manifiesto con el commit exacto; el PDF refleja el despliegue, su bloqueo y su recuperación. Continúan pendientes las pruebas integrales del bot.
+El proxy exige revalidación de tarifa/modelo a partir de2026-12-04T00:00:00Z y entonces bloquea. Mantener servicios y cuotas disponibles durante la evaluación. No reiniciar ledger para borrar reservas ni publicar dos versiones del bot simultáneamente.
 
-
-## Estado verificado26/nov
-
-- Telegram: consulta de solo lectura, aceptación explícita de alcance, vencimiento, aprobación humana77 y repetición bloqueada78.
-- Voz Pages: consultó el mismo LIN-76-1 aprobado simulado; el historial mostró46s y630créditos. No se hicieron pagos ni reservas de presupuesto.
-- Skills: dos previos utilizados y dos nuevos instalados; instrucciones reales de preparación y revisión incorporadas en agentes3/4.
-- Pendientes principales: corte monetario por llamada y deduplicación antes del modelo en Cloud; corrección V1→V2 operativa; matriz integral restante y video individual.
-
-Consultar docs/Entrega_y_cierre_25nov.md, tests/pruebas.csv y evidencias/v05_integracion_26nov.json para el estado detallado. Los archivos históricos conservan sus fechas. Guion reproducible de grabación: docs/guion_video_y_demo.md.
-
-La revisión versionada v06 se publicó sobre el workflow vigente; conserva fuentes y aprobación humana. El export v06 es inactivo al importar.44pruebas locales; ensayo integral nuevo pendiente. Ver docs/Workflow_v06.md.
-
-Alternativa con API propia: docs/Proxy_OpenAI_CANDIDATO.md. Proxy protegido publicado; evaluación manual123 correcta con11 llamadas conciliadas y revisión V1→V2. La prueba136 verificó corte por cota y duplicados en un lote de3peticiones. Versión nativa v07 publicada; falta nueva entrada Telegram y pruebas de carga amplias. Ver evidencias/v07_integracion_27nov.json.
+Declaración de IA y procedencia:docs/uso_ia_y_fuentes.md. Detalle histórico:docs/cierre_y_evidencias.md. Las fuentes originales conservan fecha y alcance; el índice actual prevalece para seleccionar archivos.

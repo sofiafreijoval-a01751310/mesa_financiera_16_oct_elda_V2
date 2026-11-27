@@ -14,6 +14,11 @@ w=json.loads((ROOT/'exports/Lincoln_Workflow_Telegram_Aprobacion_v03.json').read
 assert not w.get('active') and not w.get('pinData')
 assert all(not n.get('credentials') for n in w['nodes'])
 assert len(w['nodes'])==28
+voice=json.loads((ROOT/'exports/Lincoln_Consulta_Voz_PUBLICO.json').read_text())
+assert voice['active'] is False and not voice['pinData'] and len(voice['nodes'])==4
+assert all(not n.get('credentials') for n in voice['nodes'])
+assert all(n['parameters'].get('authentication')=='headerAuth' for n in voice['nodes'] if n['type'].endswith('.webhook'))
+assert all(n['parameters']['dataTableId']['value']=='CONFIGURAR_TABLA_lincoln_casos' for n in voice['nodes'] if n['type'].endswith('.dataTable'))
 for file in (ROOT/'evidencias').glob('LIN-*.json'):
     result=json.loads(file.read_text())
     if result['ok']:

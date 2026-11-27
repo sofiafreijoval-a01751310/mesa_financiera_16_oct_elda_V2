@@ -1,0 +1,124 @@
+{
+  "name": "Lincoln | Consulta de casos por voz",
+  "nodes": [
+    {
+      "parameters": {
+        "jsCode": "return $input.all().map((item,index)=>{\n const b=item.json.body;\n if(!b||typeof b!==\"object\"||Array.isArray(b))throw new Error(\"Se requiere un objeto JSON.\");\n if(Object.keys(b).some(k=>![\"caso_id\",\"version\"].includes(k)))throw new Error(\"Campos no permitidos.\");\n const caso_id=typeof b.caso_id===\"string\"?b.caso_id.trim().toUpperCase():\"\";\n const version=String(b.version??\"\");\n if(!/^LIN-\\d{1,12}-\\d{1,4}$/.test(caso_id)||! /^[1-9]\\d{0,3}$/.test(version))throw new Error(\"Folio o versión inválidos.\");\n return {json:{caso_id,version},pairedItem:{item:index}};\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        224,
+        0
+      ],
+      "id": "b056d9b9-e444-41b5-afd2-e4a8eddf6818",
+      "name": "Validar consulta de voz"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "CONFIGURAR_TABLA_lincoln_casos",
+          "mode": "id"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "caso_id",
+              "keyValue": "={{ $json.caso_id }}"
+            },
+            {
+              "keyName": "version_propuesta",
+              "keyValue": "={{ $json.version }}"
+            }
+          ]
+        },
+        "limit": 2
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        448,
+        0
+      ],
+      "id": "16bc1fcd-6f91-4e6c-9173-efee9894104e",
+      "name": "Leer caso para voz",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const solicitud=$(\"Validar consulta de voz\").first().json;\nconst filas=$input.all().map(i=>i.json).filter(r=>r.id!=null);\nconst fallo={ok:false,modo:\"SIMULADO\",caso_id:solicitud.caso_id,version:solicitud.version,mensaje:\"No hay un registro único disponible para ese folio y versión. No se realizó ningún cambio.\"};\nif(filas.length!==1)return [{json:fallo}];\nconst r=filas[0];\nif(r.caso_id!==solicitud.caso_id||String(r.version_propuesta)!==solicitud.version)return [{json:fallo}];\nlet p;try{p=JSON.parse(r.propuesta_json);}catch{return [{json:{...fallo,mensaje:\"El registro no puede validarse. Consulta por Telegram.\"}}];}\nif(p.caso_original?.modo!==\"SIMULADO\"||p.caso_original?.caso_id!==r.caso_id)return [{json:fallo}];\nconst permitidos=[\"PENDIENTE_APROBACION\",\"APROBADO_SIMULADO\",\"RECHAZADO\",\"VENCIDO\",\"REQUIERE_ACLARACION\",\"DETENIDO\"];\nif(!permitidos.includes(r.estado))return [{json:fallo}];\nconst vence=Date.parse(r.vence_en);\nconst estado=r.estado===\"PENDIENTE_APROBACION\"&&Number.isFinite(vence)&&Date.now()>=vence?\"VENCIDO\":r.estado;\nconst resumen=typeof p.resultado?.resultado===\"string\"?p.resultado.resultado.slice(0,1800):\"Consulta el detalle en Telegram.\";\nreturn [{json:{ok:true,modo:\"SIMULADO\",caso_id:r.caso_id,version:String(r.version_propuesta),estado,resumen,vence_en:r.vence_en,fuentes:Array.isArray(p.resultado?.fuentes)?p.resultado.fuentes.slice(0,5).map(f=>({tabla:f.tabla,fuente:f.fuente,version:f.version})):[],mensaje:\"Consulta de solo lectura. La voz no aprueba apoyos ni modifica presupuestos; las decisiones se realizan por Telegram.\"}}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        672,
+        0
+      ],
+      "id": "b1a9db34-78e4-4df3-9ffc-6310e8b67d84",
+      "name": "Respuesta segura para voz"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "lincoln-voice-cases-v1",
+        "authentication": "headerAuth",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "0b54fa14-317c-45f6-a49d-ef12e72a8b24",
+      "name": "X-Lincoln-Key"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Validar consulta de voz": {
+      "main": [
+        [
+          {
+            "node": "Leer caso para voz",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Leer caso para voz": {
+      "main": [
+        [
+          {
+            "node": "Respuesta segura para voz",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "X-Lincoln-Key": {
+      "main": [
+        [
+          {
+            "node": "Validar consulta de voz",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": true
+  },
+  "nodeGroups": []
+}
