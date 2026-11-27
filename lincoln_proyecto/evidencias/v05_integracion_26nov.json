@@ -199,7 +199,8 @@
       "modifica_presupuesto": false,
       "tokens_estimados_ui": 47781,
       "costo_real_usd": null,
-      "datos_prueba_desfijados": true
+      "datos_prueba_desfijados": true,
+      "duracion_servidor": "4m3.787s"
     }
   ],
   "tarea": {
@@ -231,7 +232,7 @@
     "V1 errónea a V2 corregida del mismo folio en flujo operativo",
     "Costos medidos por llamada",
     "Audio audible de versión final y prueba de micrófono denegado",
-    "Decisión humana sobre LIN-72-1 y grabación/reflexión individual"
+    "Grabación/reflexión individual"
   ],
   "consulta_estado": {
     "comando": "/estado FOLIO VERSION",
@@ -341,5 +342,37 @@
     "persistio": true,
     "alcance": "Impidió verificar ejecución de vencimiento y saldo antes de nueva evaluación; no se inició otra llamada de IA.",
     "recuperado_observado": true
+  },
+  "decision_humana_positiva": {
+    "ejecucion": 77,
+    "fecha_local": "2026-11-26T19:16:16-06:00",
+    "duracion": "2.281s",
+    "caso_id": "LIN-76-1",
+    "version": 1,
+    "fila": 14,
+    "entrada": "/aprobar LIN-76-1 1 ACEPTAR_AJUSTE",
+    "estado_guardado": "APROBADO_SIMULADO",
+    "aprobacion_humana": true,
+    "acepta_ajuste": true,
+    "accion": "aprobar",
+    "fecha_decision_utc": "2026-11-27T01:16:17.889Z",
+    "updatedAt": "2026-11-27T01:16:17.927Z",
+    "modifica_presupuesto": false,
+    "modelo_invocado": false,
+    "confirmacion": "UI Guardar decisión humana77 y respuesta aportada por Sofía",
+    "dictamen": "PASS_APROBACION_SIMULADA_CON_ACEPTACION"
+  },
+  "repeticion_decision": {
+    "ejecucion": 78,
+    "fecha_local": "2026-11-26T19:19:09-06:00",
+    "duracion_servidor": "2.177s",
+    "duracion_editor": "2.606s",
+    "origen": "Replay editor del comando original de77, mismo evento; datos desfijados al terminar",
+    "caso_id": "LIN-76-1",
+    "aplicar": false,
+    "respuesta": "El caso ya fue decidido o no está pendiente. No se realizó ningún cambio.",
+    "guardar_decision_ejecutado": false,
+    "modelo_invocado": false,
+    "dictamen": "PASS_SEGUNDA_DECISION_BLOQUEADA; NO_DEDUPLICACION_GENERAL_ANTES_MODELO"
   }
 }
