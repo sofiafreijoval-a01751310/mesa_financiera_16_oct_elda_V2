@@ -25,7 +25,7 @@ test('Una denegación no tiene camino al modelo ni al registro de caso',()=>{
 });
 test('Los cinco roles tienen el modelo único y cero reintentos automáticos',()=>{
  const models=w.nodes.filter(n=>n.type.endsWith('.lmChatOpenAi'));assert.equal(models.length,5);
- for(const n of models){assert.equal(n.parameters.model.value,'gpt-4o-mini-2024-07-18');assert.equal(n.parameters.options.maxRetries,0);assert(!n.credentials);}
+ for(const n of models){assert.equal(n.parameters.model.value,'gpt-4o-mini-2024-07-18');assert.equal(n.parameters.responsesApiEnabled,false);assert.equal(n.parameters.options.maxRetries,0);assert(!n.credentials);}
 });
 test('Fallo del modelo devuelve DETENIDO sin propagar información interna',()=>{
  const n=w.nodes.find(n=>n.name==='Validar contrato de salida');

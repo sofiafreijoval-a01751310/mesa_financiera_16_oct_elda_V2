@@ -15,7 +15,7 @@ def build(source):
     def add(name, typ, parameters, version, **extra):
         n = dict(id=str(uuid.uuid5(uuid.NAMESPACE_URL,'lincoln-v07/'+name)), name=name,
                  type='n8n-nodes-base.'+typ, typeVersion=version,
-                 position=[950, -350+len(w['nodes'])*5], parameters=parameters, **extra)
+                 position=[2400+(len(w['nodes'])-36)*260, -650], parameters=parameters, **extra)
         w['nodes'].append(n)
         return n
     def edge(a,b,out=0):
@@ -57,6 +57,7 @@ def build(source):
             # La credencial cliente debe usar BASE, nunca la API key real.
             n.pop('credentials',None)
             n['parameters']['model']={'__rl':True,'mode':'id','value':'gpt-4o-mini-2024-07-18'}
+            n['parameters']['responsesApiEnabled']=False
             n['parameters']['options'].update(maxTokens=4096,maxRetries=0,timeout=90000)
         if n['name']=='Orquestador Lincoln':
             n['onError']='continueRegularOutput'

@@ -71,7 +71,8 @@
           "maxTokens": 4096,
           "timeout": 90000,
           "maxRetries": 0
-        }
+        },
+        "responsesApiEnabled": false
       },
       "id": "dad4cd02-18dd-45d1-9095-d4a8dc1f4166",
       "name": "OpenAI Chat Model",
@@ -112,7 +113,8 @@
           "maxTokens": 4096,
           "timeout": 90000,
           "maxRetries": 0
-        }
+        },
+        "responsesApiEnabled": false
       },
       "id": "db3c25bb-2bbb-4ad4-af90-3d7672cfd8f7",
       "name": "OpenAI Chat Model1",
@@ -153,7 +155,8 @@
           "maxTokens": 4096,
           "timeout": 90000,
           "maxRetries": 0
-        }
+        },
+        "responsesApiEnabled": false
       },
       "id": "2e056c05-dbf0-41a1-ac6e-8a80c338c9db",
       "name": "OpenAI Chat Model2",
@@ -284,7 +287,8 @@
           "maxTokens": 4096,
           "timeout": 90000,
           "maxRetries": 0
-        }
+        },
+        "responsesApiEnabled": false
       },
       "id": "0b0d9603-1b69-4533-bc3b-54aa7cd34e08",
       "name": "OpenAI Chat Model3",
@@ -342,7 +346,8 @@
           "maxTokens": 4096,
           "timeout": 90000,
           "maxRetries": 0
-        }
+        },
+        "responsesApiEnabled": false
       },
       "id": "97e6e055-6e21-4576-90d1-f662337fc0ee",
       "name": "OpenAI Chat Model4",
@@ -1071,8 +1076,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        950,
-        -170
+        2400,
+        -650
       ],
       "parameters": {
         "method": "POST",
@@ -1117,8 +1122,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        950,
-        -165
+        2660,
+        -650
       ],
       "parameters": {
         "jsCode": "// Ningún fallo de admisión autoriza una llamada al modelo.\nconst original = $('Inicializar caso').first().json;\nconst response = $input.first().json;\nconst admitted = response.statusCode === 200 && response.body?.ok === true &&\n  response.body?.admitido === true && response.body?.caso_id === original.caso_id;\nreturn [{json: {...original, control_admitido: admitted,\n  control_estado: admitted ? 'ADMITIDO' : 'BLOQUEADO',\n  respuesta_control: admitted ? '' : 'La evaluación no pudo admitirse. Puede tratarse de una solicitud repetida o de un control temporal. No se llamó al modelo desde esta evaluación. Consulta el folio anterior o solicita revisión del sistema.'}}];\n"
@@ -1130,8 +1135,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        950,
-        -160
+        2920,
+        -650
       ],
       "parameters": {
         "conditions": {
@@ -1163,8 +1168,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        950,
-        -155
+        3180,
+        -650
       ],
       "parameters": {
         "conditions": {
@@ -1196,8 +1201,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        950,
-        -150
+        3440,
+        -650
       ],
       "parameters": {
         "chatId": "={{ $(\"Inicializar caso\").first().json.chat_id }}",
@@ -1213,8 +1218,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        950,
-        -145
+        3700,
+        -650
       ],
       "parameters": {
         "jsCode": "return $input.all();"
