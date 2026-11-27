@@ -148,6 +148,6 @@ def footer(canvas,doc):
  canvas.drawString(40,27,'LINCOLN | SIMULADO | ENTREGA ACADÉMICA | 27 NOV 2026')
  canvas.drawRightString(555,27,str(doc.page))
  canvas.setFont('DV',6.5);canvas.drawRightString(555,805,'SOFÍA FREIJO VALDOVINOS · AI TOOLS')
-doc=SimpleDocTemplate(str(OUT),pagesize=A4,rightMargin=40,leftMargin=40,topMargin=55,bottomMargin=55,title='Lincoln - Informe técnico de revisión',author='Sofía Freijo Valdovinos')
+doc=SimpleDocTemplate(str(OUT),pagesize=A4,rightMargin=40,leftMargin=40,topMargin=55,bottomMargin=55,title='Lincoln - Informe técnico y empresarial',author='Sofía Freijo Valdovinos')
 doc.build(flow,onFirstPage=footer,onLaterPages=footer)
 print(OUT)
