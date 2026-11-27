@@ -56,13 +56,20 @@
       "Iniciar llamada",
       "Mensaje"
     ],
-    "inicio_llamada": false
+    "inicio_llamada": true
   },
   "aviso_datos": "Esta exportación tiene más de24horas. Confirma el estado en Telegram antes de decidir.",
   "capturas": "Solo inspección interna; no se guardan capturas de navegador como entregables",
   "pendientes": [
     "Micrófono denegado y recuperación",
-    "Audio audible final",
     "Auditoría completa de contraste y teclado"
-  ]
+  ],
+  "voz_pages": {
+    "caso_id": "LIN-76-1",
+    "version": 1,
+    "audible_confirmado_por": "Sofía",
+    "historial_proveedor_verificado": true,
+    "duracion_segundos": 46,
+    "fuente": "evidencias/elevenlabs_26nov.json"
+  }
 }

@@ -1,9 +1,9 @@
 {
   "fecha_local": "2026-11-26",
-  "alcance": "UI_ELEVENLABS_Y_WEBHOOK_REAL; prueba conversacional de texto, no audio audible",
+  "alcance": "UI_ELEVENLABS_Y_WEBHOOK_REAL; texto y llamada de voz desde Pages con confirmación audible de Sofía",
   "version_final": "agtvrsn_3101m8d5fse5fr69cpwex6gbfaem",
   "version_conversacion_probada": "agtvrsn_6301m8d5a8kqeadtfe3ytg7emnjb",
-  "cambio_posterior": "Precisar APROBADO_SIMULADO como decisión humana académica y limitar respuesta a90palabras. Publicación observada; audio final pendiente.",
+  "cambio_posterior": "Versión final v5 probada mediante voz desde Pages el 26/nov a las19:25 México.",
   "antes": {
     "idioma": "en",
     "prompt": "Eres un asistente útil.",
@@ -78,11 +78,44 @@
     "usd_facturado": null
   },
   "no_acredita": [
-    "Reproducción audible final",
     "Permiso de micrófono denegado y recuperación",
     "Corte efectivo por120seg o5llamadas",
     "Autenticación de usuario final",
     "Desglose facturado por request",
     "Importación en cuenta independiente"
-  ]
+  ],
+  "voz_pages": {
+    "fecha_local": "2026-11-26T19:25:00-06:00",
+    "hora_precision": "minuto mostrado por ElevenLabs",
+    "version": "v5",
+    "canal": "Widget de GitHub Pages",
+    "caso_id": "LIN-76-1",
+    "version_caso": 1,
+    "dictamen": "PASS_VOZ_WEBHOOK",
+    "confirmacion_audible": "Sofía confirmó explícitamente: si escuche",
+    "duracion_segundos_panel": 46,
+    "mensajes_panel": 9,
+    "herramienta": "consultar_caso_lincoln",
+    "herramienta_estado": "Exitoso",
+    "herramienta_duracion_segundos_panel": 2.3,
+    "respuesta_verificada": {
+      "estado": "APROBADO_SIMULADO",
+      "decision_humana_academica": true,
+      "inversion_solicitada_mxn": 300000,
+      "apoyo_lincoln_mxn": 62500,
+      "aportacion_distribuidor_mxn": 62500,
+      "pago_real": false
+    },
+    "consumo_panel": {
+      "total_creditos": 630,
+      "plataforma_creditos": 511,
+      "llm_creditos": 119,
+      "llm_usd_mostrado": 0.00892,
+      "turnos_facturados_panel": 4,
+      "tipo": "CONSUMO_MOSTRADO_POR_PROVEEDOR_NO_FACTURA",
+      "usd_total_facturado": null,
+      "regla": "630=511+119; USD LLM es otro desglose del mismo consumo, no sumarlo a créditos convertidos sin conciliación."
+    },
+    "privacidad": "Solo se registra la consulta sintética; se excluyen intervenciones ajenas al ejercicio, IDs de usuario y captura completa del navegador."
+  }
 }

@@ -1,0 +1,2 @@
+caso_id,version,proveedor,modelo,canal,fecha_local,duracion_segundos,total_creditos,plataforma_creditos,llm_creditos,llm_usd_mostrado,turnos_facturados_panel,usd_total_facturado,tipo
+LIN-76-1,1,ElevenLabs,deepseek-v41-flash,Widget Pages,2026-11-26T19:25:00-06:00,46,630,511,119,0.00892,4,,CONSUMO_PANEL_NO_FACTURA
