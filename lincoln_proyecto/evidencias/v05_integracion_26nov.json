@@ -240,7 +240,9 @@
       "respuesta": "Consulta de solo lectura. Caso LIN-72-1, versión 1, estado registrado: PENDIENTE_APROBACION. Simulación académica; sin cambios de presupuesto.",
       "nota": "El pegado trae cursivas en guiones bajos. Se publicó modoHTML explícito y escape&,<,>; nueva recepción visual aún no confirmada.",
       "modelo_invocado": false,
-      "escrituras": false
+      "escrituras": false,
+      "ejecucion": 73,
+      "duracion": "1.983s"
     }
   },
   "gateway_saldo_observado_usd": 1.3,
@@ -255,5 +257,29 @@
     "modelo_invocado": false,
     "confirmacion": "UI n8n y captura aportada por Sofía",
     "captura_no_publicada": "Contiene conversaciones y datos personales ajenos al proyecto"
+  },
+  "decision_ajuste_bloqueada": {
+    "ejecucion": 74,
+    "fecha_local": "2026-11-26T18:52:19-06:00",
+    "duracion": "2.126s",
+    "caso_id": "LIN-72-1",
+    "version": 1,
+    "entrada": "/aprobar LIN-72-1 1",
+    "aplicar": false,
+    "respuesta": "Confirma expresamente el alcance reducido: /aprobar LIN-72-1 1 ACEPTAR_AJUSTE",
+    "nodos_ejecutados": [
+      "Telegram Trigger",
+      "Validar entrada Telegram",
+      "Enrutar entrada Telegram",
+      "Consultar caso para decisión",
+      "Validar decisión humana",
+      "¿Aplicar decisión?",
+      "Responder instrucciones Telegram"
+    ],
+    "nodo_guardar_decision_ejecutado": false,
+    "modelo_invocado": false,
+    "modifica_presupuesto": false,
+    "confirmacion": "UI ejecución74 y respuesta aportada por Sofía",
+    "dictamen": "PASS_BLOQUEO_SIN_ACEPTACION; APROBACION_POSITIVA_PENDIENTE"
   }
 }
