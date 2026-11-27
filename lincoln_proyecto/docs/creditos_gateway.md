@@ -40,3 +40,7 @@ Se observaron las ejecuciones 51 (aclaración por fecha pasada), 52 (bloqueo de 
 - Gateway, distinción de créditos, saldo y seguimiento por workflow/modelo: https://github.com/n8n-io/n8n-docs/blob/main/docs/build/understand-workflows/use-gateway-credits.md
 - Tarifas Gateway: https://app.n8n.cloud/service-pricing
 - Disponibilidad y advertencia de LangChain Code: https://docs.n8n.io/integrations/builtin/cluster-nodes/root-nodes/n8n-nodes-langchain.code/
+
+## Actualización nativa del 26/nov
+
+V05 está publicado. Las pruebas73 (/estado LIN-72-1) y74 (aprobar sin aceptar ajuste) terminaron sin modelos;74 no guardó decisión. La75 procesó aceptación fuera de vigencia y guardó VENCIDO, no APROBADO_SIMULADO. Tras recuperar la instancia del error503, el saldo visible fue USD0.99, antes de iniciar una sola evaluación nueva del mensaje original de Chiapas. No se extiende la vigencia del caso72. La diferencia frente a saldos anteriores sigue siendo consumo agregado redondeado.

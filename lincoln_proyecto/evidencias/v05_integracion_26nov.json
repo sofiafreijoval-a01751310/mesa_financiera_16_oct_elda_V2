@@ -164,6 +164,42 @@
         "total_estimado_log_workflow": 33921
       },
       "duracion_servidor": "2m7.067s"
+    },
+    {
+      "id": "76",
+      "caso_id": "LIN-76-1",
+      "origen": "Nueva evaluación del evento Telegram original mediante replay editor; no se reabrió72 ni se extendió su vigencia",
+      "inicio_local": "2026-11-26T19:09:31-06:00",
+      "estado_tecnico": "Success",
+      "duracion_ui_editor": "4m4.642s",
+      "fila": 14,
+      "estado": "PENDIENTE_APROBACION",
+      "createdAt": "2026-11-27T01:12:11.053Z",
+      "vence_en": "2026-11-27T01:42:11.040Z",
+      "revision": "APROBAR_REVISION",
+      "control_determinista": {
+        "ok": true,
+        "version": "0.4",
+        "vueltas": 1
+      },
+      "datos_sinteticos_mxn_antes_iva": {
+        "inversion_solicitada": 300000,
+        "apoyo_teorico": 150000,
+        "apoyo_lincoln": 62500,
+        "distribuidor": 62500,
+        "saldo_proyectado": 0,
+        "inversion_ajustada": 125000,
+        "requiere_aceptacion_ajuste": true
+      },
+      "fortaleza": "Nautilus",
+      "oportunidad": "Corsair",
+      "telegram_respuesta_api_ok": true,
+      "envio_demorado": "El nodo demoró después de guardar el caso y terminó antes del intento de detenerlo. No se canceló ni se repitió el envío.",
+      "aprobacion_humana": false,
+      "modifica_presupuesto": false,
+      "tokens_estimados_ui": 47781,
+      "costo_real_usd": null,
+      "datos_prueba_desfijados": true
     }
   ],
   "tarea": {
@@ -245,8 +281,8 @@
       "duracion": "1.983s"
     }
   },
-  "gateway_saldo_observado_usd": 1.3,
-  "gateway_saldo_alcance": "USD1.30 observado antes de las ejecuciones69–72; saldo actual no confirmado. Agregado, no factura por llamada.",
+  "gateway_saldo_observado_usd": 0.99,
+  "gateway_saldo_alcance": "Saldo visible al recuperar n8n, antes de una nueva evaluación; no costo por request ni factura.",
   "telegram_start": {
     "ejecucion": 61,
     "fecha_local": "2026-11-26T17:48:10-06:00",
@@ -288,16 +324,22 @@
     "entrada": "/aprobar LIN-72-1 1 ACEPTAR_AJUSTE",
     "respuesta": "El caso venció. Solicita una nueva evaluación.",
     "fuente": "Respuesta textual aportada por Sofía en chat",
-    "dictamen": "RECHAZO_POR_VENCIMIENTO_CONFIRMADO_POR_RESPUESTA; REGISTRO_NATIVO_PENDIENTE",
-    "ejecucion": null,
+    "dictamen": "PASS_VENCIMIENTO_NATIVO_NO_APROBACION",
+    "ejecucion": 75,
     "aprobacion_exitosa": false,
-    "nota": "No prolongar vigencia ni reabrir caso para eludir el control."
+    "nota": "No prolongar vigencia ni reabrir caso para eludir el control.",
+    "duracion": "2.084s",
+    "fecha_local": "2026-11-26T18:56:47-06:00",
+    "estado_observado": "VENCIDO",
+    "fila": 13,
+    "confirmacion": "UI n8n75: aplicar:true para transición VENCIDO; nodo Guardar decisión humana ejecutado; ningún modelo. Decisión accion:vencimiento, aprobacion_humana:false, modifica_presupuesto:false."
   },
   "bloqueo_servicio": {
     "observacion": "Workspace offline (503). Your workspace is restarting and currently offline.",
     "ruta": "workflow/PGq4bRn2ehAy6YHt",
     "reintentos": 1,
     "persistio": true,
-    "alcance": "Impidió verificar ejecución de vencimiento y saldo antes de nueva evaluación; no se inició otra llamada de IA."
+    "alcance": "Impidió verificar ejecución de vencimiento y saldo antes de nueva evaluación; no se inició otra llamada de IA.",
+    "recuperado_observado": true
   }
 }
