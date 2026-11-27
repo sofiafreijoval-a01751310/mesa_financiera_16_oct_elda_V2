@@ -9,7 +9,7 @@ Guía del estudiante, versión 30/oct/2026, sección de entregables. No entregar
 | ZIP del mismo commit | Copia del repositorio, informe, manifiesto; SKILL.md, scripts, referencias y ejemplos de todos los skills utilizados | Se genera en Actions; sustituir cualquier ZIP antiguo |
 | Enlaces operativos | GitHub Pages, Actions correcto y bloqueo deliberado, bot y acceso sin secretos | Enlaces disponibles; faltan pruebas finales de canales |
 | Exports de n8n | Roles, contratos, prompts, skills, loops y configuración sin credenciales | v05 publicado el 26/nov; caso LIN-56-1 correcto; tarea diaria publicada y transición/idempotencia comprobadas. Exports inactivos al importar por seguridad |
-| Configuración/export de ElevenLabs | Voz, idioma, saludo, herramientas, conocimiento, dominios y recreación; pruebas | Consulta histórica por voz exitosa; cerrar export y evidencia vigente |
+| Configuración/export de ElevenLabs | Voz, idioma, saludo, herramientas, conocimiento, dominios y recreación; pruebas | Configuración sanitizada y recreación agregadas; webhook positivo/negativo y chat con herramientas reales probados; audio audible final pendiente |
 | Costos y pruebas | CSV/XLSX, tarifas, proyecciones, matriz de casos, evidencias, diccionario y muestra | Existen archivos; completar medidas por llamada y casos exigidos |
 | Video y defensa individual | Video de 5–8 minutos; demo de hasta 12 minutos; declaración de IA y licencias | Requiere grabación de Sofía |
 
@@ -41,10 +41,10 @@ Prueba nativa: LIN-53-1, fila 6, versión 1 pasó de PENDIENTE_APROBACION a VENC
 1. v05 ya publicado con Telegram habilitado; /start verificado desde cuenta autorizada, ejecución61, 1.996s, sin modelos.
 2. Tarea diaria ya publicada; conservar prueba de transición e idempotencia y verificar posteriormente el primer disparo horario.
 3. Consulta `/estado FOLIO VERSION` publicada y probada localmente; prueba nativa62 bloqueó LIN-56-1 duplicado sin escrituras ni modelos. Consulta positiva LIN-34-1 respondió APROBADO_SIMULADO según respuesta compartida por Sofía. Integrar guardián/deduplicación; ejecutar la matriz de pruebas con evidencia real de al menos tres casos completos y un error/rechazo.
-4. Exportar configuración actual de ElevenLabs y completar prueba de voz enlazada al caso, accesibilidad y pantalla móvil.
+4. Configuración y recreación de ElevenLabs agregadas, pruebas reales de texto/webhook y rechazo de inyección correctas. Completar audio audible final, accesibilidad y pantalla móvil.
 5. Completar costos medidos y estimados separados, informe, reflexión personal y manifiesto del mismo commit.
 6. Sofía graba video y realiza defensa; descargar ZIP final únicamente después de Actions correcto y comprobar que coincide con el commit del informe.
 
 ## Intervención concreta
 
-`/start` pasó. `/estado LIN-34-1 1` respondió correctamente según la respuesta aportada por Sofía; LIN-56-1 pertenece a prueba manual y tiene dos inserciones, bloqueadas correctamente. No enviar otra solicitud completa mientras se revisa consumo Gateway. Para finalizar la configuración de voz hace falta completar el inicio de sesión de ElevenLabs en el navegador compartido. La grabación individual y reflexión personal corresponden a Sofía. No hace falta volver a compartir credenciales ni importar otra copia del workflow.
+`/start` pasó. `/estado LIN-34-1 1` respondió correctamente según la respuesta aportada por Sofía; LIN-56-1 pertenece a prueba manual y tiene dos inserciones, bloqueadas correctamente. No enviar otra solicitud completa mientras se revisa consumo Gateway. Acceso ElevenLabs recuperado, configuración publicada y pruebas de herramienta/texto correctas. Falta intervención de Sofía para hablar y confirmar audio audible. La grabación individual y reflexión personal corresponden a Sofía. No hace falta volver a compartir credenciales ni importar otra copia del workflow.
