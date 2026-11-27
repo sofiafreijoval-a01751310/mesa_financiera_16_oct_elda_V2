@@ -33,13 +33,13 @@ def main():
         payload.append(('repositorio/'+name,raw))
     repo=os.environ.get('GITHUB_REPOSITORY','sofiafreijoval-a01751310/mesa_financiera_16_oct_elda_V2')
     run=os.environ.get('GITHUB_RUN_ID','')
-    manifest={'proyecto':'Lincoln | Apoyos a Distribuidores','estado':'REVISION: pendientes corte monetario y deduplicación nativos y pruebas de canales','repositorio':repo,'commit':commit,'archivos_git_verificados':len(files),'archivos':files,'pdf_derivado':{'ruta':PDF.name,'sha256':hashlib.sha256(data).hexdigest()},'validacion':'Generación depende del job validar satisfactorio; no se llama a modelos','actions_run':run,'exclusiones':['Sin respaldo privado ni credenciales locales','El contenido fuente se lee del commit, no de archivos locales modificados por pruebas']}
+    manifest={'proyecto':'Lincoln | Apoyos a Distribuidores','estado':'REVISION: pendientes nueva entrada Telegram, matriz restante, carga amplia, factura total y video','repositorio':repo,'commit':commit,'archivos_git_verificados':len(files),'archivos':files,'pdf_derivado':{'ruta':PDF.name,'sha256':hashlib.sha256(data).hexdigest()},'validacion':'Generación depende del job validar satisfactorio; no se llama a modelos','actions_run':run,'exclusiones':['Sin respaldo privado ni credenciales locales','El contenido fuente se lee del commit, no de archivos locales modificados por pruebas']}
     OUT.mkdir(exist_ok=True)
     with zipfile.ZipFile(ZIP,'w',zipfile.ZIP_DEFLATED) as z:
         for name,raw in payload:z.writestr(name,raw)
         z.writestr(PDF.name,data)
         z.writestr('MANIFIESTO.json',json.dumps(manifest,ensure_ascii=False,indent=2))
-        z.writestr('LEEME_ENTREGA.txt','Proyecto Lincoln - VERSION DE REVISION.\nAbrir Informe_Lincoln_Revision.pdf y repositorio/lincoln_proyecto/docs/cierre_y_evidencias.md.\nCaso76 consultado por voz y aprobado por decisión humana77; reflexión individual integrada.\nPendientes: corte monetario y deduplicación nativos, V1/V2 operativa, matriz restante y video personal.\nEl manifiesto identifica el commit y los archivos. No sustituye la entrega de la estudiante.\n')
+        z.writestr('LEEME_ENTREGA.txt','Proyecto Lincoln - VERSION DE REVISION.\nAbrir Informe_Lincoln_Revision.pdf y repositorio/lincoln_proyecto/docs/cierre_y_evidencias.md.\nCaso76 consultado por voz y aprobado por decisión humana77; reflexión individual integrada.\n123: evaluación completa vía proxy,11llamadas conciliadas y V1/V2 correctas.136: corte por cota y lote duplicado bloqueados. V07 nativa publicada. Pendientes: nueva entrada Telegram, matriz restante, carga amplia, factura total y video personal.\nEl manifiesto identifica el commit y los archivos. No sustituye la entrega de la estudiante.\n')
     with zipfile.ZipFile(ZIP) as z:
         if z.testzip() is not None:raise ValueError('ZIP corrupto')
     print(json.dumps({'zip':str(ZIP),'bytes':ZIP.stat().st_size,'commit':commit,'archivos_git':len(files),'pdf_paginas':10}))

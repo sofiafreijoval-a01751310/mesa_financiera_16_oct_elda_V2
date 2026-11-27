@@ -26,3 +26,9 @@ Actualización26/nov/2026. Datos sintéticos; versión de revisión, no cierre t
 Rutas de detalle: tests/pruebas.csv; evidencias/v05_integracion_26nov.json; evidencias/elevenlabs_26nov.json; evidencias/pages_qa_26nov.json; docs/control_concurrencia_n8n.md; docs/Entrega_y_cierre_25nov.md. Las versiones históricas siguen fechadas; esta página es el índice vigente.
 
 El token Telegram compartido antes fue invalidado según Sofía. No incluir capturas completas del navegador, secretos ni IDs privados en el video, repositorio o ZIP.
+
+## Actualización27/nov: integración OpenAI publicada
+
+123 completó agentes1–4, transferencia desde observaciones reales y revisión determinista V1→V2; registro21 PENDIENTE_APROBACION.11llamadas conciliadas,30414tokens entrada+4132salida, USD0.007041300 a tarifa estándar (sin voz/infraestructura/factura).136 pasó lote nativo de3peticiones: corte LIMITE_COSTO previo al proveedor, una admisión y un duplicado bloqueado. Las11reservas sintéticas de ese fixture no son cargos y están excluidas del CSV de consumo.
+
+La ruta v07 está publicada; Gateway anterior despublicado para evitar dos webhooks del bot. Pendiente nueva entrada de Sofía desde Telegram, matriz negativa restante, carga amplia, factura total y video personal. Evidencias: v07_integracion_27nov.json, guard_negativo_27nov.json y costos/consumo_proxy_27nov.csv. La documentación histórica mantiene su fecha y alcance.
