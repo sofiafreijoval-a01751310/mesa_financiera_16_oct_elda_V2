@@ -1,7 +1,7 @@
 {
-  "fecha_utc": "2026-11-26T23:42:31.225Z",
+  "fecha_utc": "2026-11-27T00:36:55.804Z",
   "alcance": "LOCAL; no acredita importación, publicación ni ejecución nativa del Schedule Trigger o v05",
-  "passed": 23,
+  "passed": 25,
   "tests": [
     "Skill válido calcula 50/50",
     "Skill limita Chiapas al saldo",
@@ -16,6 +16,8 @@
     "No vence propuesta_json {",
     "No modifica casos reales",
     "Vencimiento repetido no duplica transición",
+    "Contexto Telegram no queda fuera del contrato del calculador",
+    "Los metadatos Telegram no alteran cifras ni aprueban presupuesto",
     "Estado usa ruta de lectura sin modelo",
     "Estado rechaza formato y usuario ajeno",
     "Estado vencido informa sin escribir ni aprobar",

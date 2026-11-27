@@ -4,7 +4,7 @@
   "workflow": "PGq4bRn2ehAy6YHt",
   "publicacion": {
     "observada": true,
-    "version": "Lincoln v05 consulta estado sin IA",
+    "version": "Lincoln v05 contrato Telegram corregido",
     "telegram_habilitado": true,
     "respuesta_start_pendiente": false
   },
@@ -64,6 +64,104 @@
       "skill_proponente_hash_devuelto": null,
       "limitacion": "El proponente omitió metadata; el registro de configuración se corrigió después y no se reinsertó el caso para evitar duplicados",
       "costo_real_usd": null
+    },
+    {
+      "id": "69",
+      "caso_id": "LIN-69-1",
+      "entrada": "Manual D02 Mérida, Nautilus15dic2026, inversión200000MXNantesIVA,60asistentes35-60NSEA/A+/B+,prospectos y pruebas",
+      "estado_tecnico": "Succeeded",
+      "duracion_ui_editor": "2m2.712s",
+      "duracion_servidor": "2m1.837s",
+      "createdAt": "2026-11-27T00:16:23.153Z",
+      "fila": 11,
+      "estado": "PENDIENTE_APROBACION",
+      "revision": "APROBAR_REVISION",
+      "control_determinista": {
+        "ok": true,
+        "version": "0.4",
+        "vueltas": 1
+      },
+      "apoyo_lincoln_mxn": 100000,
+      "aportacion_distribuidor_mxn": 100000,
+      "asignacion_mxn": 275000,
+      "saldo_proyectado_mxn": 175000,
+      "fortaleza": "Nautilus",
+      "oportunidad": "Corsair",
+      "coinciden": false,
+      "skills_configurados": 2,
+      "modifica_presupuesto": false,
+      "costo_real_usd": null
+    },
+    {
+      "id": "70",
+      "caso_id": "LIN-70-1",
+      "canal": "Telegram",
+      "estado_tecnico": "Succeeded",
+      "duracion": "1m21.743s",
+      "estado_negocio": "DETENIDO",
+      "fila": 12,
+      "createdAt": "2026-11-27T00:21:01.749Z",
+      "causa": "ToolCode rechazó metadatos chat_id/update_id/message_id/autorizado/ruta/respuesta/decision no incluidos en esquema. MaxIterations3.",
+      "correccion": "Metadatos opcionales tipados; decision solo null; ruta solo PROCESAR. No intervienen en cálculo ni autorización. additionalProperties:false se conserva.",
+      "modifica_presupuesto": false
+    },
+    {
+      "id": "71",
+      "estado": "Canceled",
+      "duracion": "54.858s",
+      "causa": "Segundo envío de la misma solicitud por usuario durante espera; cancelado manualmente para limitar consumo. No demuestra deduplicación automática.",
+      "costo_real_usd": null
+    },
+    {
+      "id": "72",
+      "caso_id": "LIN-72-1",
+      "origen": "Reprocesado en editor del evento Telegram original de ejecución70 mediante Copy to editor; primer nodo fijado temporalmente y desfijado al terminar",
+      "estado_tecnico": "Success",
+      "duracion_ui_editor": "2m7.892s",
+      "fila": 13,
+      "createdAt": "2026-11-27T00:26:29.447Z",
+      "vence_en": "2026-11-27T00:56:29.434Z",
+      "estado": "PENDIENTE_APROBACION",
+      "revision": "APROBAR_REVISION",
+      "control_determinista": {
+        "ok": true,
+        "version": "0.4",
+        "vueltas": 1
+      },
+      "datos_sinteticos_mxn_antes_iva": {
+        "inversion_solicitada": 300000,
+        "apoyo_teorico": 150000,
+        "apoyo_lincoln": 62500,
+        "distribuidor": 62500,
+        "asignacion": 62500,
+        "saldo_proyectado": 0,
+        "inversion_ajustada": 125000,
+        "requiere_aceptacion_ajuste": true
+      },
+      "fortaleza": "Nautilus",
+      "oportunidad": "Corsair",
+      "modifica_presupuesto": false,
+      "telegram_respuesta_api_ok": true,
+      "datos_prueba_desfijados": true,
+      "costo_real_usd": null,
+      "consumo_estimado_ui": {
+        "origen": "n8n Logs, aproximaciones por llamada; no facturación del proveedor",
+        "modelo_observado": "gpt-4.1-2025-04-14",
+        "tokens_totales_por_llamada": [
+          1313,
+          1167,
+          1647,
+          1242,
+          3027,
+          2716,
+          2346,
+          3640,
+          4149,
+          3196
+        ],
+        "total_estimado": 24443,
+        "limitacion": "Estimación UI; las llamadas a herramientas pueden registrar completionTokens0. No acredita consumo facturado ni límite monetario."
+      }
     }
   ],
   "tarea": {
@@ -92,11 +190,10 @@
   },
   "pendientes": [
     "Deduplicación persistente anterior al modelo y guardián monetario nativo",
-    "Tres casos distintos completos",
-    "V1 errónea a V2 corregida en flujo operativo",
+    "V1 errónea a V2 corregida del mismo folio en flujo operativo",
     "Costos medidos por llamada",
-    "Export final ElevenLabs y QA accesibilidad",
-    "Grabación individual"
+    "Audio audible de versión final y prueba de micrófono denegado",
+    "Decisión humana sobre LIN-72-1 y grabación/reflexión individual"
   ],
   "consulta_estado": {
     "comando": "/estado FOLIO VERSION",
@@ -136,7 +233,7 @@
     }
   },
   "gateway_saldo_observado_usd": 1.3,
-  "gateway_saldo_alcance": "Saldo visible agregado; no factura ni costo por llamada",
+  "gateway_saldo_alcance": "USD1.30 observado antes de las ejecuciones69–72; saldo actual no confirmado. Agregado, no factura por llamada.",
   "telegram_start": {
     "ejecucion": 61,
     "fecha_local": "2026-11-26T17:48:10-06:00",

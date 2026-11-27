@@ -1,0 +1,68 @@
+{
+  "fecha_local": "2026-11-26",
+  "alcance": "UI_REAL_GITHUB_PAGES_EN_IFRAMES; anchos CSS, no emulación de dispositivo físico",
+  "pagina_prueba": "https://sofiafreijoval-a01751310.github.io/mesa_financiera_16_oct_elda_V2/qa-layouts.html",
+  "viewports": [
+    {
+      "ancho": 390,
+      "alto": 844,
+      "ancho_contenido": 375,
+      "scroll_documento": 375,
+      "tabla_ancho_contenido": 650,
+      "tabla_contenedor": 305,
+      "dictamen": "Sin desbordamiento horizontal del documento; tabla en región desplazable"
+    },
+    {
+      "ancho": 1366,
+      "alto": 900,
+      "ancho_contenido": 1351,
+      "scroll_documento": 1351,
+      "tabla_ancho_contenido": 1180,
+      "tabla_contenedor": 1180,
+      "dictamen": "Sin desbordamiento horizontal del documento"
+    }
+  ],
+  "teclado": {
+    "accion": "Tab desde Saltar al contenido y Enter en Calcular propuesta",
+    "focus_observado": "Lincoln, inicio; anillo de foco visible en Calcular propuesta",
+    "alcance": "Recorrido parcial; no auditoría WCAG completa"
+  },
+  "filtros": [
+    {
+      "vista": 390,
+      "distribuidor": "D03",
+      "obtenido": "0 casos en la selección. Las pruebas técnicas no alteran los KPI."
+    },
+    {
+      "vista": 1366,
+      "folio": "LIN-34-1",
+      "obtenido": "1 caso en la selección. Las pruebas técnicas no alteran los KPI."
+    }
+  ],
+  "simulacion": {
+    "distribuidor": "D03",
+    "inversion_mxn": 300000,
+    "apoyo_lincoln_mxn": 62500,
+    "distribuidor_mxn": 62500,
+    "alcance_mxn": 125000,
+    "saldo_inicial_remanente_mxn": 0,
+    "mensaje": "El saldo inicial exige reducir el alcance. Debe aceptarse el ajuste antes de solicitar aprobación.",
+    "crea_caso": false
+  },
+  "consentimiento": {
+    "widget_antes_de_aceptar": 0,
+    "despues": "Asistente cargado. Inicia una conversación en el widget. Si deniegas el micrófono, utiliza la alternativa de Telegram.",
+    "botones_observados": [
+      "Iniciar llamada",
+      "Mensaje"
+    ],
+    "inicio_llamada": false
+  },
+  "aviso_datos": "Esta exportación tiene más de24horas. Confirma el estado en Telegram antes de decidir.",
+  "capturas": "Solo inspección interna; no se guardan capturas de navegador como entregables",
+  "pendientes": [
+    "Micrófono denegado y recuperación",
+    "Audio audible final",
+    "Auditoría completa de contraste y teclado"
+  ]
+}

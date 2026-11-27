@@ -18,6 +18,8 @@ for private in [False,True]:
   if n['name']=='calcular_propuesta':
    schema=json.loads(n['parameters']['inputSchema'])
    schema['properties']['skills_cargados']={'type':'array','maxItems':2,'description':'Metadatos de transporte n8n. Ignorados por el cálculo financiero.','items':{'type':'object','additionalProperties':False,'required':['nombre','agente','sha256','carga'],'properties':{'nombre':{'type':'string','enum':['preparar-apoyo-lincoln','revisar-apoyo-lincoln']},'agente':{'type':'string','enum':['agente_3_propuesta','agente_4_revision']},'sha256':{'type':'string','pattern':'^[a-f0-9]{64}$'},'carga':{'type':'string','enum':['ARCHIVO_EMBEBIDO_AL_CONSTRUIR_EXPORT']}}}}
+   transport={'chat_id':{'type':'string','pattern':'^-?[0-9]{1,20}$'},'update_id':{'type':'integer','minimum':0},'message_id':{'type':'integer','minimum':0},'autorizado':{'type':'boolean'},'ruta':{'type':'string','enum':['PROCESAR']},'respuesta':{'type':'string','maxLength':4000},'decision':{'type':'null'}}
+   for key,definition in transport.items():schema['properties'][key]={**definition,'description':'Metadata de transporte n8n; no se usa para cálculo ni autorización.'}
    n['parameters']['inputSchema']=json.dumps(schema,ensure_ascii=False,indent=2)
   if n['name']=='Preparar registro del caso':
    n['parameters']['jsCode']=n['parameters']['jsCode'].replace('caso_original:original,resultado,aprobacion_humana:false','caso_original:original,resultado,skills_configurados:$("Registrar skills cargados").first().json.skills_cargados,evidencia_skills:"INSTRUCCIONES_EMBEBIDAS_EN_PROMPTS; NO_EQUIVALE_A_VALIDACION_DEL_MODELO",aprobacion_humana:false')
