@@ -67,7 +67,10 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           EXPECTED_ARTIFACT_NAME: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
           EXPECTED_ARTIFACT_ID: ${{ steps.pages_artifact.outputs.artifact_id }}
-        run: python3 lincoln_proyecto/src/esperar_artefacto_pages.py
+        run: |
+          python3 lincoln_proyecto/src/esperar_artefacto_pages.py
+          # El listado REST ya lo ve; dar margen al índice consultado por deploy-pages.
+          sleep 15
       - name: Publicar panel validado
         id: deployment
         uses: actions/deploy-pages@v4
