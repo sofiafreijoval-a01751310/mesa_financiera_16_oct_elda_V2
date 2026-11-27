@@ -147,7 +147,9 @@
       "consumo_estimado_ui": {
         "origen": "n8n Logs, aproximaciones por llamada; no facturación del proveedor",
         "modelo_observado": "gpt-4.1-2025-04-14",
-        "tokens_totales_por_llamada": [
+        "limitacion": "Estimación UI; las llamadas a herramientas pueden registrar completionTokens0. No acredita consumo facturado ni límite monetario. Muestra parcial de10llamadas suma24443; encabezado agregado del workflow33921. No sumarlos entre sí.",
+        "total_estimado_parcial": 24443,
+        "tokens_totales_por_llamada_muestra": [
           1313,
           1167,
           1647,
@@ -159,9 +161,9 @@
           4149,
           3196
         ],
-        "total_estimado": 24443,
-        "limitacion": "Estimación UI; las llamadas a herramientas pueden registrar completionTokens0. No acredita consumo facturado ni límite monetario."
-      }
+        "total_estimado_log_workflow": 33921
+      },
+      "duracion_servidor": "2m7.067s"
     }
   ],
   "tarea": {
