@@ -281,5 +281,23 @@
     "modifica_presupuesto": false,
     "confirmacion": "UI ejecución74 y respuesta aportada por Sofía",
     "dictamen": "PASS_BLOQUEO_SIN_ACEPTACION; APROBACION_POSITIVA_PENDIENTE"
+  },
+  "aceptacion_tras_vencimiento": {
+    "caso_id": "LIN-72-1",
+    "version": 1,
+    "entrada": "/aprobar LIN-72-1 1 ACEPTAR_AJUSTE",
+    "respuesta": "El caso venció. Solicita una nueva evaluación.",
+    "fuente": "Respuesta textual aportada por Sofía en chat",
+    "dictamen": "RECHAZO_POR_VENCIMIENTO_CONFIRMADO_POR_RESPUESTA; REGISTRO_NATIVO_PENDIENTE",
+    "ejecucion": null,
+    "aprobacion_exitosa": false,
+    "nota": "No prolongar vigencia ni reabrir caso para eludir el control."
+  },
+  "bloqueo_servicio": {
+    "observacion": "Workspace offline (503). Your workspace is restarting and currently offline.",
+    "ruta": "workflow/PGq4bRn2ehAy6YHt",
+    "reintentos": 1,
+    "persistio": true,
+    "alcance": "Impidió verificar ejecución de vencimiento y saldo antes de nueva evaluación; no se inició otra llamada de IA."
   }
 }
