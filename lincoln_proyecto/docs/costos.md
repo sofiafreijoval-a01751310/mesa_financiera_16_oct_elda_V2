@@ -20,7 +20,7 @@ Fórmula por etapa = (tokens entrada × tarifa entrada + tokens salida × tarifa
 
 ## Voz e infraestructura
 
-ElevenAgents mensual público: Free USD0/15 minutos, Starter USD6/75 minutos, Creator USD22/275 minutos; fuente https://elevenlabs.io/pricing/agents . No se usaron promociones. Duración por consulta desconocida. Sensibilidad ilustrativa: a un minuto por consulta, 100/1,000/10,000 casos consumen 100/1,000/10,000 minutos; a dos minutos, 200/2,000/20,000. Esto no es una medición. El precio aplicable a excedentes y al LLM de voz debe confirmarse en el plan contratado; no sumar una tarifa inventada.
+ElevenAgents mensual público: Free USD0/15 minutos, Starter USD6/75 minutos, Creator USD22/275 minutos; fuente https://elevenlabs.io/pricing/agents . No se usaron promociones. Una llamada observada del widget duró46s; es una muestra única, no un promedio de operación. Sensibilidad ilustrativa: a un minuto por consulta, 100/1,000/10,000 casos consumen 100/1,000/10,000 minutos; a dos minutos, 200/2,000/20,000. Esto no es una medición. El precio aplicable a excedentes y al LLM de voz debe confirmarse en el plan contratado; no sumar una tarifa inventada.
 
 n8n anuncia Starter EUR20/mes con facturación anual y 2,500 ejecuciones: https://n8n.io/pricing/ . Es referencia comercial, no factura de esta cuenta. Cada entrada, consulta de voz y eventual callback pueden producir ejecuciones separadas. El volumen de casos no equivale automáticamente al de ejecuciones. Hosting, gateway, voz, IVA, FX y cuotas de desarrollo quedan separados.
 
@@ -33,3 +33,10 @@ Para conciliar, completar costos/consumo_real_plantilla.csv con request_id, etap
 ## Conexión elegida: Gateway credits
 
 Se conserva la conexión Gateway de n8n por indicación de Sofía. Sus tarifas y cargos se deben consultar en n8n; los precios públicos de OpenAI de este documento no se presentan como tarifas Gateway. El 24/nov/2026 se observó saldo USD1.46 y consumo Gateway agregado del workflow de USD0.16 en el periodo de siete días; el saldo inicial mostrado era USD1.62. Estos importes están redondeados y no son un cargo exacto por caso. Ver evidencia `evidencias/n8n_gateway_24nov.json`. El valor nominal USD 0.25 no es todavía un corte monetario comprobado en n8n. Ver [procedimiento de medición y alcance](creditos_gateway.md).
+
+
+## Llamada de voz verificada el26/nov
+
+La versión final v5 consultó LIN-76-1 desde Pages a las19:25 México. Sofía confirmó que escuchó la respuesta. El historial de ElevenLabs mostró46segundos,9mensajes,630créditos totales:511de plataforma y119de LLM; el panel monetario del LLM mostró USD0.00892 para4turnos facturados. La herramienta tardó2.3s. Son datos del panel del proveedor, no una factura conciliada ni el costo total monetario de la llamada.
+
+Ver costos/voz_observada_26nov.csv y evidencias/elevenlabs_26nov.json. Los630créditos ya incluyen los119del LLM. No sumar el importe USD del LLM a una conversión del total de créditos sin comprobar la política de facturación. A46s por consulta,100/1000/10000consultas serían76.67/766.67/7666.67minutos: extrapolación de una muestra, no predicción ni tarifa.
