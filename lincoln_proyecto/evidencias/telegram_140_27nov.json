@@ -1,0 +1,51 @@
+{
+  "fecha_local": "2026-11-27",
+  "zona": "America/Mexico_City",
+  "tipo": "ENTRADA_NUEVA_TELEGRAM_PRODUCCION",
+  "ejecucion": "140",
+  "duracion_segundos": 75.68,
+  "caso_id": "LIN-140-1",
+  "estado": "PENDIENTE_APROBACION",
+  "version_propuesta": 2,
+  "registro_id": 22,
+  "creado_utc": "2026-11-27T13:43:51.906Z",
+  "vence_utc": "2026-11-27T14:13:51.900Z",
+  "canal": "telegram",
+  "transferencia": "SALIDAS_HERRAMIENTAS_MISMO_CASO",
+  "traza": [
+    {
+      "version": 1,
+      "ok": false,
+      "errores": [
+        "ok",
+        "errores",
+        "estado_aprobacion",
+        "modifica_presupuesto",
+        "requiere_aceptacion_ajuste"
+      ]
+    },
+    {
+      "version": 2,
+      "ok": true,
+      "errores": []
+    }
+  ],
+  "calculo": {
+    "inversion_total_mxn": 400000,
+    "apoyo_lincoln_mxn": 200000,
+    "aportacion_distribuidor_mxn": 200000,
+    "saldo_proyectado_mxn": 450000
+  },
+  "entrega_telegram": {
+    "ok": true,
+    "respuesta_observada_en_nodo": "Enviar resultado Lincoln"
+  },
+  "aprobacion_humana": false,
+  "modifica_presupuesto": false,
+  "incidencia": "La captura de usuaria mostraba el mensaje enviado durante el procesamiento. n8n concluyó y Telegram aceptó la respuesta después de75.68segundos.",
+  "limites": [
+    "Aceptación Telegram no confirma que la usuaria haya visto el mensaje",
+    "No se atribuye costo monetario desde tokens aproximados del editor",
+    "No acredita toda concurrencia posible"
+  ]
+}
